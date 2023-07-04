@@ -1,17 +1,17 @@
 # Protecting EST Payloads with OSCORE
 
-This is the working area for the individual Internet-Draft, "Protecting EST Payloads with OSCORE".
+This is the working area for the IETF [ACE Working Group](https://datatracker.ietf.org/wg/ace/documents/) Internet-Draft, "Protecting EST Payloads with OSCORE".
 
-* [Editor's Copy](https://EricssonResearch.github.io/EST-OSCORE/#go.draft-selander-ace-coap-est-oscore.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-selander-ace-coap-est-oscore)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-selander-ace-coap-est-oscore)
-* [Compare Editor's Copy to Individual Draft](https://EricssonResearch.github.io/EST-OSCORE/#go.draft-selander-ace-coap-est-oscore.diff)
+* [Editor's Copy](https://ace-wg.github.io/est-oscore/#go.draft-ietf-ace-coap-est-oscore.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-ace-coap-est-oscore)
+* [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-ace-coap-est-oscore)
+* [Compare Editor's Copy to Working Group Draft](https://ace-wg.github.io/est-oscore/#go.draft-ietf-ace-coap-est-oscore.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/EricssonResearch/EST-OSCORE/blob/master/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/ace-wg/est-oscore/blob/master/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.

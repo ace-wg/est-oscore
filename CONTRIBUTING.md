@@ -29,3 +29,31 @@ technical issues needs to occur on the mailing list.
 
 You might also like to familiarize yourself with other
 [Working Group documents](https://datatracker.ietf.org/wg/ace/documents/).
+## Working Group Information
+
+Discussion of this work occurs on the [Authentication and Authorization for Constrained Environments
+Working Group mailing list](mailto:ace@ietf.org)
+([archive](https://mailarchive.ietf.org/arch/browse/ace/),
+[subscribe](https://www.ietf.org/mailman/listinfo/ace)).
+In addition to contributions in GitHub, you are encouraged to participate in
+discussions there.
+
+**Note**: Some working groups adopt a policy whereby substantive discussion of
+technical issues needs to occur on the mailing list.
+
+You might also like to familiarize yourself with other
+[Working Group documents](https://datatracker.ietf.org/wg/ace/documents/).
+## Working Group Information
+
+Discussion of this work occurs on the [Authentication and Authorization for Constrained Environments
+Working Group mailing list](mailto:ace@ietf.org)
+([archive](https://mailarchive.ietf.org/arch/browse/ace/),
+[subscribe](https://www.ietf.org/mailman/listinfo/ace)).
+In addition to contributions in GitHub, you are encouraged to participate in
+discussions there.
+
+**Note**: Some working groups adopt a policy whereby substantive discussion of
+technical issues needs to occur on the mailing list.
+
+You might also like to familiarize yourself with other
+[Working Group documents](https://datatracker.ietf.org/wg/ace/documents/).
