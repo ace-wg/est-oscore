@@ -388,6 +388,24 @@ TBD: Compare with RFC9148
 
 TBD: Channel binding security considerations: 3SHAKE attack and EDHOC.
 
+## Server-generated Private Keys
+
+This document enables the EST client to request generation of private keys and the enrollment of the corresponding public key through /skg and /skc functions.
+As discussed in {{Section 9 of RFC9148}}, the transport of private keys generated at EST-server is inherently risky.
+The use of server-generated private keys may lead to the increased probability of digital identity theft.
+Therefore, implementations SHOULD NOT use server-generated private key EST functions.
+
+A cryptographically secure pseudo-random number generator is required to be available to generate good quality private keys on EST-clients.
+A cryptographically secure pseudo-random number generator is also a dependency of many security protocols.
+This includes the EDHOC protocol, which EST-oscore uses for the mutual authentication of EST-client and EST-server.
+If EDHOC is used and a secure pseudo-random number generator is available, the EST-client MUST NOT use server-generated private key EST functions.
+However, EST-oscore also allows pre-shared OSCORE contexts to be used for authentication, meaning that EDHOC may not necessarily be required in the protocol stack of an EST-client.
+If EDHOC is not used for authentication, and the EST-client device does not have a cryptographically secure pseudo-random number generator, then the EST-client MAY use the server-generated private key functions.
+
+Although hardware random number generators are becoming dominantly present in modern IoT devices, it has been shown that many available hardware modules contain vulnerabilities and do not produce cryptographically secure random numbers.
+It is therefore important to use multiple randomness sources to seed the cryptographically secure pseudo-random number generator.
+
+
 # Privacy Considerations
 
 TBD
