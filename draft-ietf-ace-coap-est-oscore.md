@@ -76,6 +76,7 @@ informative:
   RFC9110:
   RFC9112:
   RFC8446:
+  RFC7627:
   I-D.ietf-core-oscore-groupcomm:
   I-D.ietf-core-oscore-edhoc:
   I-D.ietf-cose-x509:
@@ -386,8 +387,6 @@ If a secure association is needed between the EST Client and the CoAP-to-HTTP Pr
 
 TBD: Compare with RFC9148
 
-TBD: Channel binding security considerations: 3SHAKE attack and EDHOC.
-
 ## Server-generated Private Keys
 
 This document enables the EST client to request generation of private keys and the enrollment of the corresponding public key through /skg and /skc functions.
@@ -405,6 +404,15 @@ If EDHOC is not used for authentication, and the EST-client device does not have
 Although hardware random number generators are becoming dominantly present in modern IoT devices, it has been shown that many available hardware modules contain vulnerabilities and do not produce cryptographically secure random numbers.
 It is therefore important to use multiple randomness sources to seed the cryptographically secure pseudo-random number generator.
 
+## Considerations on Channel Binding
+
+{{Section 3 of RFC9148}} specifies that the use of channel binding is optional, and achieves it by including the tls-unique value in the CSR.
+As a rationale, {{Section 9 of RFC9148}} discusses the Triple SHAKE attack: the attack relies on the absence of the server certificate as a dependency in the tls-unique value in case of TLS 1.2.
+This was mitigated in TLS 1.2 with {{RFC7627}}, and in TLS 1.3 through the tls-exporter API, which computes the value by taking into account the full handshake transcript.
+Similarly, this specification when used with EDHOC achieves channel binding through the EDHOC-Exporter interface, which also relies on the full handshake transcript.
+Therefore, authentication based on EDHOC is not susceptible to the same attack as the one considered in {{RFC9148}}.
+At the time of the writing, it seems to be safe not to require channel binding and the inclusion of EDHOC-Exporter value in CSR.
+However, this specification makes channel binding OPTIONAL, as a mitigation against any other attacks that might be discovered in future.
 
 # Privacy Considerations
 
