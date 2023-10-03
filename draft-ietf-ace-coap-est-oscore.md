@@ -132,8 +132,7 @@ The reason for these deviations is that a significant overhead can be removed in
 
 # Terminology   {#terminology}
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in {{RFC2119}}.
-These words may also appear in this document in lowercase, absent their normative meanings.
+{::boilerplate bcp14}
 
 This document uses terminology from {{RFC9148}} which in turn is based on {{RFC7030}} and, in turn, on {{RFC5272}}.
 
