@@ -67,19 +67,15 @@ informative:
   RFC5280:
   RFC5914:
   RFC6024:
-  RFC6347:
   RFC9147:
   RFC7228:
   RFC7030:
-  RFC8392:
   RFC9031:
-  RFC9110:
-  RFC9112:
   RFC8446:
   RFC7627:
+  RFC9360:
   I-D.ietf-core-oscore-groupcomm:
   I-D.ietf-core-oscore-edhoc:
-  I-D.ietf-cose-x509:
   I-D.ietf-cose-cbor-encoded-cert:
   I-D.tiloca-core-oscore-capable-proxies:
 
@@ -96,7 +92,7 @@ The protocols leverage payload formats defined in Enrollment over Secure Transpo
 
 One of the challenges with deploying a Public Key Infrastructure (PKI) for the Internet of Things (IoT) is certificate enrollment, because existing enrollment protocols are not optimized for constrained environments {{RFC7228}}.
 
-One optimization of certificate enrollment targeting IoT deployments is specified in EST-coaps ({{RFC9148}}), which defines a version of Enrollment over Secure Transport {{RFC7030}} for transporting EST payloads over CoAP {{RFC7252}} and DTLS {{RFC6347}} {{RFC9147}}, instead of HTTP {{RFC9110}} {{RFC9112}} and TLS {{RFC8446}}.
+One optimization of certificate enrollment targeting IoT deployments is specified in EST-coaps {{RFC9148}}, which defines a version of Enrollment over Secure Transport {{RFC7030}} for transporting EST payloads over CoAP {{RFC7252}} and DTLS {{RFC9147}}, instead of HTTP and TLS {{RFC8446}}.
 
 This document describes a method for protecting EST payloads over CoAP or HTTP with OSCORE {{RFC8613}}.
 OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported. OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data.
@@ -111,7 +107,7 @@ For this purpose we assume by default the use of the lightweight authenticated k
 Other ways to optimize the performance of certificate enrollment and certificate based authentication described in this draft include the use of:
 
 * Compact representations of X.509 certificates (see {{I-D.ietf-cose-cbor-encoded-cert}})
-* Certificates by reference (see {{I-D.ietf-cose-x509}})
+* Certificates by reference (see {{RFC9360}})
 * Compact, CBOR representations of EST payloads (see {{I-D.ietf-cose-cbor-encoded-cert}})
 
 ## Operational Differences with EST-coaps  {#operational}
@@ -161,7 +157,7 @@ The server must also provide relevant information to the CA for decision about i
 
 EDHOC supports authentication with certificates/raw public keys (referred to as "credentials"), and the credentials may either be transported in the protocol, or referenced.
 This is determined by the identifier of the credential of the endpoint, ID_CRED_x for x= Initiator/Responder, which is transported in an EDHOC message.
-This identifier may be the credential itself (in which case the credential is transported), or a pointer such as a URI to the credential (e.g., x5u, see {{I-D.ietf-cose-x509}}) or some other identifier which enables the receiving endpoint to retrieve the credential.
+This identifier may be the credential itself (in which case the credential is transported), or a pointer such as a URI to the credential (e.g., x5u, see {{RFC9360}}) or some other identifier which enables the receiving endpoint to retrieve the credential.
 
 ## Certificate-based Authentication
 
@@ -194,7 +190,7 @@ The client then adds the edhoc-unique byte string as a challengePassword (see Se
 
 * The certificates MAY be compressed, e.g., using the CBOR encoding defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
-* The client certificate MAY be referenced instead of transported {{I-D.ietf-cose-x509}}.
+* The client certificate MAY be referenced instead of transported {{RFC9360}}.
 The EST-oscore server MAY use information in the credential identifier field of the EDHOC message (ID_CRED_x) to access the EST-oscore client certificate, e.g., in a directory or database provided by the issuer.
 In this case the certificate may not need to be transported over a constrained link between EST client and server.
 
@@ -343,7 +339,7 @@ This section specifies how the EST client enrolls a static DH key.
 Because a DH key pair cannot be used for signing operations, the EST client attempting to enroll a DH key must use an alternative proof-of-possesion algorithm.
 The EST client obtained the CA certs including the CA's DH certificate using the /crts function.
 The certificate indicates the DH group parameters which MUST be respected by the EST client when generating its own DH key pair.
-The EST client prepares the PKCS #10 object and computes a MAC by following the steps in Section 4 of {{RFC6955}}.
+The EST client prepares the PKCS #10 object and computes a MAC by following the steps in Section 6 of {{RFC6955}}.
 The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF and HMAC algorithms used by OSCORE.
 As per {{RFC8613}}, the HKDF MUST be one of the HMAC-based HKDF {{RFC5869}} algorithms defined for COSE {{RFC9052}}.
 The KDF and MAC is thus defined by the hash algorithm used by OSCORE in HKDF and HMAC, which by default is SHA-256.
