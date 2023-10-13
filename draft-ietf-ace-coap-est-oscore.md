@@ -205,18 +205,14 @@ The DTLS handshake is complemented by or replaced with EDHOC {{I-D.ietf-lake-edh
 {{fig-stack}} below shows the layered EST-oscore architecture.
 Note that {{fig-stack}} does not illustrate the potential use of DTLS.
 
-~~~~~~~~~~~
-
+~~~~~~~~~~~ aasvg
              +----------------+
              |  EST messages  |
 +------------+----------------+
 |    EDHOC   |    OSCORE      |
 +------------+----------------+
-|       CoAP or HTTP          |
+|        CoAP or HTTP         |
 +-----------------------------+
-|        UDP or TCP           |
-+-----------------------------+
-
 ~~~~~~~~~~~
 {: #fig-stack title="EST protected with OSCORE."}
 {: artwork-align="center"}
@@ -358,21 +354,21 @@ OSCORE provides end-to-end security between EST Server and EST Client.
 The additional use of TLS and DTLS is optional.
 If a secure association is needed between the EST Client and the CoAP-to-HTTP Proxy, this may also rely on OSCORE {{I-D.tiloca-core-oscore-capable-proxies}}.
 
-~~~~~~~~~~~
+~~~~~~~~~~~ aasvg
                                        Constrained-Node Network
-  .---------.                       .----------------------------.
-  |   CA    |                       |.--------------------------.|
-  '---------'                       ||                          ||
-       |                            ||                          ||
-   .------.  HTTP   .-----------------.   CoAP   .-----------.  ||
-   | EST  |<------->|  CoAP-to-HTTP   |<-------->| EST Client|  ||
-   |Server|  (TLS)  |      Proxy      |  (DTLS)  '-----------'  ||
-   '------'         '-----------------'                         ||
-                                    ||                          ||
-       <------------------------------------------------>       ||
-                        OSCORE      ||                          ||
-                                    |'--------------------------'|
-                                    '----------------------------'
+  .---------.                      .-----------------------------.
+  |   CA    |                      |                             |
+  '---------'                      |                             |
+       |                           |                             |
+   .------.  HTTP   .-----------------.   CoAP   .-----------.   |
+   | EST  |<------->|  CoAP-to-HTTP   |<-------->| EST Client|   |
+   |Server|  (TLS)  |      Proxy      |  (DTLS)  '-----------'   |
+   '------'         '-----------------'                          |
+                                   |                             |
+       <------------------------------------------------>        |
+                        OSCORE     |                             |
+                                   |                             |
+                                   '-----------------------------'
 ~~~~~~~~~~~
 {: #fig-proxy title="CoAP-to-HTTP proxy at the CoAP boundary."}
 {: artwork-align="center"}
