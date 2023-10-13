@@ -415,16 +415,10 @@ TBD
 
 IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC).
 
-~~~~~~~~~~~
+| Label | Description  | Response              |
+| TBD1  | EDHOC unique | \[\[this document\]\] |
+{: #table_exporter_label cols="l l l" title="EDHOC Exporter Label."}
 
-+-------------+------------------------------+-------------------+
-| Label       | Description                  | Reference         |
-+=============+==============================+===================+
-| TBD1        | EDHOC unique                 | [[this document]] |
-+-------------+------------------------------+-------------------+
-
-~~~~~~~~~~~
-{: #fig-exporter-label title="EDHOC Exporter Label"}
 
 # Acknowledgments
 
