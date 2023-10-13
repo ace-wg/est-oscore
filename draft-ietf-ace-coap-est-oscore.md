@@ -432,4 +432,6 @@ IANA is requested to register the following entry in the "EDHOC Exporter Label" 
 
 # Acknowledgments
 
+The authors would like to thank Marco Tiloca and John Mattsson for providing a review of the document.
+
 --- fluff
