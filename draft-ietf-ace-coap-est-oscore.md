@@ -341,7 +341,6 @@ The EST client obtained the CA certs including the CA's DH certificate using the
 The certificate indicates the DH group parameters which MUST be respected by the EST client when generating its own DH key pair.
 The EST client prepares the PKCS #10 object and computes a MAC by following the steps in Section 6 of {{RFC6955}}.
 The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF and HMAC algorithms used by OSCORE.
-As per {{RFC8613}}, the HKDF MUST be one of the HMAC-based HKDF {{RFC5869}} algorithms defined for COSE {{RFC9052}}.
 The KDF and MAC is thus defined by the hash algorithm used by OSCORE in HKDF and HMAC, which by default is SHA-256.
 When EDHOC is used, then the hash algorithm is the application hash algorithm of the selected cipher suite.
 
