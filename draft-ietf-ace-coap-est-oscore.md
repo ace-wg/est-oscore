@@ -204,6 +204,7 @@ External Authorization Data (EAD) fields of EDHOC are intentionally not used to 
 The DTLS handshake is complemented by or replaced with EDHOC {{I-D.ietf-lake-edhoc}}.
 {{fig-stack}} below shows the layered EST-oscore architecture.
 Note that {{fig-stack}} does not illustrate the potential use of DTLS.
+Protocol design also allows that OSCORE and EDHOC messages are carried within the same CoAP message, as per {{I-D.ietf-core-oscore-edhoc}}.
 
 ~~~~~~~~~~~ aasvg
              +----------------+
