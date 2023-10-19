@@ -182,9 +182,9 @@ Connection-based proof-of-possession using the challengePassword attribute of th
 
 * The last message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrolment request and response) in two round trips {{I-D.ietf-core-oscore-edhoc}}.
 
-* The certificates MAY be compressed, e.g., using the CBOR encoding defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+* The enrolled certificates MAY be compressed, e.g., using the CBOR encoding defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
-* The client certificate MAY be referenced instead of transported {{RFC9360}}.
+* The enrolled client certificate MAY be referenced instead of transported {{RFC9360}}.
 The EST-oscore server MAY use information in the credential identifier field of the EDHOC message (ID_CRED_x) to access the EST-oscore client certificate, e.g., in a directory or database provided by the issuer.
 In this case the certificate may not need to be transported over a constrained link between EST client and server.
 
