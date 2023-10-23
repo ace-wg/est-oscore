@@ -370,8 +370,6 @@ If a secure association is needed between the EST Client and the CoAP-to-HTTP Pr
 
 # Security Considerations  {#security-considerations}
 
-TBD: Compare with RFC9148
-
 ## Server-generated Private Keys
 
 This document enables the EST client to request generation of private keys and the enrollment of the corresponding public key through /skg and /skc functions.
@@ -392,9 +390,6 @@ It is therefore important to use multiple randomness sources to seed the cryptog
 ## Considerations on Channel Binding
 
 {{Section 3 of RFC9148}} specifies that the use of connection-based channel binding is optional, and achieves it by including the tls-unique value in the CSR.
-As a rationale, {{Section 9 of RFC9148}} discusses the Triple SHAKE attack: the attack relies on the absence of the server certificate as a dependency in the tls-unique value in case of TLS 1.2.
-This was mitigated in TLS 1.2 with {{RFC7627}}, and in TLS 1.3 through the tls-exporter API, which computes the value by taking into account the full handshake transcript.
-
 This specification when used with EDHOC for the enrollment of static DH keys achieves connection-based channel binding by using the EDHOC ephemeral key of the responder as the public key in the proof-of-possession algorithm which generates a PKCS#10 MAC.
 Therefore, connection-based channel binding is in this case achieved without any additional overhead.
 In other cases, including pre-shared OSCORE contexts, this specification makes explicit channel binding based on the challengePassword attribute in PKCS#10 requests OPTIONAL.
