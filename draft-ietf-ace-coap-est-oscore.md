@@ -180,7 +180,7 @@ Connection-based proof-of-possession using the challengePassword attribute of th
 
 ## Optimizations {#optimizations}
 
-* The last message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrolment request and response) in two round trips {{I-D.ietf-core-oscore-edhoc}}.
+* The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrolment request and response) in two round trips {{I-D.ietf-core-oscore-edhoc}}.
 
 * The enrolled certificates MAY be compressed, e.g., using the CBOR encoding defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
@@ -190,6 +190,10 @@ In this case the certificate may not need to be transported over a constrained l
 
 * Conversely, the response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself.
 The EST-oscore server MAY in the enrolment response to the EST-oscore client include a pointer to a directory or database where the certificate can be retrieved.
+
+* The PKCS#10 object MAY request a certificate for a static DH key instead of a signature key.
+This results in a more compact request because the use of static DH keys implies a proof-of-posession using a MAC, which is shorter than a signature.
+Additionally, subsequent EDHOC sessions using static DH keys for authentication have less overhead than key exchange protocols using signature-based authentication credentials.
 
 # Protocol Design and Layering
 EST-oscore uses CoAP {{RFC7252}} and Block-Wise {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
