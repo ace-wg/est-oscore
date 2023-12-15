@@ -263,26 +263,46 @@ In either case they can be compactly encoded, e.g. using CBOR encoding {{I-D.iet
 
 ## Payload formats
 Similar to EST-coaps, EST-oscore allows transport of the ASN.1 structure of a given Media-Type in binary format.
-In addition, EST-oscore uses the same CoAP Content-Format identifiers when transferring EST requests and responses.
-{{table_mediatypes}} summarizes the information from Section 4.3 in {{RFC9148}}.
+When transporting ASN.1 objects, EST-oscore uses the same CoAP Content-Format identifiers when transferring EST requests and responses.
+In addition, EST-oscore allows the transport of CBOR-encoded objects, signaled via their corresponding Media-Type.
+{{table_mediatype_asn1}} summarizes the information from Section 4.3 in {{RFC9148}} in what concerns the transport of ASN.1 structures.
+Similarly, {{table_mediatype_cbor}} presents the equivalent information when CBOR-encoded objects are in use.
 
-|  URI  | Content-Format                                       | #IANA |
-| /crts | N/A                                            (req) |   -   |
-|       | application/pkix-cert                          (res) |  287  |
-|       | application/pkcs-7-mime;smime-type=certs-only  (res) |  281  |
-| /sen  | application/pkcs10                             (req) |  286  |
-|       | application/pkix-cert                          (res) |  287  |
-|       | application/pkcs-7-mime;smime-type=certs-only  (res) |  281  |
-| /sren | application/pkcs10                             (req) |  286  |
-|       | application/pkix-cert                          (res) |  287  |
-|       | application/pkcs-7-mime;smime-type=certs-only  (res) |  281  |
-| /skg  | application/pkcs10                             (req) |  286  |
-|       | application/multipart-core                     (res) |   62  |
-| /skc  | application/pkcs10                             (req) |  286  |
-|       | application/multipart-core                     (res) |   62  |
-| /att  | N/A                                            (req) |   -   |
-|       | application/csrattrs                           (res) |  285  |
-{: #table_mediatypes cols="l l" title="EST functions and the associated CoAP Content-Format identifiers"}
+|  URI  | Content-Format                                | Type | #IANA |
+| /crts | N/A                                           | req |   -   |
+|       | application/pkix-cert                         | res |  287  |
+|       | application/pkcs7-mime;smime-type=certs-only  | res |  281  |
+| /sen  | application/pkcs10                            | req |  286  |
+|       | application/pkix-cert                         | res |  287  |
+|       | application/pkcs7-mime;smime-type=certs-only  | res |  281  |
+| /sren | application/pkcs10                            | req |  286  |
+|       | application/pkix-cert                         | res |  287  |
+|       | application/pkcs7-mime;smime-type=certs-only  | res |  281  |
+| /skg  | application/pkcs10                            | req |  286  |
+|       | application/multipart-core                    | res |   62  |
+| /skc  | application/pkcs10                            | req |  286  |
+|       | application/multipart-core                    | res |   62  |
+| /att  | N/A                                           | req |   -   |
+|       | application/csrattrs                          | res |  285  |
+{: #table_mediatype_asn1 cols="l l" title="EST functions and the associated ASN.1 CoAP Content-Format identifiers"}
+
+|  URI  | Content-Format                                | Type | #IANA |
+| /crts | N/A                                           | req |   -   |
+|       | application/cose-c509                         | res | TBD1  |
+|       | application/cose-c509;usage=chain             | res | TBD1  |
+| /sen  | application/cose-c509-pkcs10                  | req | TBD2  |
+|       | application/cose-c509                         | res | TBD1  |
+|       | application/cose-c509;usage=chain             | res | TBD1  |
+| /sren | application/cose-c509-pkcs10                  | req | TBD2  |
+|       | application/cose-c509                         | res | TBD1  |
+|       | application/cose-c509;usage=chain             | res | TBD1  |
+| /skg  | application/cose-c509-pkcs10                  | req | TBD2  |
+|       | application/multipart-core                    | res |   62  |
+| /skc  | application/cose-c509-pkcs10                  | req | TBD2  |
+|       | application/multipart-core                    | res |   62  |
+| /att  | N/A                                           | req |   -   |
+|       | application/csrattrs                          | res |  285  |
+{: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers"}
 
 Content-Format 281 MUST be supported by EST-oscore servers.
 Servers MAY also support Content-Format 287.
@@ -297,11 +317,14 @@ Due to the use of OSCORE, which protects the communication between the EST clien
 Therefore, when making the CSR to /skc or /skg, the EST client MUST NOT include SMIMECapabilities.
 As a consequence, the private key part of the response to /skc or /skg is an unencrypted PKCS #8 object.
 
+In the case of CBOR-encoded request to /skc or /skg, the two parts of the response are also CBOR encoded.
+The certificate part is encoded as the application/cose-c509 object (Content-Format identifier TBD1), while the corresponding private key is encoded as application/cose-key (Content-Format identifier 101).
+
 {{table_cft_skg_skc}} summarizes the Content-Format identifiers used in responses to /skg and /skc.
 
-| Function | Response, Part 1 | Response, Part 2 |
-| /skg     | 284              | 281              |
-| /skc     | 284              | 287              |
+| Function | ASN.1 Response, Part 1 | CBOR Response, Part 1 | ASN.1 Response, Part 2 | CBOR Response Part 2 |
+| /skg     | 284 | 101 | 281 | TBD1 |
+| /skc     | 284 | 101 | 287 | TBD1 |
 {: #table_cft_skg_skc cols="l l" title="Response Content-Format identifiers for /skg and /skc"}
 
 ## Message Bindings
@@ -420,7 +443,7 @@ TBD
 IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC).
 
 | Label | Description  | Response              |
-| TBD1  | EDHOC unique | \[\[this document\]\] |
+| TBD3  | EDHOC unique | \[\[this document\]\] |
 {: #table_exporter_label cols="l l l" title="EDHOC Exporter Label."}
 
 
