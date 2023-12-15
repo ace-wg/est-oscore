@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 25 April 2024                                              RISE
+Expires: 17 June 2024                                               RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                         23 October 2023
+                                                        15 December 2023
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2024.
+   This Internet-Draft will expire on 17 June 2024.
 
 Copyright Notice
 
@@ -287,28 +287,36 @@ Table of Contents
 
 3.4.  Optimizations
 
-   *  The last message of the EDHOC protocol, message_3, MAY be combined
-      with an OSCORE request, enabling authenticated Diffie-Hellman key
-      exchange and a protected CoAP request/response (which may contain
-      an enrolment request and response) in two round trips
+   *  The third message of the EDHOC protocol, message_3, MAY be
+      combined with an OSCORE request, enabling authenticated Diffie-
+      Hellman key exchange and a protected CoAP request/response (which
+      may contain an enrolment request and response) in two round trips
       [I-D.ietf-core-oscore-edhoc].
 
-   *  The certificates MAY be compressed, e.g., using the CBOR encoding
-      defined in [I-D.ietf-cose-cbor-encoded-cert].
+   *  The enrolled certificates MAY be compressed, e.g., using the CBOR
+      encoding defined in [I-D.ietf-cose-cbor-encoded-cert].
 
-   *  The client certificate MAY be referenced instead of transported
-      [RFC9360].  The EST-oscore server MAY use information in the
-      credential identifier field of the EDHOC message (ID_CRED_x) to
-      access the EST-oscore client certificate, e.g., in a directory or
-      database provided by the issuer.  In this case the certificate may
-      not need to be transported over a constrained link between EST
-      client and server.
+   *  The enrolled client certificate MAY be referenced instead of
+      transported [RFC9360].  The EST-oscore server MAY use information
+      in the credential identifier field of the EDHOC message
+      (ID_CRED_x) to access the EST-oscore client certificate, e.g., in
+      a directory or database provided by the issuer.  In this case the
+      certificate may not need to be transported over a constrained link
+      between EST client and server.
 
    *  Conversely, the response to the PKCS#10 request MAY specify a
       reference to the enrolled certificate rather than the certificate
       itself.  The EST-oscore server MAY in the enrolment response to
       the EST-oscore client include a pointer to a directory or database
       where the certificate can be retrieved.
+
+   *  The PKCS#10 object MAY request a certificate for a static DH key
+      instead of a signature key.  This results in a more compact
+      request because the use of static DH keys implies a proof-of-
+      posession using a MAC, which is shorter than a signature.
+      Additionally, subsequent EDHOC sessions using static DH keys for
+      authentication have less overhead than key exchange protocols
+      using signature-based authentication credentials.
 
 4.  Protocol Design and Layering
 
@@ -398,50 +406,91 @@ Table of Contents
 4.3.  Payload formats
 
    Similar to EST-coaps, EST-oscore allows transport of the ASN.1
-   structure of a given Media-Type in binary format.  In addition, EST-
-   oscore uses the same CoAP Content-Format identifiers when
-   transferring EST requests and responses.  Table 2 summarizes the
-   information from Section 4.3 in [RFC9148].
+   structure of a given Media-Type in binary format.  When transporting
+   ASN.1 objects, EST-oscore uses the same CoAP Content-Format
+   identifiers when transferring EST requests and responses.  In
+   addition, EST-oscore allows the transport of CBOR-encoded objects,
+   signaled via their corresponding Media-Type.  Table 2 summarizes the
+   information from Section 4.3 in [RFC9148] in what concerns the
+   transport of ASN.1 structures.  Similarly, Table 3 presents the
+   equivalent information when CBOR-encoded objects are in use.
 
-           +=======+===================================+=======+
-           | URI   | Content-Format                    | #IANA |
-           +=======+===================================+=======+
-           | /crts | N/A (req)                         | -     |
-           +-------+-----------------------------------+-------+
-           |       | application/pkix-cert (res)       | 287   |
-           +-------+-----------------------------------+-------+
-           |       | application/pkcs-7-mime;smime-    | 281   |
-           |       | type=certs-only (res)             |       |
-           +-------+-----------------------------------+-------+
-           | /sen  | application/pkcs10 (req)          | 286   |
-           +-------+-----------------------------------+-------+
-           |       | application/pkix-cert (res)       | 287   |
-           +-------+-----------------------------------+-------+
-           |       | application/pkcs-7-mime;smime-    | 281   |
-           |       | type=certs-only (res)             |       |
-           +-------+-----------------------------------+-------+
-           | /sren | application/pkcs10 (req)          | 286   |
-           +-------+-----------------------------------+-------+
-           |       | application/pkix-cert (res)       | 287   |
-           +-------+-----------------------------------+-------+
-           |       | application/pkcs-7-mime;smime-    | 281   |
-           |       | type=certs-only (res)             |       |
-           +-------+-----------------------------------+-------+
-           | /skg  | application/pkcs10 (req)          | 286   |
-           +-------+-----------------------------------+-------+
-           |       | application/multipart-core (res)  | 62    |
-           +-------+-----------------------------------+-------+
-           | /skc  | application/pkcs10 (req)          | 286   |
-           +-------+-----------------------------------+-------+
-           |       | application/multipart-core (res)  | 62    |
-           +-------+-----------------------------------+-------+
-           | /att  | N/A (req)                         | -     |
-           +-------+-----------------------------------+-------+
-           |       | application/csrattrs (res)        | 285   |
-           +-------+-----------------------------------+-------+
+        +=======+==================================+======+=======+
+        | URI   | Content-Format                   | Type | #IANA |
+        +=======+==================================+======+=======+
+        | /crts | N/A                              | req  | -     |
+        +-------+----------------------------------+------+-------+
+        |       | application/pkix-cert            | res  | 287   |
+        +-------+----------------------------------+------+-------+
+        |       | application/pkcs7-mime;smime-    | res  | 281   |
+        |       | type=certs-only                  |      |       |
+        +-------+----------------------------------+------+-------+
+        | /sen  | application/pkcs10               | req  | 286   |
+        +-------+----------------------------------+------+-------+
+        |       | application/pkix-cert            | res  | 287   |
+        +-------+----------------------------------+------+-------+
+        |       | application/pkcs7-mime;smime-    | res  | 281   |
+        |       | type=certs-only                  |      |       |
+        +-------+----------------------------------+------+-------+
+        | /sren | application/pkcs10               | req  | 286   |
+        +-------+----------------------------------+------+-------+
+        |       | application/pkix-cert            | res  | 287   |
+        +-------+----------------------------------+------+-------+
+        |       | application/pkcs7-mime;smime-    | res  | 281   |
+        |       | type=certs-only                  |      |       |
+        +-------+----------------------------------+------+-------+
+        | /skg  | application/pkcs10               | req  | 286   |
+        +-------+----------------------------------+------+-------+
+        |       | application/multipart-core       | res  | 62    |
+        +-------+----------------------------------+------+-------+
+        | /skc  | application/pkcs10               | req  | 286   |
+        +-------+----------------------------------+------+-------+
+        |       | application/multipart-core       | res  | 62    |
+        +-------+----------------------------------+------+-------+
+        | /att  | N/A                              | req  | -     |
+        +-------+----------------------------------+------+-------+
+        |       | application/csrattrs             | res  | 285   |
+        +-------+----------------------------------+------+-------+
 
-               Table 2: EST functions and the associated CoAP
+            Table 2: EST functions and the associated ASN.1 CoAP
                          Content-Format identifiers
+
+       +=======+===================================+======+=======+
+       | URI   | Content-Format                    | Type | #IANA |
+       +=======+===================================+======+=======+
+       | /crts | N/A                               | req  | -     |
+       +-------+-----------------------------------+------+-------+
+       |       | application/cose-c509             | res  | TBD1  |
+       +-------+-----------------------------------+------+-------+
+       |       | application/cose-c509;usage=chain | res  | TBD1  |
+       +-------+-----------------------------------+------+-------+
+       | /sen  | application/cose-c509-pkcs10      | req  | TBD2  |
+       +-------+-----------------------------------+------+-------+
+       |       | application/cose-c509             | res  | TBD1  |
+       +-------+-----------------------------------+------+-------+
+       |       | application/cose-c509;usage=chain | res  | TBD1  |
+       +-------+-----------------------------------+------+-------+
+       | /sren | application/cose-c509-pkcs10      | req  | TBD2  |
+       +-------+-----------------------------------+------+-------+
+       |       | application/cose-c509             | res  | TBD1  |
+       +-------+-----------------------------------+------+-------+
+       |       | application/cose-c509;usage=chain | res  | TBD1  |
+       +-------+-----------------------------------+------+-------+
+       | /skg  | application/cose-c509-pkcs10      | req  | TBD2  |
+       +-------+-----------------------------------+------+-------+
+       |       | application/multipart-core        | res  | 62    |
+       +-------+-----------------------------------+------+-------+
+       | /skc  | application/cose-c509-pkcs10      | req  | TBD2  |
+       +-------+-----------------------------------+------+-------+
+       |       | application/multipart-core        | res  | 62    |
+       +-------+-----------------------------------+------+-------+
+       | /att  | N/A                               | req  | -     |
+       +-------+-----------------------------------+------+-------+
+       |       | application/csrattrs              | res  | 285   |
+       +-------+-----------------------------------+------+-------+
+
+           Table 3: EST functions and the associated CBOR CoAP
+                        Content-Format identifiers
 
    Content-Format 281 MUST be supported by EST-oscore servers.  Servers
    MAY also support Content-Format 287.  It is up to the client to
@@ -465,19 +514,26 @@ Table of Contents
    SMIMECapabilities.  As a consequence, the private key part of the
    response to /skc or /skg is an unencrypted PKCS #8 object.
 
-   Table 3 summarizes the Content-Format identifiers used in responses
+   In the case of CBOR-encoded request to /skc or /skg, the two parts of
+   the response are also CBOR encoded.  The certificate part is encoded
+   as the application/cose-c509 object (Content-Format identifier TBD1),
+   while the corresponding private key is encoded as application/cose-
+   key (Content-Format identifier 101).
+
+   Table 4 summarizes the Content-Format identifiers used in responses
    to /skg and /skc.
 
-            +==========+==================+==================+
-            | Function | Response, Part 1 | Response, Part 2 |
-            +==========+==================+==================+
-            | /skg     | 284              | 281              |
-            +----------+------------------+------------------+
-            | /skc     | 284              | 287              |
-            +----------+------------------+------------------+
+     +==========+=================+===========+===========+==========+
+     | Function | ASN.1 Response, | CBOR      | ASN.1     | CBOR     |
+     |          | Part 1          | Response, | Response, | Response |
+     |          |                 | Part 1    | Part 2    | Part 2   |
+     +==========+=================+===========+===========+==========+
+     | /skg     | 284             | 101       | 281       | TBD1     |
+     +----------+-----------------+-----------+-----------+----------+
+     | /skc     | 284             | 101       | 287       | TBD1     |
+     +----------+-----------------+-----------+-----------+----------+
 
-               Table 3: Response Content-Format identifiers
-                            for /skg and /skc
+       Table 4: Response Content-Format identifiers for /skg and /skc
 
 4.4.  Message Bindings
 
@@ -533,17 +589,34 @@ Table of Contents
    This section specifies how the EST client enrolls a static DH key.
    Because a DH key pair cannot be used for signing operations, the EST
    client attempting to enroll a DH key must use an alternative proof-
-   of-possesion algorithm.  The EST client obtained the CA certs
-   including the CA's DH certificate using the /crts function.  The
-   certificate indicates the DH group parameters which MUST be respected
-   by the EST client when generating its own DH key pair.  The EST
-   client prepares the PKCS #10 object and computes a MAC by following
-   the steps in Section 6 of [RFC6955].  The Key Derivation Function
-   (KDF) and the MAC MUST be set to the HDKF and HMAC algorithms used by
-   OSCORE.  The KDF and MAC is thus defined by the hash algorithm used
-   by OSCORE in HKDF and HMAC, which by default is SHA-256.  When EDHOC
-   is used, then the hash algorithm is the application hash algorithm of
-   the selected cipher suite.
+   of-possession algorithm.  The EST client prepares the PKCS#10 object
+   and computes a MAC, replacing the signature, over the certification
+   request information by following the steps in Section 6 of [RFC6955].
+   The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF
+   and HMAC algorithms used by OSCORE.  The KDF and MAC is thus defined
+   by the hash algorithm used by OSCORE in HKDF and HMAC, which by
+   default is SHA-256.  When EDHOC is used, then the hash algorithm is
+   the application hash algorithm of the selected cipher suite.
+
+   To generate a MAC according to the algorithm outlined in Section 6 of
+   [RFC6955], the client needs to know the public DH key of the proof-
+   of-possession recipient/verifier, i.e. the EST server.  In the
+   general case, the EST client MAY obtain the CA certs including the
+   CA's DH certificate using the /crts function using an explicit
+   request/response flow.  The obtained certificate indicates the DH
+   group parameters which MUST be respected by the EST client when
+   generating its own DH key pair.
+
+   As an optimization, when EDHOC precedes the enrollment and combined
+   OSCORE-EDHOC flow is being used in EDHOC message_3 and message_4 per
+   [I-D.ietf-core-oscore-edhoc], the client MUST use the public
+   ephemeral key of the EDHOC Responder, G_Y, as the recipient public
+   key in the algorithm outlined in Section 6 of [RFC6955].  When
+   generating its DH key pair, the client uses the group parameters as
+   indicated by the EDHOC cipher suite in use in the EDHOC session.
+   Because the combined delivery is used per
+   [I-D.ietf-core-oscore-edhoc], the client has already in EDHOC
+   message_2 obtained the ephemeral key G_Y of the server.
 
 5.  HTTP-CoAP Proxy
 
@@ -656,10 +729,10 @@ Table of Contents
                +=======+==============+===================+
                | Label | Description  | Response          |
                +=======+==============+===================+
-               | TBD1  | EDHOC unique | [[this document]] |
+               | TBD3  | EDHOC unique | [[this document]] |
                +-------+--------------+-------------------+
 
-                      Table 4: EDHOC Exporter Label.
+                      Table 5: EDHOC Exporter Label.
 
 9.  Acknowledgments
 
@@ -740,10 +813,13 @@ Table of Contents
 
    [I-D.ietf-core-oscore-edhoc]
               Palombini, F., Tiloca, M., Höglund, R., Hristozov, S., and
-              G. Selander, "Using EDHOC with CoAP and OSCORE", Work in
-              Progress, Internet-Draft, draft-ietf-core-oscore-edhoc-08,
-              8 August 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-core-oscore-edhoc-08>.
+              G. Selander, "Using Ephemeral Diffie-Hellman Over COSE
+              (EDHOC) with the Constrained Application Protocol (CoAP)
+              and Object Security for Constrained RESTful Environments
+              (OSCORE)", Work in Progress, Internet-Draft, draft-ietf-
+              core-oscore-edhoc-10, 29 November 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-core-
+              oscore-edhoc-10>.
 
    [I-D.ietf-core-oscore-groupcomm]
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
@@ -757,9 +833,9 @@ Table of Contents
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-06, 7 July 2023,
+              ietf-cose-cbor-encoded-cert-07, 20 October 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-06>.
+              cbor-encoded-cert-07>.
 
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
