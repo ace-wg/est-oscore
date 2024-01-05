@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 17 June 2024                                               RISE
+Expires: 8 July 2024                                                RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                        15 December 2023
+                                                          5 January 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,11 +54,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 June 2024.
+   This Internet-Draft will expire on 8 July 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -416,7 +416,7 @@ Table of Contents
    equivalent information when CBOR-encoded objects are in use.
 
         +=======+==================================+======+=======+
-        | URI   | Content-Format                   | Type | #IANA |
+        | URI   | Media Type                       | Type | #IANA |
         +=======+==================================+======+=======+
         | /crts | N/A                              | req  | -     |
         +-------+----------------------------------+------+-------+
@@ -456,25 +456,23 @@ Table of Contents
                          Content-Format identifiers
 
        +=======+===================================+======+=======+
-       | URI   | Content-Format                    | Type | #IANA |
+       | URI   | Media Type                        | Type | #IANA |
        +=======+===================================+======+=======+
        | /crts | N/A                               | req  | -     |
        +-------+-----------------------------------+------+-------+
        |       | application/cose-c509             | res  | TBD1  |
        +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509;usage=chain | res  | TBD1  |
-       +-------+-----------------------------------+------+-------+
        | /sen  | application/cose-c509-pkcs10      | req  | TBD2  |
        +-------+-----------------------------------+------+-------+
        |       | application/cose-c509             | res  | TBD1  |
        +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509;usage=chain | res  | TBD1  |
+       |       | application/cose-c509;usage=chain | res  | TBD3  |
        +-------+-----------------------------------+------+-------+
        | /sren | application/cose-c509-pkcs10      | req  | TBD2  |
        +-------+-----------------------------------+------+-------+
        |       | application/cose-c509             | res  | TBD1  |
        +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509;usage=chain | res  | TBD1  |
+       |       | application/cose-c509;usage=chain | res  | TBD3  |
        +-------+-----------------------------------+------+-------+
        | /skg  | application/cose-c509-pkcs10      | req  | TBD2  |
        +-------+-----------------------------------+------+-------+
@@ -486,7 +484,7 @@ Table of Contents
        +-------+-----------------------------------+------+-------+
        | /att  | N/A                               | req  | -     |
        +-------+-----------------------------------+------+-------+
-       |       | application/csrattrs              | res  | 285   |
+       |       | application/csrattrs              | res  | TBD5  |
        +-------+-----------------------------------+------+-------+
 
            Table 3: EST functions and the associated CBOR CoAP
@@ -729,7 +727,7 @@ Table of Contents
                +=======+==============+===================+
                | Label | Description  | Response          |
                +=======+==============+===================+
-               | TBD3  | EDHOC unique | [[this document]] |
+               | TBD4  | EDHOC unique | [[this document]] |
                +-------+--------------+-------------------+
 
                       Table 5: EDHOC Exporter Label.
