@@ -268,7 +268,7 @@ In addition, EST-oscore allows the transport of CBOR-encoded objects, signaled v
 {{table_mediatype_asn1}} summarizes the information from Section 4.3 in {{RFC9148}} in what concerns the transport of ASN.1 structures.
 Similarly, {{table_mediatype_cbor}} presents the equivalent information when CBOR-encoded objects are in use.
 
-|  URI  | Content-Format                                | Type | #IANA |
+|  URI  | Media Type                                    | Type | #IANA |
 | /crts | N/A                                           | req |   -   |
 |       | application/pkix-cert                         | res |  287  |
 |       | application/pkcs7-mime;smime-type=certs-only  | res |  281  |
@@ -286,22 +286,21 @@ Similarly, {{table_mediatype_cbor}} presents the equivalent information when CBO
 |       | application/csrattrs                          | res |  285  |
 {: #table_mediatype_asn1 cols="l l" title="EST functions and the associated ASN.1 CoAP Content-Format identifiers"}
 
-|  URI  | Content-Format                                | Type | #IANA |
+|  URI  | Media Type                                    | Type | #IANA |
 | /crts | N/A                                           | req |   -   |
 |       | application/cose-c509                         | res | TBD1  |
-|       | application/cose-c509;usage=chain             | res | TBD1  |
 | /sen  | application/cose-c509-pkcs10                  | req | TBD2  |
 |       | application/cose-c509                         | res | TBD1  |
-|       | application/cose-c509;usage=chain             | res | TBD1  |
+|       | application/cose-c509;usage=chain             | res | TBD3  |
 | /sren | application/cose-c509-pkcs10                  | req | TBD2  |
 |       | application/cose-c509                         | res | TBD1  |
-|       | application/cose-c509;usage=chain             | res | TBD1  |
+|       | application/cose-c509;usage=chain             | res | TBD3  |
 | /skg  | application/cose-c509-pkcs10                  | req | TBD2  |
 |       | application/multipart-core                    | res |   62  |
 | /skc  | application/cose-c509-pkcs10                  | req | TBD2  |
 |       | application/multipart-core                    | res |   62  |
 | /att  | N/A                                           | req |   -   |
-|       | application/csrattrs                          | res |  285  |
+|       | application/csrattrs                          | res | TBD5  |
 {: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers"}
 
 Content-Format 281 MUST be supported by EST-oscore servers.
@@ -443,7 +442,7 @@ TBD
 IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC).
 
 | Label | Description  | Response              |
-| TBD3  | EDHOC unique | \[\[this document\]\] |
+| TBD4  | EDHOC unique | \[\[this document\]\] |
 {: #table_exporter_label cols="l l l" title="EDHOC Exporter Label."}
 
 
