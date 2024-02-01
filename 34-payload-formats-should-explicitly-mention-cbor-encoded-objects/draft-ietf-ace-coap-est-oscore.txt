@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 8 July 2024                                                RISE
+Expires: 4 August 2024                                              RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                          5 January 2024
+                                                         1 February 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 July 2024.
+   This Internet-Draft will expire on 4 August 2024.
 
 Copyright Notice
 
@@ -405,15 +405,17 @@ Table of Contents
 
 4.3.  Payload formats
 
-   Similar to EST-coaps, EST-oscore allows transport of the ASN.1
-   structure of a given Media-Type in binary format.  When transporting
-   ASN.1 objects, EST-oscore uses the same CoAP Content-Format
-   identifiers when transferring EST requests and responses.  In
-   addition, EST-oscore allows the transport of CBOR-encoded objects,
-   signaled via their corresponding Media-Type.  Table 2 summarizes the
-   information from Section 4.3 in [RFC9148] in what concerns the
-   transport of ASN.1 structures.  Similarly, Table 3 presents the
-   equivalent information when CBOR-encoded objects are in use.
+   Similar to EST-coaps, EST-oscore allows transport of DER-encoded
+   objects of a given Media-Type in binary format.  When transporting
+   DER-encoded objects, EST-oscore uses the same CoAP Content-Format
+   identifiers as EST-coaps when transferring EST requests and
+   responses.  In addition, EST-oscore allows the transport of CBOR-
+   encoded objects, signaled via their corresponding Media-Type.
+
+4.3.1.  DER-encoded ASN.1 Objects
+
+   Table 2 summarizes the information from Section 4.3 in [RFC9148] in
+   what concerns the transport of DER-encoded ASN.1 objects.
 
         +=======+==================================+======+=======+
         | URI   | Media Type                       | Type | #IANA |
@@ -455,41 +457,6 @@ Table of Contents
             Table 2: EST functions and the associated ASN.1 CoAP
                          Content-Format identifiers
 
-       +=======+===================================+======+=======+
-       | URI   | Media Type                        | Type | #IANA |
-       +=======+===================================+======+=======+
-       | /crts | N/A                               | req  | -     |
-       +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509             | res  | TBD1  |
-       +-------+-----------------------------------+------+-------+
-       | /sen  | application/cose-c509-pkcs10      | req  | TBD2  |
-       +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509             | res  | TBD1  |
-       +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509;usage=chain | res  | TBD3  |
-       +-------+-----------------------------------+------+-------+
-       | /sren | application/cose-c509-pkcs10      | req  | TBD2  |
-       +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509             | res  | TBD1  |
-       +-------+-----------------------------------+------+-------+
-       |       | application/cose-c509;usage=chain | res  | TBD3  |
-       +-------+-----------------------------------+------+-------+
-       | /skg  | application/cose-c509-pkcs10      | req  | TBD2  |
-       +-------+-----------------------------------+------+-------+
-       |       | application/multipart-core        | res  | 62    |
-       +-------+-----------------------------------+------+-------+
-       | /skc  | application/cose-c509-pkcs10      | req  | TBD2  |
-       +-------+-----------------------------------+------+-------+
-       |       | application/multipart-core        | res  | 62    |
-       +-------+-----------------------------------+------+-------+
-       | /att  | N/A                               | req  | -     |
-       +-------+-----------------------------------+------+-------+
-       |       | application/csrattrs              | res  | TBD5  |
-       +-------+-----------------------------------+------+-------+
-
-           Table 3: EST functions and the associated CBOR CoAP
-                        Content-Format identifiers
-
    Content-Format 281 MUST be supported by EST-oscore servers.  Servers
    MAY also support Content-Format 287.  It is up to the client to
    support only Content-Format 281, 287 or both.  As indicated in
@@ -512,26 +479,77 @@ Table of Contents
    SMIMECapabilities.  As a consequence, the private key part of the
    response to /skc or /skg is an unencrypted PKCS #8 object.
 
-   In the case of CBOR-encoded request to /skc or /skg, the two parts of
-   the response are also CBOR encoded.  The certificate part is encoded
-   as the application/cose-c509 object (Content-Format identifier TBD1),
-   while the corresponding private key is encoded as application/cose-
-   key (Content-Format identifier 101).
+   +==========+====================================+===================+
+   | Function | DER-encoded ASN.1                  | DER-encoded ASN.1 |
+   |          | Response, Part 1                   | Response, Part 2  |
+   +==========+====================================+===================+
+   | /skg     | 284                                | 281               |
+   +----------+------------------------------------+-------------------+
+   | /skc     | 284                                | 287               |
+   +----------+------------------------------------+-------------------+
 
-   Table 4 summarizes the Content-Format identifiers used in responses
-   to /skg and /skc.
+     Table 3: Response Content-Format identifiers for /skg and /skc in
+                     case of DER- encoded ASN.1 objects
 
-     +==========+=================+===========+===========+==========+
-     | Function | ASN.1 Response, | CBOR      | ASN.1     | CBOR     |
-     |          | Part 1          | Response, | Response, | Response |
-     |          |                 | Part 1    | Part 2    | Part 2   |
-     +==========+=================+===========+===========+==========+
-     | /skg     | 284             | 101       | 281       | TBD1     |
-     +----------+-----------------+-----------+-----------+----------+
-     | /skc     | 284             | 101       | 287       | TBD1     |
-     +----------+-----------------+-----------+-----------+----------+
+4.3.2.  CBOR-encoded Objects
 
-       Table 4: Response Content-Format identifiers for /skg and /skc
+   Table 4 presents the equivalent information to Section 4.3.1 when
+   CBOR-encoded objects are in use.
+
+          +=======+==============================+======+=======+
+          | URI   | Media Type                   | Type | #IANA |
+          +=======+==============================+======+=======+
+          | /crts | N/A                          | req  | -     |
+          +-------+------------------------------+------+-------+
+          |       | application/cose-c509-cert   | res  | TBD6  |
+          +-------+------------------------------+------+-------+
+          | /sen  | application/cose-c509-pkcs10 | req  | TBD7  |
+          +-------+------------------------------+------+-------+
+          |       | application/cose-c509-cert   | res  | TBD6  |
+          +-------+------------------------------+------+-------+
+          | /sren | application/cose-c509-pkcs10 | req  | TBD7  |
+          +-------+------------------------------+------+-------+
+          |       | application/cose-c509-cert   | res  | TBD6  |
+          +-------+------------------------------+------+-------+
+          | /skg  | application/cose-c509-pkcs10 | req  | TBD7  |
+          +-------+------------------------------+------+-------+
+          |       | application/multipart-core   | res  | 62    |
+          +-------+------------------------------+------+-------+
+          | /skc  | N/A                          | req  | -     |
+          +-------+------------------------------+------+-------+
+          |       | N/A                          | res  | -     |
+          +-------+------------------------------+------+-------+
+          | /att  | N/A                          | req  | -     |
+          +-------+------------------------------+------+-------+
+          |       | application/csrattrs         | res  | TBD5  |
+          +-------+------------------------------+------+-------+
+
+            Table 4: EST functions and the associated CBOR CoAP
+                         Content-Format identifiers
+
+   In case of CBOR-encoded objects, there is a single Content-Format,
+   TBD6, that MUST be supported by both the EST-oscore servers and
+   clients.
+
+   In the case of CBOR-encoded request to /skg, the two parts of the
+   response are also CBOR encoded.  The certificate part is encoded as
+   the application/cose-c509-cert object (Content-Format identifier
+   TBD6), while the corresponding private key is encoded as application/
+   cose-key (Content-Format identifier 101).  The function /skc is not
+   available when using CBOR-encoded objects, and for server-side
+   generated keys, clients MUST use the /skg function.
+
+   Table 5 summarizes the Content-Format identifiers used in responses
+   to the /skg function.
+
+        +==========+=======================+======================+
+        | Function | CBOR Response, Part 1 | CBOR Response Part 2 |
+        +==========+=======================+======================+
+        | /skg     | 101                   | TBD6                 |
+        +----------+-----------------------+----------------------+
+
+           Table 5: Response Content-Format identifiers for /skg
+                      in case of CBOR-encoded objects
 
 4.4.  Message Bindings
 
@@ -730,7 +748,7 @@ Table of Contents
                | TBD4  | EDHOC unique | [[this document]] |
                +-------+--------------+-------------------+
 
-                      Table 5: EDHOC Exporter Label.
+                      Table 6: EDHOC Exporter Label.
 
 9.  Acknowledgments
 
@@ -744,9 +762,9 @@ Table of Contents
    [I-D.ietf-lake-edhoc]
               Selander, G., Mattsson, J. P., and F. Palombini,
               "Ephemeral Diffie-Hellman Over COSE (EDHOC)", Work in
-              Progress, Internet-Draft, draft-ietf-lake-edhoc-22, 25
-              August 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-lake-edhoc-22>.
+              Progress, Internet-Draft, draft-ietf-lake-edhoc-23, 22
+              January 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-lake-edhoc-23>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
