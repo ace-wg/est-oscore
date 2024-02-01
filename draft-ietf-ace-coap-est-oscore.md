@@ -267,6 +267,11 @@ Similar to EST-coaps, EST-oscore allows transport of DER-encoded objects of a gi
 When transporting DER-encoded objects, EST-oscore uses the same CoAP Content-Format identifiers as EST-coaps when transferring EST requests and responses.
 In addition, EST-oscore allows the transport of CBOR-encoded objects, signaled via their corresponding Media-Type.
 
+EST-oscore servers MUST support both the DER-encoded ASN.1 objects and the CBOR-encoded objects.
+This means supporting formats detailed in {{der}} and {{cbor}}.
+It is up to the client to support only DER-encoded ASN.1, CBOR encoding, or both.
+As a reminder, Content-Format negotiation happens through CoAP's Accept option present in the requests.
+
 ### DER-encoded ASN.1 Objects {#der}
 {{table_mediatype_asn1}} summarizes the information from Section 4.3 in {{RFC9148}} in what concerns the transport of DER-encoded ASN.1 objects.
 
@@ -306,7 +311,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 | /skc     | 284 | 287 |
 {: #table_cft_skg_skc cols="l l" title="Response Content-Format identifiers for /skg and /skc in case of DER-encoded ASN.1 objects"}
 
-### CBOR-encoded Objects
+### CBOR-encoded Objects {#cbor}
 
 {{table_mediatype_cbor}} presents the equivalent information to {{der}} when CBOR-encoded objects are in use.
 
