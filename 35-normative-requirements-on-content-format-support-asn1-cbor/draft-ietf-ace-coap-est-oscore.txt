@@ -414,7 +414,10 @@ Table of Contents
 
    EST-oscore servers MUST support both the DER-encoded ASN.1 objects
    and the CBOR-encoded objects.  This means supporting formats detailed
-   in Section 4.3.1 and Section 4.3.2.
+   in Section 4.3.1 and Section 4.3.2.  It is up to the client to
+   support only DER-encoded ASN.1, CBOR encoding, or both.  As a
+   reminder, Content-Format negotiation happens through CoAP's Accept
+   option present in the requests.
 
 4.3.1.  DER-encoded ASN.1 Objects
 
