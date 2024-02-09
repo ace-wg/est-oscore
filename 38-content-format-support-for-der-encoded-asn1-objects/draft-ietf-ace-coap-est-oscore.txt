@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 4 August 2024                                              RISE
+Expires: 12 August 2024                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                         1 February 2024
+                                                         9 February 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 August 2024.
+   This Internet-Draft will expire on 12 August 2024.
 
 Copyright Notice
 
@@ -535,9 +535,10 @@ Table of Contents
    response are also CBOR encoded.  The certificate part is encoded as
    the application/cose-c509-cert object (Content-Format identifier
    TBD6), while the corresponding private key is encoded as application/
-   cose-key (Content-Format identifier 101).  The function /skc is not
-   available when using CBOR-encoded objects, and for server-side
-   generated keys, clients MUST use the /skg function.
+   cose-key (Content-Format identifier 101).  EDITOR NOTE: Align the
+   private key container with issue #150 in the c509 github page.  The
+   function /skc is not available when using CBOR-encoded objects, and
+   for server-side generated keys, clients MUST use the /skg function.
 
    Table 5 summarizes the Content-Format identifiers used in responses
    to the /skg function.
