@@ -329,6 +329,7 @@ In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MU
 
 In the case of CBOR-encoded request to /skg, the two parts of the response are also CBOR encoded.
 The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD6), while the corresponding private key is encoded as application/cose-key (Content-Format identifier 101).
+EDITOR NOTE: Align the private key container with issue #150 in the c509 github page.
 The function /skc is not available when using CBOR-encoded objects, and for server-side generated keys, clients MUST use the /skg function.
 
 {{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
