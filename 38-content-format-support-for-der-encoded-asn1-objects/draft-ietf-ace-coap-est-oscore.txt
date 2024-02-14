@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 12 August 2024                                             RISE
+Expires: 17 August 2024                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                         9 February 2024
+                                                        14 February 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 August 2024.
+   This Internet-Draft will expire on 17 August 2024.
 
 Copyright Notice
 
@@ -212,12 +212,15 @@ Table of Contents
    trust anchor represents an authoritative entity via a public key and
    associated data.  The public key is used to verify digital
    signatures, and the associated data is used to constrain the types of
-   information for which the trust anchor is authoritative."  One
-   example of specifying more compact alternatives to X.509 certificates
-   for exchanging trust anchor information is provided by the
-   TrustAnchorInfo structure of [RFC5914], the mandatory parts of which
-   essentially is the SubjectPublicKeyInfo structure [RFC5280], i.e., an
-   algorithm identifier followed by a public key.
+   information for which the trust anchor is authoritative."
+
+   Apart from enrolling signature keys, this document also specifies how
+   to enroll static DH keys.  Instead of signing, possession of the
+   private static DH key is proved by generating a MAC given the
+   recipients public DH key.  Therefore this document extends the
+   definition of the term "Trust Anchor" in a sense that its public key
+   can also be used for MAC generation for static DH proof of possession
+   procedures defined.
 
 3.  Authentication
 
@@ -256,11 +259,11 @@ Table of Contents
 3.2.  Certificate-based Authentication
 
    EST-oscore, like EST-coaps, supports certificate-based authentication
-   between the EST client and server.  In this case the client MUST be
-   configured with an Implicit or Explicit Trust Anchor (TA) [RFC7030]
-   database, enabling the client to authenticate the server.  During the
-   initial enrollment the client SHOULD populate its Explicit TA
-   database and use it for subsequent authentications.
+   between the EST client and server.  The client MUST be configured
+   with an Implicit or Explicit Trust Anchor (TA) [RFC7030] database,
+   enabling the client to authenticate the server.  During the initial
+   enrollment the client SHOULD populate its Explicit TA database and
+   use it for subsequent authentications.
 
    The EST client certificate SHOULD conform to [RFC7925].  The EST
    client and/or EST server certificate MAY be a (natively signed) CBOR
@@ -406,11 +409,18 @@ Table of Contents
 4.3.  Payload formats
 
    Similar to EST-coaps, EST-oscore allows transport of DER-encoded
-   objects of a given Media-Type in binary format.  When transporting
-   DER-encoded objects, EST-oscore uses the same CoAP Content-Format
-   identifiers as EST-coaps when transferring EST requests and
-   responses.  In addition, EST-oscore allows the transport of CBOR-
-   encoded objects, signaled via their corresponding Media-Type.
+   objects of a given Media-Type.  When transporting DER-encoded
+   objects, EST-oscore uses the same CoAP Content-Format identifiers as
+   EST-coaps when transferring EST requests and responses.  In addition,
+   EST-oscore allows the transport of CBOR-encoded objects, signaled via
+   their corresponding Media-Type.
+
+   EST-oscore servers MUST support both the DER-encoded ASN.1 objects
+   and the CBOR-encoded objects.  This means supporting formats detailed
+   in Section 4.3.1 and Section 4.3.2.  It is up to the client to
+   support only DER-encoded ASN.1, CBOR encoding, or both.  As a
+   reminder, Content-Format negotiation happens through CoAP's Accept
+   option present in the requests.
 
 4.3.1.  DER-encoded ASN.1 Objects
 
@@ -530,6 +540,9 @@ Table of Contents
    In case of CBOR-encoded objects, there is a single Content-Format,
    TBD6, that MUST be supported by both the EST-oscore servers and
    clients.
+
+   EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to
+   appropriate document for its semantics.
 
    In the case of CBOR-encoded request to /skg, the two parts of the
    response are also CBOR encoded.  The certificate part is encoded as
