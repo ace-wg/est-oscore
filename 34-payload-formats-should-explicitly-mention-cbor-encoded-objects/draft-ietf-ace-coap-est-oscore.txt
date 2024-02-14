@@ -534,6 +534,9 @@ Table of Contents
    TBD6, that MUST be supported by both the EST-oscore servers and
    clients.
 
+   EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to
+   appropriate document for its semantics.
+
    In the case of CBOR-encoded request to /skg, the two parts of the
    response are also CBOR encoded.  The certificate part is encoded as
    the application/cose-c509-cert object (Content-Format identifier

@@ -1788,11 +1788,12 @@ As a consequence, the private key part of the response to /skc or /skg is an une
           </table>
 </div>
 <p id="section-4.3.2-3">In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.<a href="#section-4.3.2-3" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-4">In the case of CBOR-encoded request to /skg, the two parts of the response are also CBOR encoded.
+<p id="section-4.3.2-4">EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to appropriate document for its semantics.<a href="#section-4.3.2-4" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-5">In the case of CBOR-encoded request to /skg, the two parts of the response are also CBOR encoded.
 The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD6), while the corresponding private key is encoded as application/cose-key (Content-Format identifier 101).
 EDITOR NOTE: Align the private key container with issue #150 in the c509 github page.
-The function /skc is not available when using CBOR-encoded objects, and for server-side generated keys, clients MUST use the /skg function.<a href="#section-4.3.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-5"><a href="#table_cft_skg_cbor" class="auto internal xref">Table 5</a> summarizes the Content-Format identifiers used in responses to the /skg function.<a href="#section-4.3.2-5" class="pilcrow">¶</a></p>
+The function /skc is not available when using CBOR-encoded objects, and for server-side generated keys, clients MUST use the /skg function.<a href="#section-4.3.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.3.2-6"><a href="#table_cft_skg_cbor" class="auto internal xref">Table 5</a> summarizes the Content-Format identifiers used in responses to the /skg function.<a href="#section-4.3.2-6" class="pilcrow">¶</a></p>
 <span id="name-response-content-format-iden"></span><div id="table_cft_skg_cbor">
 <table class="center" id="table-5">
             <caption>
