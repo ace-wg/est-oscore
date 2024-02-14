@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 25 April 2024                                              RISE
+Expires: 17 August 2024                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                         23 October 2023
+                                                        14 February 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,11 +54,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2024.
+   This Internet-Draft will expire on 17 August 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -256,11 +256,11 @@ Table of Contents
 3.2.  Certificate-based Authentication
 
    EST-oscore, like EST-coaps, supports certificate-based authentication
-   between the EST client and server.  In this case the client MUST be
-   configured with an Implicit or Explicit Trust Anchor (TA) [RFC7030]
-   database, enabling the client to authenticate the server.  During the
-   initial enrollment the client SHOULD populate its Explicit TA
-   database and use it for subsequent authentications.
+   between the EST client and server.  The client MUST be configured
+   with an Implicit or Explicit Trust Anchor (TA) [RFC7030] database,
+   enabling the client to authenticate the server.  During the initial
+   enrollment the client SHOULD populate its Explicit TA database and
+   use it for subsequent authentications.
 
    The EST client certificate SHOULD conform to [RFC7925].  The EST
    client and/or EST server certificate MAY be a (natively signed) CBOR
@@ -698,9 +698,9 @@ Table of Contents
    [I-D.ietf-lake-edhoc]
               Selander, G., Mattsson, J. P., and F. Palombini,
               "Ephemeral Diffie-Hellman Over COSE (EDHOC)", Work in
-              Progress, Internet-Draft, draft-ietf-lake-edhoc-22, 25
-              August 2023, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-lake-edhoc-22>.
+              Progress, Internet-Draft, draft-ietf-lake-edhoc-23, 22
+              January 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-lake-edhoc-23>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -765,10 +765,13 @@ Table of Contents
 
    [I-D.ietf-core-oscore-edhoc]
               Palombini, F., Tiloca, M., Höglund, R., Hristozov, S., and
-              G. Selander, "Using EDHOC with CoAP and OSCORE", Work in
-              Progress, Internet-Draft, draft-ietf-core-oscore-edhoc-08,
-              8 August 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-core-oscore-edhoc-08>.
+              G. Selander, "Using Ephemeral Diffie-Hellman Over COSE
+              (EDHOC) with the Constrained Application Protocol (CoAP)
+              and Object Security for Constrained RESTful Environments
+              (OSCORE)", Work in Progress, Internet-Draft, draft-ietf-
+              core-oscore-edhoc-10, 29 November 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-core-
+              oscore-edhoc-10>.
 
    [I-D.ietf-core-oscore-groupcomm]
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
@@ -782,9 +785,9 @@ Table of Contents
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-06, 7 July 2023,
+              ietf-cose-cbor-encoded-cert-07, 20 October 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-06>.
+              cbor-encoded-cert-07>.
 
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
