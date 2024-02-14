@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 11 August 2024                                             RISE
+Expires: 17 August 2024                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                         8 February 2024
+                                                        14 February 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 August 2024.
+   This Internet-Draft will expire on 17 August 2024.
 
 Copyright Notice
 
@@ -215,12 +215,12 @@ Table of Contents
    information for which the trust anchor is authoritative."
 
    Apart from enrolling signature keys, this document also specifies how
-   to enroll static DH keys, which cannot be used for signing.  Instead
-   of signing, possession of the private static DH key is proved by
-   generating a MAC given the recipients public DH key.  Therefore this
-   document extends the definition of the term "Trust Anchor" in a sense
-   that its public key can also be used for MAC generation for static DH
-   proof of possession procedures defined.
+   to enroll static DH keys.  Instead of signing, possession of the
+   private static DH key is proved by generating a MAC given the
+   recipients public DH key.  Therefore this document extends the
+   definition of the term "Trust Anchor" in a sense that its public key
+   can also be used for MAC generation for static DH proof of possession
+   procedures defined.
 
 3.  Authentication
 
