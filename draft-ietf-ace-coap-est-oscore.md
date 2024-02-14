@@ -135,7 +135,10 @@ This document uses terminology from {{RFC9148}} which in turn is based on {{RFC7
 The term "Trust Anchor" follows the terminology of {{RFC6024}}:
 "A trust anchor represents an authoritative entity via a public key and associated data.
 The public key is used to verify digital signatures, and the associated data is used to constrain the types of information for which the trust anchor is authoritative."
-One example of specifying more compact alternatives to X.509 certificates for exchanging trust anchor information is provided by the TrustAnchorInfo structure of {{RFC5914}}, the mandatory parts of which essentially is the SubjectPublicKeyInfo structure {{RFC5280}}, i.e., an algorithm identifier followed by a public key.
+
+Apart from enrolling signature keys, this document also specifies how to enroll static DH keys.
+Instead of signing, possession of the private static DH key is proved by generating a MAC given the recipients public DH key.
+Therefore this document extends the definition of the term "Trust Anchor" in a sense that its public key can also be used for MAC generation for static DH proof of possession procedures defined.
 
 # Authentication
 
