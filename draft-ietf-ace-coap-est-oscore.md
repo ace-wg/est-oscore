@@ -263,7 +263,7 @@ In either case they can be compactly encoded, e.g. using CBOR encoding {{I-D.iet
 
 ## Payload formats
 
-Similar to EST-coaps, EST-oscore allows transport of DER-encoded objects of a given Media-Type in binary format.
+Similar to EST-coaps, EST-oscore allows transport of DER-encoded objects of a given Media-Type.
 When transporting DER-encoded objects, EST-oscore uses the same CoAP Content-Format identifiers as EST-coaps when transferring EST requests and responses.
 In addition, EST-oscore allows the transport of CBOR-encoded objects, signaled via their corresponding Media-Type.
 
