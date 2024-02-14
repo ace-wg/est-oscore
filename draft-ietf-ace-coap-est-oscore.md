@@ -327,6 +327,8 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 
 In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
 
+EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to appropriate document for its semantics.
+
 In the case of CBOR-encoded request to /skg, the two parts of the response are also CBOR encoded.
 The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD6), while the corresponding private key is encoded as application/cose-key (Content-Format identifier 101).
 EDITOR NOTE: Align the private key container with issue #150 in the c509 github page.
