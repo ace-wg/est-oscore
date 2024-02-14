@@ -162,7 +162,7 @@ This identifier may be the credential itself (in which case the credential is tr
 ## Certificate-based Authentication
 
 EST-oscore, like EST-coaps, supports certificate-based authentication between the EST client and server.
-In this case the client MUST be configured with an Implicit or Explicit Trust Anchor (TA) {{RFC7030}} database, enabling the client to authenticate the server.
+The client MUST be configured with an Implicit or Explicit Trust Anchor (TA) {{RFC7030}} database, enabling the client to authenticate the server.
 During the initial enrollment the client SHOULD populate its Explicit TA database and use it for subsequent authentications.
 
 The EST client certificate SHOULD conform to {{RFC7925}}.
