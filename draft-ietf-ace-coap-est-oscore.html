@@ -12,7 +12,7 @@
 <meta content="Timothy Claeys" name="author">
 <meta content="
        This document specifies public-key certificate enrollment procedures protected with lightweight application-layer security protocols suitable for Internet of Things (IoT) deployments.
-The protocols leverage payload formats defined in Enrollment over Secure Transport (EST) and existing IoT standards including the Constrained Application Protocol (CoAP), Concise Binary Object Representation (CBOR) and the CBOR Object Signing and Encryption (COSE) format. 
+The protocols leverage payload formats defined in Enrollment over Secure Transport (EST) and existing IoT standards including the Constrained Application Protocol (CoAP), Concise Binary Object Representation (CBOR), and the CBOR Object Signing and Encryption (COSE) format. 
     " name="description">
 <meta content="xml2rfc 3.19.4" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1081,7 +1081,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document specifies public-key certificate enrollment procedures protected with lightweight application-layer security protocols suitable for Internet of Things (IoT) deployments.
-The protocols leverage payload formats defined in Enrollment over Secure Transport (EST) and existing IoT standards including the Constrained Application Protocol (CoAP), Concise Binary Object Representation (CBOR) and the CBOR Object Signing and Encryption (COSE) format.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+The protocols leverage payload formats defined in Enrollment over Secure Transport (EST) and existing IoT standards including the Constrained Application Protocol (CoAP), Concise Binary Object Representation (CBOR), and the CBOR Object Signing and Encryption (COSE) format.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1253,7 +1253,7 @@ The protocols leverage payload formats defined in Enrollment over Secure Transpo
 OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported.
 OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data.
 Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between between CoAP and HTTP.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span> and COSE <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH <span>[<a href="#RFC9031" class="cite xref">RFC9031</a>]</span>, or for securing CoAP group messages <span>[<a href="#I-D.ietf-core-oscore-groupcomm" class="cite xref">I-D.ietf-core-oscore-groupcomm</a>]</span>.
+<p id="section-1-4">OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>, and COSE <span>[<a href="#RFC9052" class="cite xref">RFC9052</a>]</span> <span>[<a href="#RFC9053" class="cite xref">RFC9053</a>]</span>, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH <span>[<a href="#RFC9031" class="cite xref">RFC9031</a>]</span>, or for securing CoAP group messages <span>[<a href="#I-D.ietf-core-oscore-groupcomm" class="cite xref">I-D.ietf-core-oscore-groupcomm</a>]</span>.
 Where OSCORE is implemented and used for communication security, the reuse of OSCORE for other purposes, such as enrollment, reduces the code footprint.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">In order to protect certificate enrollment with OSCORE, the necessary keying material (notably, the OSCORE Master Secret, see <span>[<a href="#RFC8613" class="cite xref">RFC8613</a>]</span>) needs to be established between the EST-oscore client and EST-oscore server.
 For this purpose we assume by default the use of the lightweight authenticated key exchange protocol EDHOC <span>[<a href="#I-D.ietf-lake-edhoc" class="cite xref">I-D.ietf-lake-edhoc</a>]</span>, although pre-shared OSCORE keying material would also be an option.<a href="#section-1-5" class="pilcrow">¶</a></p>
