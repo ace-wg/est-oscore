@@ -95,7 +95,8 @@ One of the challenges with deploying a Public Key Infrastructure (PKI) for the I
 One optimization of certificate enrollment targeting IoT deployments is specified in EST-coaps {{RFC9148}}, which defines a version of Enrollment over Secure Transport {{RFC7030}} for transporting EST payloads over CoAP {{RFC7252}} and DTLS {{RFC9147}}, instead of HTTP and TLS {{RFC8446}}.
 
 This document describes a method for protecting EST payloads over CoAP or HTTP with OSCORE {{RFC8613}}.
-OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported. OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data.
+OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported.
+OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data.
 Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between between CoAP and HTTP.
 
 OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR {{RFC8949}} and COSE {{RFC9052}} {{RFC9053}}, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH {{RFC9031}}, or for securing CoAP group messages {{I-D.ietf-core-oscore-groupcomm}}.
@@ -117,13 +118,13 @@ This specification deviates from EST-coaps in the following respects:
 
 * The DTLS record layer is replaced by, or complemented with, OSCORE.
 * The DTLS handshake is replaced by, or complemented with, the lightweight authenticated key exchange protocol EDHOC {{I-D.ietf-lake-edhoc}}, and makes use of the following features:
-   * Authentication based on certificates is complemented with  authentication based on raw public keys.
+   * Authentication based on certificates is complemented with authentication based on raw public keys.
    * Authentication based on signature keys is complemented with authentication based on static Diffie-Hellman keys, for certificates/raw public keys.
    * Authentication based on certificate by value is complemented with authentication based on certificate/raw public keys by reference.
 * The EST payloads protected by OSCORE can be proxied between constrained networks supporting CoAP/CoAPs and non-constrained networks supporting HTTP/HTTPs with a CoAP-HTTP proxy protection without any security processing in the proxy (see {{proxying}}).
 The concept "Registrar" and its required trust relation with the EST server as described in Section 5 of {{RFC9148}} is therefore not applicable.
 
-So, while the same authentication scheme (Diffie-Hellman key exchange authenticated with transported certificates) and the same EST payloads as EST-coaps also apply to EST-oscore, the latter specifies other authentication schemes and a new matching EST function.
+So, while the same authentication scheme (Diffie-Hellman key exchange authenticated with transported certificates) and the same EST payloads as EST-coaps also apply to EST-oscore, the latter specifies other authentication schemes.
 The reason for these deviations is that a significant overhead can be removed in terms of message sizes and round trips by using a different handshake, public key type or transported credential, and those are independent of the actual enrollment procedure.
 
 # Terminology   {#terminology}
@@ -137,7 +138,7 @@ The term "Trust Anchor" follows the terminology of {{RFC6024}}:
 The public key is used to verify digital signatures, and the associated data is used to constrain the types of information for which the trust anchor is authoritative."
 
 Apart from enrolling signature keys, this document also specifies how to enroll static DH keys.
-Instead of signing, possession of the private static DH key is proved by generating a MAC given the recipients public DH key.
+Instead of signing, possession of the private static DH key may be proved by generating a MAC given the recipients public DH key.
 Therefore this document extends the definition of the term "Trust Anchor" in a sense that its public key can also be used for MAC generation for static DH proof of possession procedures defined.
 
 # Authentication
@@ -185,7 +186,7 @@ Connection-based proof-of-possession using the challengePassword attribute of th
 
 * The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrolment request and response) in two round trips {{I-D.ietf-core-oscore-edhoc}}.
 
-* The enrolled certificates MAY be compressed, e.g., using the CBOR encoding defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+* The enrolled certificates MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 * The enrolled client certificate MAY be referenced instead of transported {{RFC9360}}.
 The EST-oscore server MAY use information in the credential identifier field of the EDHOC message (ID_CRED_x) to access the EST-oscore client certificate, e.g., in a directory or database provided by the issuer.
@@ -195,10 +196,11 @@ In this case the certificate may not need to be transported over a constrained l
 The EST-oscore server MAY in the enrolment response to the EST-oscore client include a pointer to a directory or database where the certificate can be retrieved.
 
 * The PKCS#10 object MAY request a certificate for a static DH key instead of a signature key.
-This results in a more compact request because the use of static DH keys implies a proof-of-posession using a MAC, which is shorter than a signature.
+This may result in a more compact request because the use of static DH keys may imply a proof-of-posession using a MAC, which is shorter than a signature.
 Additionally, subsequent EDHOC sessions using static DH keys for authentication have less overhead than key exchange protocols using signature-based authentication credentials.
 
 # Protocol Design and Layering
+
 EST-oscore uses CoAP {{RFC7252}} and Block-Wise {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
 Instead of DTLS record layer, OSCORE {{RFC8613}} is used to protect the messages conveying the EST payloads.
 External Authorization Data (EAD) fields of EDHOC are intentionally not used to carry EST payloads because EDHOC needs not be executed in the case of re-enrollment.
@@ -222,6 +224,7 @@ Protocol design also allows that OSCORE and EDHOC messages are carried within th
 EST-oscore follows much of the EST-coaps and EST design.
 
 ## Discovery and URI     {#discovery}
+
 The discovery of EST resources and the definition of the short EST-coaps URI paths specified in Section 4.1 of {{RFC9148}}, as well as the new Resource Type defined in Section 8.2 of {{RFC9148}} apply to EST-oscore.
 Support for OSCORE is indicated by the "osc" attribute defined in Section 9 of {{RFC8613}}.
 
@@ -240,6 +243,7 @@ The use of the "osc" attribute is REQUIRED.
 In scenarios where OSCORE and DTLS are combined, the absence of the "osc" attribute might wrongly suggest that the EST server is actually using EST-coaps, because of the scheme "coaps", when it is using EST-oscore.
 
 ## Mandatory/optional EST Functions {#est-functions}
+
 The EST-oscore specification has the same set of required-to-implement functions as EST-coaps.
 The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} and uses the updated URI paths (see {{discovery}}).
 
@@ -273,6 +277,7 @@ It is up to the client to support only DER-encoded ASN.1, CBOR encoding, or both
 As a reminder, Content-Format negotiation happens through CoAP's Accept option present in the requests.
 
 ### DER-encoded ASN.1 Objects {#der}
+
 {{table_mediatype_asn1}} summarizes the information from Section 4.3 in {{RFC9148}} in what concerns the transport of DER-encoded ASN.1 objects.
 
 |  URI  | Media Type                                    | Type | #IANA |
@@ -346,6 +351,7 @@ The function /skc is not available when using CBOR-encoded objects, and for serv
 {: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects"}
 
 ## Message Bindings
+
 Note that the EST-oscore message characteristics are identical to those specified in Section 4.4 of {{RFC9148}}.
 It is therefore required that
 
@@ -355,6 +361,7 @@ It is therefore required that
     In case DTLS is additionally used, the translation target is the scheme "coaps", instead of "coap".
 
 ## CoAP response codes
+
 See Section 4.5 in {{RFC9148}}.
 
 ## Message fragmentation
@@ -370,6 +377,7 @@ EST-oscore servers MUST implement Block1 and Block2.
 EST-oscore clients MUST implement Block2 and MAY implement Block1.
 
 ## Delayed Responses
+
 See Section 4.7 in {{RFC9148}}.
 
 ## Enrollment of Static DH Keys {#static-dh-keys}
@@ -390,6 +398,7 @@ When generating its DH key pair, the client uses the group parameters as indicat
 Because the combined delivery is used per {{I-D.ietf-core-oscore-edhoc}}, the client has already in EDHOC message_2 obtained the ephemeral key G_Y of the server.
 
 # HTTP-CoAP Proxy {#proxying}
+
 As noted in Section 5 of {{RFC9148}}, in real-world deployments, the EST server will not always reside within the CoAP boundary.
 The EST-server can exist outside the constrained network in a non-constrained network that supports HTTP but not CoAP, thus requiring an intermediary CoAP-to-HTTP proxy.
 
@@ -449,10 +458,6 @@ Therefore, connection-based channel binding is in this case achieved without any
 In other cases, including pre-shared OSCORE contexts, this specification makes explicit channel binding based on the challengePassword attribute in PKCS#10 requests OPTIONAL.
 The challengePassword attribute could be used for freshness in the case of pre-shared OSCORE contexts and a re-enrollment request.
 How challengePassword is generated is outside of the scope of this specification and can be specified by an application profile.
-
-# Privacy Considerations
-
-TBD
 
 # IANA Considerations  {#iana}
 
