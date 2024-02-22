@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 17 August 2024                                             RISE
+Expires: 25 August 2024                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                        14 February 2024
+                                                        22 February 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 August 2024.
+   This Internet-Draft will expire on 25 August 2024.
 
 Copyright Notice
 
@@ -93,13 +93,12 @@ Table of Contents
    6.  Security Considerations
      6.1.  Server-generated Private Keys
      6.2.  Considerations on Channel Binding
-   7.  Privacy Considerations
-   8.  IANA Considerations
-     8.1.  EDHOC Exporter Label Registry
-   9.  Acknowledgments
-   10. References
-     10.1.  Normative References
-     10.2.  Informative References
+   7.  IANA Considerations
+     7.1.  EDHOC Exporter Label Registry
+   8.  Acknowledgments
+   9.  References
+     9.1.  Normative References
+     9.2.  Informative References
    Authors' Addresses
 
 1.  Introduction
@@ -191,11 +190,11 @@ Table of Contents
    So, while the same authentication scheme (Diffie-Hellman key exchange
    authenticated with transported certificates) and the same EST
    payloads as EST-coaps also apply to EST-oscore, the latter specifies
-   other authentication schemes and a new matching EST function.  The
-   reason for these deviations is that a significant overhead can be
-   removed in terms of message sizes and round trips by using a
-   different handshake, public key type or transported credential, and
-   those are independent of the actual enrollment procedure.
+   other authentication schemes.  The reason for these deviations is
+   that a significant overhead can be removed in terms of message sizes
+   and round trips by using a different handshake, public key type or
+   transported credential, and those are independent of the actual
+   enrollment procedure.
 
 2.  Terminology
 
@@ -216,7 +215,7 @@ Table of Contents
 
    Apart from enrolling signature keys, this document also specifies how
    to enroll static DH keys.  Instead of signing, possession of the
-   private static DH key is proved by generating a MAC given the
+   private static DH key may be proved by generating a MAC given the
    recipients public DH key.  Therefore this document extends the
    definition of the term "Trust Anchor" in a sense that its public key
    can also be used for MAC generation for static DH proof of possession
@@ -296,8 +295,8 @@ Table of Contents
       may contain an enrolment request and response) in two round trips
       [I-D.ietf-core-oscore-edhoc].
 
-   *  The enrolled certificates MAY be compressed, e.g., using the CBOR
-      encoding defined in [I-D.ietf-cose-cbor-encoded-cert].
+   *  The enrolled certificates MAY be the CBOR-encoded certificates
+      defined in [I-D.ietf-cose-cbor-encoded-cert].
 
    *  The enrolled client certificate MAY be referenced instead of
       transported [RFC9360].  The EST-oscore server MAY use information
@@ -314,8 +313,8 @@ Table of Contents
       where the certificate can be retrieved.
 
    *  The PKCS#10 object MAY request a certificate for a static DH key
-      instead of a signature key.  This results in a more compact
-      request because the use of static DH keys implies a proof-of-
+      instead of a signature key.  This may result in a more compact
+      request because the use of static DH keys may imply a proof-of-
       posession using a MAC, which is shorter than a signature.
       Additionally, subsequent EDHOC sessions using static DH keys for
       authentication have less overhead than key exchange protocols
@@ -744,13 +743,9 @@ Table of Contents
    of the scope of this specification and can be specified by an
    application profile.
 
-7.  Privacy Considerations
+7.  IANA Considerations
 
-   TBD
-
-8.  IANA Considerations
-
-8.1.  EDHOC Exporter Label Registry
+7.1.  EDHOC Exporter Label Registry
 
    IANA is requested to register the following entry in the "EDHOC
    Exporter Label" registry under the group name "Ephemeral Diffie-
@@ -764,14 +759,14 @@ Table of Contents
 
                       Table 6: EDHOC Exporter Label.
 
-9.  Acknowledgments
+8.  Acknowledgments
 
    The authors would like to thank Marco Tiloca and John Mattsson for
    providing a review of the document.
 
-10.  References
+9.  References
 
-10.1.  Normative References
+9.1.  Normative References
 
    [I-D.ietf-lake-edhoc]
               Selander, G., Mattsson, J. P., and F. Palombini,
@@ -839,7 +834,7 @@ Table of Contents
               DOI 10.17487/RFC9148, April 2022,
               <https://www.rfc-editor.org/info/rfc9148>.
 
-10.2.  Informative References
+9.2.  Informative References
 
    [I-D.ietf-core-oscore-edhoc]
               Palombini, F., Tiloca, M., Höglund, R., Hristozov, S., and
