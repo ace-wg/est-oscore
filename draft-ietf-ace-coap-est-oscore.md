@@ -84,7 +84,7 @@ informative:
 
 
 This document specifies public-key certificate enrollment procedures protected with lightweight application-layer security protocols suitable for Internet of Things (IoT) deployments.
-The protocols leverage payload formats defined in Enrollment over Secure Transport (EST) and existing IoT standards including the Constrained Application Protocol (CoAP), Concise Binary Object Representation (CBOR) and the CBOR Object Signing and Encryption (COSE) format.
+The protocols leverage payload formats defined in Enrollment over Secure Transport (EST) and existing IoT standards including the Constrained Application Protocol (CoAP), Concise Binary Object Representation (CBOR), and the CBOR Object Signing and Encryption (COSE) format.
 
 --- middle
 
@@ -99,7 +99,7 @@ OSCORE specifies an extension to CoAP which protects messages at the application
 OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data.
 Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between between CoAP and HTTP.
 
-OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR {{RFC8949}} and COSE {{RFC9052}} {{RFC9053}}, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH {{RFC9031}}, or for securing CoAP group messages {{I-D.ietf-core-oscore-groupcomm}}.
+OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR {{RFC8949}}, and COSE {{RFC9052}} {{RFC9053}}, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH {{RFC9031}}, or for securing CoAP group messages {{I-D.ietf-core-oscore-groupcomm}}.
 Where OSCORE is implemented and used for communication security, the reuse of OSCORE for other purposes, such as enrollment, reduces the code footprint.
 
 In order to protect certificate enrollment with OSCORE, the necessary keying material (notably, the OSCORE Master Secret, see {{RFC8613}}) needs to be established between the EST-oscore client and EST-oscore server.
