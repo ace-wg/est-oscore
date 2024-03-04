@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 25 August 2024                                             RISE
+Expires: 5 September 2024                                           RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                        22 February 2024
+                                                            4 March 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 August 2024.
+   This Internet-Draft will expire on 5 September 2024.
 
 Copyright Notice
 
@@ -616,16 +616,20 @@ Table of Contents
 4.8.  Enrollment of Static DH Keys
 
    This section specifies how the EST client enrolls a static DH key.
-   Because a DH key pair cannot be used for signing operations, the EST
-   client attempting to enroll a DH key must use an alternative proof-
-   of-possession algorithm.  The EST client prepares the PKCS#10 object
-   and computes a MAC, replacing the signature, over the certification
-   request information by following the steps in Section 6 of [RFC6955].
-   The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF
-   and HMAC algorithms used by OSCORE.  The KDF and MAC is thus defined
-   by the hash algorithm used by OSCORE in HKDF and HMAC, which by
-   default is SHA-256.  When EDHOC is used, then the hash algorithm is
-   the application hash algorithm of the selected cipher suite.
+   In general, a given key pair should only be used for a single
+   purpose, such as key establishment, digital signature, key transport.
+
+   The EST client attempting to enroll a DH key for a key usage
+   operation other than digital signature SHOULD use an alternative
+   proof-of-possession algorithm: The EST client SHOULD prepare the
+   PKCS#10 object and compute a MAC, replacing the signature, over the
+   certification request information by following the steps in Section 6
+   of [RFC6955].  The Key Derivation Function (KDF) and the MAC MUST be
+   set to the HDKF and HMAC algorithms used by OSCORE.  The KDF and MAC
+   is thus defined by the hash algorithm used by OSCORE in HKDF and
+   HMAC, which by default is SHA-256.  When EDHOC is used, then the hash
+   algorithm is the application hash algorithm of the selected cipher
+   suite.
 
    To generate a MAC according to the algorithm outlined in Section 6 of
    [RFC6955], the client needs to know the public DH key of the proof-
@@ -646,6 +650,14 @@ Table of Contents
    Because the combined delivery is used per
    [I-D.ietf-core-oscore-edhoc], the client has already in EDHOC
    message_2 obtained the ephemeral key G_Y of the server.
+
+   In some cases, it may be beneficial to exceptionally use the static
+   DH private key associated to the public key used in enrollment for a
+   one-time signing operation of the CSR.  While a key pair should only
+   be used for a single purpose (e.g. key establishment or signing),
+   this exceptional use for one-time signing of the CSR is allowed, as
+   discussed in Section 5.6.3.2 of [SP-800-56A] and Section 5.2 of
+   [SP-800-57].
 
 5.  HTTP-CoAP Proxy
 
@@ -858,9 +870,9 @@ Table of Contents
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-07, 20 October 2023,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-07>.
+              ietf-cose-cbor-encoded-cert-09, 4 March 2024,
+              <https://datatracker.ietf.org/api/v1/doc/document/draft-
+              ietf-cose-cbor-encoded-cert/>.
 
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
@@ -931,6 +943,18 @@ Table of Contents
               Header Parameters for Carrying and Referencing X.509
               Certificates", RFC 9360, DOI 10.17487/RFC9360, February
               2023, <https://www.rfc-editor.org/info/rfc9360>.
+
+   [SP-800-56A]
+              Barker, E., Chen, L., Roginsky, A., Vassilev, A., and R.
+              Davis, "Recommendation for Pair-Wise Key-Establishment
+              Schemes Using Discrete Logarithm Cryptography",
+              NIST Special Publication 800-56A Revision 3, April 2018,
+              <https://doi.org/10.6028/NIST.SP.800-56Ar3>.
+
+   [SP-800-57]
+              Barker, E., "Recommendation for Key Management",
+              NIST Special Publication 800-57 Revision 5, May 2020,
+              <https://doi.org/10.6028/NIST.SP.800-57pt1r5>.
 
 Authors' Addresses
 
