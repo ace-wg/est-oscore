@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 5 September 2024                                           RISE
+Expires: 12 October 2024                                            RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                            4 March 2024
+                                                           10 April 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2024.
+   This Internet-Draft will expire on 12 October 2024.
 
 Copyright Notice
 
@@ -547,10 +547,9 @@ Table of Contents
    response are also CBOR encoded.  The certificate part is encoded as
    the application/cose-c509-cert object (Content-Format identifier
    TBD6), while the corresponding private key is encoded as application/
-   cose-key (Content-Format identifier 101).  EDITOR NOTE: Align the
-   private key container with issue #150 in the c509 github page.  The
-   function /skc is not available when using CBOR-encoded objects, and
-   for server-side generated keys, clients MUST use the /skg function.
+   cose-c509-privkey (Content-Format identifier TBD10).  The function
+   /skc is not available when using CBOR-encoded objects, and for
+   server-side generated keys, clients MUST use the /skg function.
 
    Table 5 summarizes the Content-Format identifiers used in responses
    to the /skg function.
@@ -854,25 +853,25 @@ Table of Contents
               (EDHOC) with the Constrained Application Protocol (CoAP)
               and Object Security for Constrained RESTful Environments
               (OSCORE)", Work in Progress, Internet-Draft, draft-ietf-
-              core-oscore-edhoc-10, 29 November 2023,
+              core-oscore-edhoc-11, 9 April 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              oscore-edhoc-10>.
+              oscore-edhoc-11>.
 
    [I-D.ietf-core-oscore-groupcomm]
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
-              and J. Park, "Group Object Security for Constrained
+              and R. Höglund, "Group Object Security for Constrained
               RESTful Environments (Group OSCORE)", Work in Progress,
-              Internet-Draft, draft-ietf-core-oscore-groupcomm-20, 2
-              September 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-core-oscore-groupcomm-20>.
+              Internet-Draft, draft-ietf-core-oscore-groupcomm-21, 4
+              March 2024, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-core-oscore-groupcomm-21>.
 
    [I-D.ietf-cose-cbor-encoded-cert]
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
               ietf-cose-cbor-encoded-cert-09, 4 March 2024,
-              <https://datatracker.ietf.org/api/v1/doc/document/draft-
-              ietf-cose-cbor-encoded-cert/>.
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
+              cbor-encoded-cert-09>.
 
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
