@@ -57,7 +57,7 @@ normative:
   RFC8613:
   RFC9052:
   RFC9148:
-  I-D.ietf-lake-edhoc:
+  RFC9528:
 
 informative:
 
@@ -133,9 +133,10 @@ OSCORE is designed for constrained environments, building on IoT standards such 
 Where OSCORE is implemented and used for communication security, the reuse of OSCORE for other purposes, such as enrollment, reduces the code footprint.
 
 In order to protect certificate enrollment with OSCORE, the necessary keying material (notably, the OSCORE Master Secret, see {{RFC8613}}) needs to be established between the EST-oscore client and EST-oscore server.
-For this purpose we assume by default the use of the lightweight authenticated key exchange protocol EDHOC {{I-D.ietf-lake-edhoc}}, although pre-shared OSCORE keying material would also be an option.
+For this purpose we assume by default the use of the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}, although pre-shared OSCORE keying material would also be an option.
 
-Other ways to optimize the performance of certificate enrollment and certificate based authentication described in this draft include the use of:
+
+Other ways to optimize the performance of certificate enrollment and certificate based authentication described in this document include the use of:
 
 * Compact representations of X.509 certificates (see {{I-D.ietf-cose-cbor-encoded-cert}})
 * Certificates by reference (see {{RFC9360}})
@@ -147,7 +148,7 @@ The protection of EST payloads defined in this document builds on EST-coaps {{RF
 This specification deviates from EST-coaps in the following respects:
 
 * The DTLS record layer is replaced by, or complemented with, OSCORE.
-* The DTLS handshake is replaced by, or complemented with, the lightweight authenticated key exchange protocol EDHOC {{I-D.ietf-lake-edhoc}}, and makes use of the following features:
+* The DTLS handshake is replaced by, or complemented with, the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}, and makes use of the following features:
    * Authentication based on certificates is complemented with authentication based on raw public keys.
    * Authentication based on signature keys is complemented with authentication based on static Diffie-Hellman keys, for certificates/raw public keys.
    * Authentication based on certificate by value is complemented with authentication based on certificate/raw public keys by reference.
@@ -173,8 +174,8 @@ Therefore this document extends the definition of the term "Trust Anchor" in a s
 
 # Authentication
 
-This specification replaces, or complements, the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC {{I-D.ietf-lake-edhoc}}.
-During initial enrollment, the EST-oscore client and server run EDHOC {{I-D.ietf-lake-edhoc}} to authenticate and establish the OSCORE Security Context used to protect the messages conveying EST payloads.
+This specification replaces, or complements, the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
+During initial enrollment, the EST-oscore client and server run EDHOC {{RFC9528}} to authenticate and establish the OSCORE Security Context used to protect the messages conveying EST payloads.
 
 The EST-oscore client MUST play the role of the EDHOC Initiator.
 The EST-oscore server MUST play the role of the EDHOC Responder.
@@ -183,7 +184,7 @@ The EST-oscore clients and servers must perform mutual authentication.
 The EST server and EST client are responsible for ensuring that an acceptable cipher suite is negotiated.
 The client must authenticate the server before accepting any server response.
 The server must authenticate the client.
-These requirements are fullfilled when using EDHOC {{I-D.ietf-lake-edhoc}}.
+These requirements are fullfilled when using EDHOC {{RFC9528}}.
 
 The server must also provide relevant information to the CA for decision about issuing a certificate.
 
@@ -234,7 +235,7 @@ Additionally, subsequent EDHOC sessions using static DH keys for authentication 
 EST-oscore uses CoAP {{RFC7252}} and Block-Wise {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
 Instead of DTLS record layer, OSCORE {{RFC8613}} is used to protect the messages conveying the EST payloads.
 External Authorization Data (EAD) fields of EDHOC are intentionally not used to carry EST payloads because EDHOC needs not be executed in the case of re-enrollment.
-The DTLS handshake is complemented by or replaced with EDHOC {{I-D.ietf-lake-edhoc}}.
+The DTLS handshake is complemented by or replaced with EDHOC {{RFC9528}}.
 {{fig-stack}} below shows the layered EST-oscore architecture.
 Note that {{fig-stack}} does not illustrate the potential use of DTLS.
 Protocol design also allows that OSCORE and EDHOC messages are carried within the same CoAP message, as per {{I-D.ietf-core-oscore-edhoc}}.
@@ -394,7 +395,7 @@ See Section 4.5 in {{RFC9148}}.
 
 ## Message fragmentation
 
-The EDHOC key exchange is optimized for message overhead, in particular the use of static DH keys instead of signature keys for authentication (e.g., method 3 of {{I-D.ietf-lake-edhoc}}).
+The EDHOC key exchange is optimized for message overhead, in particular the use of static DH keys instead of signature keys for authentication (e.g., method 3 of {{RFC9528}}).
 Together with various measures listed in this document such as CBOR-encoded payloads {{RFC8949}}, CBOR certificates {{I-D.ietf-cose-cbor-encoded-cert}}, certificates by reference ({{optimizations}}), and trust anchors without signature ({{crts}}), a significant reduction of message sizes can be achieved.
 
 Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource constrained networks such as IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
