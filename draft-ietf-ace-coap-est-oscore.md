@@ -511,9 +511,77 @@ IANA is requested to register the following entry in the "EDHOC Exporter Label" 
 | TBD4  | EDHOC unique | \[\[this document\]\] |
 {: #table_exporter_label cols="l l l" title="EDHOC Exporter Label."}
 
+--- back
+
+# Examples
+
+## Example Enrollment Without Optimizations
+
+~~~~~~~~~~~ aasvg
+
+EST Client                   EST Server
+|                                     |
+|     EDHOC message_1                 |
++------------------------------------>|
+|     EDHOC message_2                 |
+|<------------------------------------+
+|     EDHOC message_3                 |
++------------------------------------>|
+|     OSCORE request to /sen          |
++------------------------------------>|
+|           POST /.well-known/est/sen |
+|           Accept: TBD6              |
+|           Content-Format: TBD7      |
+|           Payload: Serialized TBD7  |
+|                                     |
+|     OSCORE response                 |
+|<------------------------------------+
+|           2.04 Changed              |
+|           Content-Format: TBD6      |
+|           Payload: Serialized TBD6  |
+
+|
+~~~~~~~~~~~
+{: #fig-sen-no-optimizations title="Enrollment EST-oscore flow without optimizations."}
+{: artwork-align="center"}
+
+## Example Enrollment With Optimizations
+
+~~~~~~~~~~~ aasvg
+
+EST Client                   EST Server
+|                                     |
+|     EDHOC message_1                 |
++------------------------------------>|
+|     EDHOC message_2                 |
+|<------------------------------------+
+|     EDHOC message_3                 |
+|            +                        |
+|     OSCORE request to /sen          |
++------------------------------------>|
+|           POST /.well-known/est/sen |
+|           Accept: TBD6              |
+|           Content-Format: TBD7      |
+|           Payload: Serialized TBD7  |
+|                                     |
+|     OSCORE response                 |
+|<------------------------------------+
+|           2.04 Changed              |
+|           Content-Format: TBD6      |
+|           Payload: Serialized TBD6  |
+
+~~~~~~~~~~~
+{: #fig-sen-optimizations title="Enrollment EST-oscore flow with optimizations."}
+{: artwork-align="center"}
 
 # Acknowledgments
+{: numbered="no"}
 
-The authors would like to thank Marco Tiloca and John Mattsson for providing a review of the document.
+The authors would like to thank
+{{{Marco Tiloca}}}, and
+{{{John Mattsson}}}
+for providing a review of the document.
 
 --- fluff
+
+
