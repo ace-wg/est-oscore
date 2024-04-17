@@ -132,11 +132,16 @@ Hence EST payloads can be protected end-to-end independent of the underlying tra
 OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR {{RFC8949}}, and COSE {{RFC9052}} {{RFC9053}}, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH {{RFC9031}}, or for securing CoAP group messages {{I-D.ietf-core-oscore-groupcomm}}.
 Where OSCORE is implemented and used for communication security, the reuse of OSCORE for other purposes, such as enrollment, reduces the code footprint.
 
-In order to protect certificate enrollment with OSCORE, the necessary keying material (notably, the OSCORE Master Secret, see {{RFC8613}}) needs to be established between the EST-oscore client and EST-oscore server.
-For this purpose we assume by default the use of the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}, although pre-shared OSCORE keying material would also be an option.
+Prior to running EST-oscore, the protocol defined in this specification, there must exist a trust relation between the EST-oscore client and the EST-oscore server.
+This trust relation may be based on the pre-shared OSCORE security context, or based on the common root of trust.
+In case there is a pre-shared OSCORE security context, the CoAP exchange carrying EST payloads can occur immediately.
+In case there is a common root of trust, a security handshake based on the Ephemeral Diffie-Hellman over COSE (EDHOC, {{RFC9528}}) protocol needs to occur prior to running CoAP.
+How this trust relation is established is out of scope of this document.
 
+How the EST-oscore server verifies the identity of the client prior to issuing a certificate is also out of scope of this specification.
 
-Other ways to optimize the performance of certificate enrollment and certificate based authentication described in this document include the use of:
+EST-oscore defines a number of optimizations with respect to EST-coaps.
+The performance of certificate enrollment and certificate-based authentication described in this document includes the use of:
 
 * Compact representations of X.509 certificates (see {{I-D.ietf-cose-cbor-encoded-cert}})
 * Certificates by reference (see {{RFC9360}})
