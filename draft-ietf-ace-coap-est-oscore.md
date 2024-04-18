@@ -113,7 +113,7 @@ informative:
 
 Enrollment over Secure Transport (EST) is a certificate provisioning protocol over HTTPS.
 This document specifies how to carry EST over the Constrained Application Protocol (CoAP) protected with Object Security for Constrained RESTful Environments (OSCORE).
-The specification builds on top of the EST-coaps {{RFC9148}} specification, but uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC) instead of DTLS.
+The specification builds on the EST-coaps {{RFC9148}} specification, but uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC) instead of DTLS.
 The specification also leverages the certificate structures defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 --- middle
