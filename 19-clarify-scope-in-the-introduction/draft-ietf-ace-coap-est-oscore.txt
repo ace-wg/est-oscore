@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 19 October 2024                                            RISE
+Expires: 20 October 2024                                            RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                           17 April 2024
+                                                           18 April 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -23,10 +23,10 @@ Abstract
    protocol over HTTPS.  This document specifies how to carry EST over
    the Constrained Application Protocol (CoAP) protected with Object
    Security for Constrained RESTful Environments (OSCORE).  The
-   specification builds on top of the EST-coaps [RFC9148] specification,
-   but uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC)
-   instead of DTLS.  The specification also leverages the certificate
-   structures defined in [I-D.ietf-cose-cbor-encoded-cert].
+   specification builds on the EST-coaps [RFC9148] specification, but
+   uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC) instead of
+   DTLS.  The specification also leverages the certificate structures
+   defined in [I-D.ietf-cose-cbor-encoded-cert].
 
 Discussion Venues
 
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 October 2024.
+   This Internet-Draft will expire on 20 October 2024.
 
 Copyright Notice
 
