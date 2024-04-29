@@ -19,13 +19,14 @@ Expires: 31 October 2024                                            RISE
 
 Abstract
 
-   This document specifies public-key certificate enrollment procedures
-   protected with lightweight application-layer security protocols
-   suitable for Internet of Things (IoT) deployments.  The protocols
-   leverage payload formats defined in Enrollment over Secure Transport
-   (EST) and existing IoT standards including the Constrained
-   Application Protocol (CoAP), Concise Binary Object Representation
-   (CBOR), and the CBOR Object Signing and Encryption (COSE) format.
+   Enrollment over Secure Transport (EST) is a certificate provisioning
+   protocol over HTTPS.  This document specifies how to carry EST over
+   the Constrained Application Protocol (CoAP) protected with Object
+   Security for Constrained RESTful Environments (OSCORE).  The
+   specification builds on the EST-coaps [RFC9148] specification, but
+   uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC) instead of
+   DTLS.  The specification also leverages the certificate structures
+   defined in [I-D.ietf-cose-cbor-encoded-cert].
 
 Discussion Venues
 
@@ -133,17 +134,23 @@ Table of Contents
    used for communication security, the reuse of OSCORE for other
    purposes, such as enrollment, reduces the code footprint.
 
-   In order to protect certificate enrollment with OSCORE, the necessary
-   keying material (notably, the OSCORE Master Secret, see [RFC8613])
-   needs to be established between the EST-oscore client and EST-oscore
-   server.  For this purpose we assume by default the use of the
-   lightweight authenticated key exchange protocol EDHOC
-   [I-D.ietf-lake-edhoc], although pre-shared OSCORE keying material
-   would also be an option.
+   Prior to running EST-oscore, the protocol defined in this
+   specification, there must exist a trust relation between the EST-
+   oscore client and the EST-oscore server.  This trust relation may be
+   based on the pre-shared OSCORE security context, or based on the
+   common root of trust.  In case there is a pre-shared OSCORE security
+   context, the CoAP exchange carrying EST payloads can occur
+   immediately.  In case there is a common root of trust, a security
+   handshake based on the Ephemeral Diffie-Hellman over COSE (EDHOC,
+   [RFC9528]) protocol needs to occur prior to running CoAP.  How this
+   trust relation is established is out of scope of this document.
 
-   Other ways to optimize the performance of certificate enrollment and
-   certificate based authentication described in this draft include the
-   use of:
+   How the EST-oscore server verifies the identity of the client prior
+   to issuing a certificate is also out of scope of this specification.
+
+   EST-oscore defines a number of optimizations with respect to EST-
+   coaps.  The performance of certificate enrollment and certificate-
+   based authentication described in this document includes the use of:
 
    *  Compact representations of X.509 certificates (see
       [I-D.ietf-cose-cbor-encoded-cert])
@@ -165,8 +172,8 @@ Table of Contents
       OSCORE.
 
    *  The DTLS handshake is replaced by, or complemented with, the
-      lightweight authenticated key exchange protocol EDHOC
-      [I-D.ietf-lake-edhoc], and makes use of the following features:
+      lightweight authenticated key exchange protocol EDHOC [RFC9528],
+      and makes use of the following features:
 
       -  Authentication based on certificates is complemented with
          authentication based on raw public keys.
@@ -225,10 +232,10 @@ Table of Contents
 
    This specification replaces, or complements, the DTLS handshake in
    EST-coaps with the lightweight authenticated key exchange protocol
-   EDHOC [I-D.ietf-lake-edhoc].  During initial enrollment, the EST-
-   oscore client and server run EDHOC [I-D.ietf-lake-edhoc] to
-   authenticate and establish the OSCORE Security Context used to
-   protect the messages conveying EST payloads.
+   EDHOC [RFC9528].  During initial enrollment, the EST-oscore client
+   and server run EDHOC [RFC9528] to authenticate and establish the
+   OSCORE Security Context used to protect the messages conveying EST
+   payloads.
 
    The EST-oscore client MUST play the role of the EDHOC Initiator.  The
    EST-oscore server MUST play the role of the EDHOC Responder.
@@ -238,7 +245,7 @@ Table of Contents
    ensuring that an acceptable cipher suite is negotiated.  The client
    must authenticate the server before accepting any server response.
    The server must authenticate the client.  These requirements are
-   fullfilled when using EDHOC [I-D.ietf-lake-edhoc].
+   fullfilled when using EDHOC [RFC9528].
 
    The server must also provide relevant information to the CA for
    decision about issuing a certificate.
@@ -328,11 +335,11 @@ Table of Contents
    EST payloads.  External Authorization Data (EAD) fields of EDHOC are
    intentionally not used to carry EST payloads because EDHOC needs not
    be executed in the case of re-enrollment.  The DTLS handshake is
-   complemented by or replaced with EDHOC [I-D.ietf-lake-edhoc].
-   Figure 1 below shows the layered EST-oscore architecture.  Note that
-   Figure 1 does not illustrate the potential use of DTLS.  Protocol
-   design also allows that OSCORE and EDHOC messages are carried within
-   the same CoAP message, as per [I-D.ietf-core-oscore-edhoc].
+   complemented by or replaced with EDHOC [RFC9528].  Figure 1 below
+   shows the layered EST-oscore architecture.  Note that Figure 1 does
+   not illustrate the potential use of DTLS.  Protocol design also
+   allows that OSCORE and EDHOC messages are carried within the same
+   CoAP message, as per [I-D.ietf-core-oscore-edhoc].
 
                                    +----------------+
                                    |  EST messages  |
@@ -588,12 +595,12 @@ Table of Contents
 
    The EDHOC key exchange is optimized for message overhead, in
    particular the use of static DH keys instead of signature keys for
-   authentication (e.g., method 3 of [I-D.ietf-lake-edhoc]).  Together
-   with various measures listed in this document such as CBOR-encoded
-   payloads [RFC8949], CBOR certificates
-   [I-D.ietf-cose-cbor-encoded-cert], certificates by reference
-   (Section 3.4), and trust anchors without signature (Section 4.2.1), a
-   significant reduction of message sizes can be achieved.
+   authentication (e.g., method 3 of [RFC9528]).  Together with various
+   measures listed in this document such as CBOR-encoded payloads
+   [RFC8949], CBOR certificates [I-D.ietf-cose-cbor-encoded-cert],
+   certificates by reference (Section 3.4), and trust anchors without
+   signature (Section 4.2.1), a significant reduction of message sizes
+   can be achieved.
 
    Nevertheless, depending on the application, the protocol messages may
    become larger than the available frame size thus resulting in
@@ -783,13 +790,6 @@ Table of Contents
 
 9.1.  Normative References
 
-   [I-D.ietf-lake-edhoc]
-              Selander, G., Mattsson, J. P., and F. Palombini,
-              "Ephemeral Diffie-Hellman Over COSE (EDHOC)", Work in
-              Progress, Internet-Draft, draft-ietf-lake-edhoc-23, 22
-              January 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-lake-edhoc-23>.
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -848,6 +848,11 @@ Table of Contents
               the Secure Constrained Application Protocol", RFC 9148,
               DOI 10.17487/RFC9148, April 2022,
               <https://www.rfc-editor.org/info/rfc9148>.
+
+   [RFC9528]  Selander, G., Preuß Mattsson, J., and F. Palombini,
+              "Ephemeral Diffie-Hellman Over COSE (EDHOC)", RFC 9528,
+              DOI 10.17487/RFC9528, March 2024,
+              <https://www.rfc-editor.org/info/rfc9528>.
 
 9.2.  Informative References
 
