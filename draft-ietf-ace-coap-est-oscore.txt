@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 12 October 2024                                            RISE
+Expires: 31 October 2024                                            RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                           10 April 2024
+                                                           29 April 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 October 2024.
+   This Internet-Draft will expire on 31 October 2024.
 
 Copyright Notice
 
@@ -745,14 +745,18 @@ Table of Contents
    binding by using the EDHOC ephemeral key of the responder as the
    public key in the proof-of-possession algorithm which generates a
    PKCS#10 MAC.  Therefore, connection-based channel binding is in this
-   case achieved without any additional overhead.  In other cases,
-   including pre-shared OSCORE contexts, this specification makes
+   case achieved without any additional overhead.
+
+   Other cases include pre-shared OSCORE contexts and the case where the
+   signature key used for signing the CSR is different from the key used
+   in the EDHOC run.  In these other cases, this specification makes
    explicit channel binding based on the challengePassword attribute in
-   PKCS#10 requests OPTIONAL.  The challengePassword attribute could be
-   used for freshness in the case of pre-shared OSCORE contexts and a
-   re-enrollment request.  How challengePassword is generated is outside
-   of the scope of this specification and can be specified by an
-   application profile.
+   PKCS#10 requests OPTIONAL.  For example, the challengePassword
+   attribute could be used for freshness in the case of pre-shared
+   OSCORE contexts and a re-enrollment request.
+
+   How challengePassword is generated is outside of the scope of this
+   specification and can be specified by an application profile.
 
 7.  IANA Considerations
 
