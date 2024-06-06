@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 31 October 2024                                            RISE
+Expires: 8 December 2024                                            RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                           29 April 2024
+                                                             6 June 2024
 
 
                   Protecting EST Payloads with OSCORE
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 October 2024.
+   This Internet-Draft will expire on 8 December 2024.
 
 Copyright Notice
 
