@@ -517,6 +517,12 @@ IANA is requested to register the following entry in the "EDHOC Exporter Label" 
 
 ## Example Enrollment Without Optimizations
 
+The message flow without optimization starts with the EST client sending EDHOC message_1.
+The EDHOC handshake follows and concludes with the EDHOC message_3, or optionally message_4.
+EST client requests enrollment by sending a CoAP POST to the /sen endpoint.
+This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
+In response, the client receives the application/cose-c509-cert object which contains the certificate.
+
 ~~~~~~~~~~~ aasvg
 
 EST Client                   EST Server
@@ -546,6 +552,10 @@ EST Client                   EST Server
 {: artwork-align="center"}
 
 ## Example Enrollment With Optimizations
+
+The flow starts with the EST client sending EDHOC message_1.
+EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{I-D.ietf-core-oscore-edhoc}}.
+OSCORE enrollment request carries the same information as in the case without optimization.
 
 ~~~~~~~~~~~ aasvg
 
