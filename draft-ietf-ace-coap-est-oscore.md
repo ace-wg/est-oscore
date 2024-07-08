@@ -513,49 +513,14 @@ IANA is requested to register the following entry in the "EDHOC Exporter Label" 
 
 --- back
 
-# Examples
+# Example Enrollment With Optimizations
 
-## Example Enrollment Without Optimizations
-
-The message flow without optimization starts with the EST client sending EDHOC message_1.
-The EDHOC handshake follows and concludes with the EDHOC message_3, or optionally message_4.
-EST client requests enrollment by sending a CoAP POST to the /sen endpoint.
+The message flow starts with the EST client sending EDHOC message_1.
+The EDHOC handshake follows and concludes with the EDHOC message_3.
+EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{I-D.ietf-core-oscore-edhoc}}.
+The OSCORE enrollment request contains a CoAP POST to the /sen endpoint.
 This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
 In response, the client receives the application/cose-c509-cert object which contains the certificate.
-
-~~~~~~~~~~~ aasvg
-
-EST Client                   EST Server
-|                                     |
-|     EDHOC message_1                 |
-+------------------------------------>|
-|     EDHOC message_2                 |
-|<------------------------------------+
-|     EDHOC message_3                 |
-+------------------------------------>|
-|     OSCORE request to /sen          |
-+------------------------------------>|
-|           POST /.well-known/est/sen |
-|           Accept: TBD6              |
-|           Content-Format: TBD7      |
-|           Payload: Serialized TBD7  |
-|                                     |
-|     OSCORE response                 |
-|<------------------------------------+
-|           2.04 Changed              |
-|           Content-Format: TBD6      |
-|           Payload: Serialized TBD6  |
-
-|
-~~~~~~~~~~~
-{: #fig-sen-no-optimizations title="Enrollment EST-oscore flow without optimizations."}
-{: artwork-align="center"}
-
-## Example Enrollment With Optimizations
-
-The flow starts with the EST client sending EDHOC message_1.
-EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{I-D.ietf-core-oscore-edhoc}}.
-OSCORE enrollment request carries the same information as in the case without optimization.
 
 ~~~~~~~~~~~ aasvg
 
