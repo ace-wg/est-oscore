@@ -16,23 +16,22 @@ This document specifies how to carry EST over the Constrained Application Protoc
 The specification builds on the EST-coaps   specification, but uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC) instead of DTLS.
 The specification also leverages the certificate structures defined in  . 
     " name="description">
-<meta content="xml2rfc 3.21.0" name="generator">
+<meta content="xml2rfc 3.22.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-ace-coap-est-oscore-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.21.0
-    Python 3.11.9
+  xml2rfc 3.22.0
+    Python 3.12.3
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
-    Jinja2 3.1.2
-    lxml 4.9.3
-    platformdirs 4.2.1
+    Jinja2 3.1.4
+    lxml 4.9.4
+    platformdirs 4.2.2
     pycountry 22.3.5
     PyYAML 6.0.1
-    requests 2.31.0
-    setuptools 68.2.2
-    six 1.16.0
+    requests 2.32.3
+    setuptools 69.5.1
     wcwidth 0.2.13
 -->
 <link href="draft-ietf-ace-coap-est-oscore.xml" rel="alternate" type="application/rfc+xml">
@@ -1032,11 +1031,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">EST-oscore</td>
-<td class="right">June 2024</td>
+<td class="right">July 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Selander, et al.</td>
-<td class="center">Expires 8 December 2024</td>
+<td class="center">Expires 9 January 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1049,12 +1048,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-ace-coap-est-oscore-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-06-06" class="published">6 June 2024</time>
+<time datetime="2024-07-08" class="published">8 July 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-08">8 December 2024</time></dd>
+<dd class="expires"><time datetime="2025-01-09">9 January 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1117,7 +1116,7 @@ The specification also leverages the certificate structures defined in <span>[<a
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 8 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1226,21 +1225,24 @@ The specification also leverages the certificate structures defined in <span>[<a
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-example-enrollment-with-opt" class="internal xref">Example Enrollment With Optimizations</a></p>
+</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -2056,22 +2058,14 @@ For example, the challengePassword attribute could be used for freshness in the 
 </div>
 </section>
 </div>
-<div id="acknowledgments">
 <section id="section-8">
-      <h2 id="name-acknowledgments">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
-      </h2>
-<p id="section-8-1">The authors would like to thank Marco Tiloca and John Mattsson for providing a review of the document.<a href="#section-8-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<section id="section-9">
       <h2 id="name-references">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <div id="sec-normative-references">
-<section id="section-9.1">
+<section id="section-8.1">
         <h3 id="name-normative-references">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
@@ -2130,9 +2124,9 @@ For example, the challengePassword attribute could be used for freshness in the 
 </section>
 </div>
 <div id="sec-informative-references">
-<section id="section-9.2">
+<section id="section-8.2">
         <h3 id="name-informative-references">
-<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="I-D.ietf-core-oscore-edhoc">[I-D.ietf-core-oscore-edhoc]</dt>
@@ -2215,8 +2209,89 @@ For example, the challengePassword attribute could be used for freshness in the 
 </section>
 </div>
 </section>
-<div id="authors-addresses">
+<div id="example-enrollment-with-optimizations">
 <section id="appendix-A">
+      <h2 id="name-example-enrollment-with-opt">
+<a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-example-enrollment-with-opt" class="section-name selfRef">Example Enrollment With Optimizations</a>
+      </h2>
+<p id="appendix-A-1">The message flow starts with the EST client sending EDHOC message_1.
+The EDHOC handshake follows and concludes with the EDHOC message_3.
+EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in <span>[<a href="#I-D.ietf-core-oscore-edhoc" class="cite xref">I-D.ietf-core-oscore-edhoc</a>]</span>.
+The OSCORE enrollment request contains a CoAP POST to the /sen endpoint.
+This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
+In response, the client receives the application/cose-c509-cert object which contains the certificate.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<span id="name-enrollment-est-oscore-flow-"></span><div id="fig-sen-optimizations">
+<figure id="figure-3">
+        <div id="appendix-A-2.1">
+          <div class="alignCenter art-svg artwork" id="appendix-A-2.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="368" width="320" viewBox="0 0 320 368" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 8,48 L 8,336" fill="none" stroke="black"></path>
+              <path d="M 312,48 L 312,336" fill="none" stroke="black"></path>
+              <path d="M 8,80 L 304,80" fill="none" stroke="black"></path>
+              <path d="M 16,112 L 312,112" fill="none" stroke="black"></path>
+              <path d="M 8,176 L 304,176" fill="none" stroke="black"></path>
+              <path d="M 16,288 L 312,288" fill="none" stroke="black"></path>
+              <polygon class="arrowhead" points="312,176 300,170.4 300,181.6" fill="black" transform="rotate(0,304,176)"></polygon>
+              <polygon class="arrowhead" points="312,80 300,74.4 300,85.6" fill="black" transform="rotate(0,304,80)"></polygon>
+              <polygon class="arrowhead" points="24,288 12,282.4 12,293.6" fill="black" transform="rotate(180,16,288)"></polygon>
+              <polygon class="arrowhead" points="24,112 12,106.4 12,117.6" fill="black" transform="rotate(180,16,112)"></polygon>
+              <g class="text">
+                <text x="16" y="36">EST</text>
+                <text x="60" y="36">Client</text>
+                <text x="248" y="36">EST</text>
+                <text x="292" y="36">Server</text>
+                <text x="72" y="68">EDHOC</text>
+                <text x="136" y="68">message_1</text>
+                <text x="72" y="100">EDHOC</text>
+                <text x="136" y="100">message_2</text>
+                <text x="72" y="132">EDHOC</text>
+                <text x="136" y="132">message_3</text>
+                <text x="112" y="148">+</text>
+                <text x="76" y="164">OSCORE</text>
+                <text x="136" y="164">request</text>
+                <text x="180" y="164">to</text>
+                <text x="212" y="164">/sen</text>
+                <text x="116" y="196">POST</text>
+                <text x="220" y="196">/.well-known/est/sen</text>
+                <text x="128" y="212">Accept:</text>
+                <text x="180" y="212">TBD6</text>
+                <text x="160" y="228">Content-Format:</text>
+                <text x="244" y="228">TBD7</text>
+                <text x="132" y="244">Payload:</text>
+                <text x="212" y="244">Serialized</text>
+                <text x="276" y="244">TBD7</text>
+                <text x="76" y="276">OSCORE</text>
+                <text x="140" y="276">response</text>
+                <text x="116" y="308">2.04</text>
+                <text x="168" y="308">Changed</text>
+                <text x="160" y="324">Content-Format:</text>
+                <text x="244" y="324">TBD6</text>
+                <text x="132" y="340">Payload:</text>
+                <text x="212" y="340">Serialized</text>
+                <text x="276" y="340">TBD6</text>
+              </g>
+            </svg><a href="#appendix-A-2.1.1" class="pilcrow">¶</a>
+</div>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-enrollment-est-oscore-flow-" class="selfRef">Enrollment EST-oscore flow with optimizations.</a>
+        </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-B">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-B-1">The authors would like to thank
+<span class="contact-name">Marco Tiloca</span>, and
+<span class="contact-name">John Mattsson</span>
+for providing a review of the document.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-C">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
