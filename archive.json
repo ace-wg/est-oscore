@@ -1,0 +1,166 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-07-11T01:46:22.609011+00:00",
+  "repo": "ace-wg/est-oscore",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOJrmt1M5qpOPQ",
+      "title": "Add a security consideration on server-generated private keys",
+      "url": "https://github.com/ace-wg/est-oscore/issues/1",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Minutes from the ACE wg meeting on 06-June-2023:\r\n\r\n>MV (p4): comment on GH issue from MCR. Should we continue supporting server-generated private keys in EST-oscore? The hardware RNG is not enough secure for random number generation.\r\nGS: It\u2019d be good to avoid server-generated keys, but we\u2019d need first to be convinced it\u2019s a bad option to start avoiding. Otherwise we should keep it.\r\nMCR (on chat): I don\u2019t buy the \u201cwithout an OS\u201d point. If they code bare-metal, then they need to code bare-metal secure RNG, or they will have lots of problems. I haven\u2019t watched this youtube video [https://www.youtube.com/watch?v=Zuqw0-jZh9Y]\u2026 are there people in the WG who want server generated keys? Let them stand up. (I don\u2019t object to it, but I question the need).\r\nPW (on chat): I would be okay with a big fat warning that it SHOULD NOT be done unless absolutely no other way possible\r\nMV: So we can go for a big security consideration on this, and fundamentally allow it.\r\nCB: Maybe not a problem anymore with very new platforms, but practically it\u2019s still relevant. Can the server contribute to entropy? It might not fit in this document but still something to think about.\r\nGS (on chat): Something for T2TRG.\r\nCB (on chat): +1\r\nMV: Even renowned manufacturers admit to have vulnerabilities in the secure random number generation.\r\nMV: I hear consensus on keeping the option, and add a big warning in the security considerations.",
+      "createdAt": "2023-07-05T09:49:20Z",
+      "updatedAt": "2023-07-07T08:55:18Z",
+      "closedAt": "2023-07-07T08:55:18Z",
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOJrmt1M5q4Jvk",
+      "title": "Add security consideration on channel binding",
+      "url": "https://github.com/ace-wg/est-oscore/issues/3",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-07T08:55:40Z",
+      "updatedAt": "2023-07-09T09:05:05Z",
+      "closedAt": "2023-07-09T09:05:05Z",
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 2,
+      "id": "PR_kwDOJrmt1M5Utnum",
+      "title": "#1: Add security considerations on server-generated private keys",
+      "url": "https://github.com/ace-wg/est-oscore/pull/2",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-05T14:42:58Z",
+      "updatedAt": "2023-07-07T08:56:52Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "12e95948c57c9f4c7f30551243400ab61a116e31",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "1-add-a-security-consideration-on-server-generated-private-keys",
+      "headRefOid": "74109c88323acebefc5ac8563091d1a2df134f14",
+      "closedAt": "2023-07-07T08:55:16Z",
+      "mergedAt": "2023-07-07T08:55:16Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "f43decc8b9e30ae2c3830c504c2a8907d6b87c5c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5aSaE_",
+          "commit": {
+            "abbreviatedOid": "74109c8"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-07-05T15:15:47Z",
+          "updatedAt": "2023-07-05T15:15:47Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOJrmt1M5U5T40",
+      "title": "#3: Add security consideration on channel binding",
+      "url": "https://github.com/ace-wg/est-oscore/pull/4",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-07-07T09:18:40Z",
+      "updatedAt": "2023-07-09T09:05:42Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "f43decc8b9e30ae2c3830c504c2a8907d6b87c5c",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "3-add-security-consideration-on-channel-binding",
+      "headRefOid": "57a4ba28a5d27c1d0633b8650f39d5bef2337ec6",
+      "closedAt": "2023-07-09T09:05:04Z",
+      "mergedAt": "2023-07-09T09:05:04Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "c2925213385f97649a12296b4d632aade4982f85"
+      },
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Merging this in order to publish -02 before the cutoff",
+          "createdAt": "2023-07-09T09:04:58Z",
+          "updatedAt": "2023-07-09T09:04:58Z"
+        }
+      ],
+      "reviews": []
+    }
+  ]
+}
