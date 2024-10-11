@@ -27,7 +27,8 @@ Abstract
    [RFC9148] specification, but uses OSCORE and Ephemeral Diffie-Hellman
    over COSE (EDHOC) instead of DTLS.  The specification also leverages
    the certificate structures defined in
-   [I-D.ietf-cose-cbor-encoded-cert].
+   [I-D.ietf-cose-cbor-encoded-cert], which can be optionally used
+   alongside X.509 certificates.
 
 Discussion Venues
 
