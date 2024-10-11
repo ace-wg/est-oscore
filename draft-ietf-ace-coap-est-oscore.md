@@ -46,7 +46,6 @@ author:
 normative:
 
   RFC2119:
-  RFC5869:
   RFC6955:
   RFC8949:
   RFC7252:
@@ -58,25 +57,20 @@ normative:
   RFC9052:
   RFC9148:
   RFC9528:
+  RFC8446:
+  RFC9147:
+  RFC9360:
+  I-D.ietf-cose-cbor-encoded-cert:
+  I-D.ietf-core-oscore-edhoc:
 
 informative:
 
-  RFC2985:
-  RFC2986:
   RFC5272:
-  RFC5280:
-  RFC5914:
   RFC6024:
-  RFC9147:
   RFC7228:
   RFC7030:
   RFC9031:
-  RFC8446:
-  RFC7627:
-  RFC9360:
   I-D.ietf-core-oscore-groupcomm:
-  I-D.ietf-core-oscore-edhoc:
-  I-D.ietf-cose-cbor-encoded-cert:
   I-D.tiloca-core-oscore-capable-proxies:
 
   SP-800-57:
