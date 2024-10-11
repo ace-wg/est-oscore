@@ -612,7 +612,9 @@ Table of Contents
    costly retransmissions.
 
    It is recommended to prevent 6LoWPAN fragmentation, since it involves
-   an error-prone datagram reassembly.
+   an error-prone datagram reassembly.  To limit the size of the CoAP
+   payload, this document specifies the requirements on implementing
+   CoAP options Block1 and Block2 (see Section 4.4).
 
 4.7.  Delayed Responses
 
