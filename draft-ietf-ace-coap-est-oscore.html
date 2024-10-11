@@ -1835,7 +1835,7 @@ The function /skc is not available when using CBOR-encoded objects, and for serv
 It is therefore required that<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.4-2.1">
-            <p id="section-4.4-2.1.1">The EST-oscore endpoints support delayed responses<a href="#section-4.4-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-2.1.1">The EST-oscore endpoints support delayed responses (see <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.7" class="relref">Section 4.7</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>)<a href="#section-4.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-2.2">
             <p id="section-4.4-2.2.1">The endpoints supports the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
@@ -1843,8 +1843,8 @@ EST-oscore servers MUST implement Block1 and Block2.
 EST-oscore clients MUST implement Block2 and MAY implement Block1.<a href="#section-4.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-2.3">
-            <p id="section-4.4-2.3.1">The EST URLs based on https:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
-In case DTLS is additionally used, the translation target is the scheme "coaps", instead of "coap".<a href="#section-4.4-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-2.3.1">The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
+In case DTLS is additionally used, the scheme "coaps" remains in use.<a href="#section-4.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1874,7 +1874,7 @@ To limit the size of the CoAP payload, this document specifies the requirements 
         <h3 id="name-delayed-responses">
 <a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-delayed-responses" class="section-name selfRef">Delayed Responses</a>
         </h3>
-<p id="section-4.7-1">See Section 4.7 in <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
+<p id="section-4.7-1">See <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.7" class="relref">Section 4.7</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="static-dh-keys">
