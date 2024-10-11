@@ -290,7 +290,7 @@ The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} an
 | /skg           | OPTIONAL                    |
 | /skc           | OPTIONAL                    |
 | /att           | OPTIONAL                    |
-{: #table_functions cols="l l" title="Mandatory and optional EST-oscore functions"}
+{: #table_functions cols="l l" title="Mandatory and optional EST-oscore functions."}
 
 ### /crts {#crts}
 
@@ -332,7 +332,7 @@ As a reminder, Content-Format negotiation happens through CoAP's Accept option p
 |       | application/multipart-core                    | res |   62  |
 | /att  | N/A                                           | req |   -   |
 |       | application/csrattrs                          | res |  285  |
-{: #table_mediatype_asn1 cols="l l" title="EST functions and the associated ASN.1 CoAP Content-Format identifiers"}
+{: #table_mediatype_asn1 cols="l l" title="EST functions and the associated ASN.1 CoAP Content-Format identifiers."}
 
 Content-Format 281 and Content-Format 287 MUST be supported by EST-oscore servers.
 It is up to the client to support only Content-Format 281, 287 or both.
@@ -349,7 +349,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 | Function | DER-encoded ASN.1 Response, Part 1 | DER-encoded ASN.1 Response, Part 2 |
 | /skg     | 284 | 281 |
 | /skc     | 284 | 287 |
-{: #table_cft_skg_skc cols="l l" title="Response Content-Format identifiers for /skg and /skc in case of DER-encoded ASN.1 objects"}
+{: #table_cft_skg_skc cols="l l" title="Response Content-Format identifiers for /skg and /skc in case of DER-encoded ASN.1 objects."}
 
 ### CBOR-encoded Objects {#cbor}
 
@@ -368,7 +368,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |       | N/A                                           | res |   -   |
 | /att  | N/A                                           | req |   -   |
 |       | application/csrattrs                          | res | TBD5  |
-{: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers"}
+{: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
 
 In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
 
@@ -382,7 +382,7 @@ The function /skc is not available when using CBOR-encoded objects, and for serv
 
 | Function | CBOR Response, Part 1  | CBOR Response Part 2 |
 | /skg     | 101 | TBD6 |
-{: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects"}
+{: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings
 
