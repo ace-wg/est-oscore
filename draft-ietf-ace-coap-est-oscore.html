@@ -11,7 +11,7 @@
 <meta content="Mališa Vučinić" name="author">
 <meta content="Timothy Claeys" name="author">
 <meta content="
-       Enrollment over Secure Transport (EST) is a certificate provisioning protocol over HTTPS.
+       Enrollment over Secure Transport (EST) is a certificate provisioning protocol over HTTPS   or CoAPs  .
 This document specifies how to carry EST over the Constrained Application Protocol (CoAP) protected with Object Security for Constrained RESTful Environments (OSCORE).
 The specification builds on the EST-coaps   specification, but uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC) instead of DTLS.
 The specification also leverages the certificate structures defined in  . 
@@ -1081,7 +1081,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Protecting EST Payloads with OSCORE</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">Enrollment over Secure Transport (EST) is a certificate provisioning protocol over HTTPS.
+<p id="section-abstract-1">Enrollment over Secure Transport (EST) is a certificate provisioning protocol over HTTPS <span>[<a href="#RFC7030" class="cite xref">RFC7030</a>]</span> or CoAPs <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.
 This document specifies how to carry EST over the Constrained Application Protocol (CoAP) protected with Object Security for Constrained RESTful Environments (OSCORE).
 The specification builds on the EST-coaps <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> specification, but uses OSCORE and Ephemeral Diffie-Hellman over COSE (EDHOC) instead of DTLS.
 The specification also leverages the certificate structures defined in <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
