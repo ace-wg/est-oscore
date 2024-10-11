@@ -496,13 +496,7 @@ How challengePassword is generated is outside of the scope of this specification
 
 # IANA Considerations  {#iana}
 
-## EDHOC Exporter Label Registry
-
-IANA is requested to register the following entry in the "EDHOC Exporter Label" registry under the group name "Ephemeral Diffie-Hellman Over COSE (EDHOC).
-
-| Label | Description  | Response              |
-| TBD4  | EDHOC unique | \[\[this document\]\] |
-{: #table_exporter_label cols="l l l" title="EDHOC Exporter Label."}
+This document does not require any IANA registrations.
 
 --- back
 
