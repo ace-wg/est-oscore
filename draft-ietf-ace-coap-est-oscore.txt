@@ -97,7 +97,6 @@ Table of Contents
      6.1.  Server-generated Private Keys
      6.2.  Considerations on Channel Binding
    7.  IANA Considerations
-     7.1.  EDHOC Exporter Label Registry
    8.  References
      8.1.  Normative References
      8.2.  Informative References
@@ -770,19 +769,7 @@ Table of Contents
 
 7.  IANA Considerations
 
-7.1.  EDHOC Exporter Label Registry
-
-   IANA is requested to register the following entry in the "EDHOC
-   Exporter Label" registry under the group name "Ephemeral Diffie-
-   Hellman Over COSE (EDHOC).
-
-               +=======+==============+===================+
-               | Label | Description  | Response          |
-               +=======+==============+===================+
-               | TBD4  | EDHOC unique | [[this document]] |
-               +-------+--------------+-------------------+
-
-                      Table 6: EDHOC Exporter Label.
+   This document does not require any IANA registrations.
 
 8.  References
 
