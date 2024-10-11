@@ -382,12 +382,12 @@ The function /skc is not available when using CBOR-encoded objects, and for serv
 Note that the EST-oscore message characteristics are identical to those specified in Section 4.4 of {{RFC9148}}.
 It is therefore required that
 
-  * The EST-oscore endpoints support delayed responses
+  * The EST-oscore endpoints support delayed responses (see {{Section 4.7 of RFC9148}})
   * The endpoints supports the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
     EST-oscore servers MUST implement Block1 and Block2.
     EST-oscore clients MUST implement Block2 and MAY implement Block1.
-  * The EST URLs based on https:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
-    In case DTLS is additionally used, the translation target is the scheme "coaps", instead of "coap".
+  * The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
+    In case DTLS is additionally used, the scheme "coaps" remains in use.
 
 ## CoAP response codes
 
@@ -403,9 +403,9 @@ Nevertheless, depending on the application, the protocol messages may become lar
 It is recommended to prevent 6LoWPAN fragmentation, since it involves an error-prone datagram reassembly.
 To limit the size of the CoAP payload, this document specifies the requirements on implementing CoAP options Block1 and Block2 (see {{message-bindings}}).
 
-## Delayed Responses
+## Delayed Responses {#delayed-responses}
 
-See Section 4.7 in {{RFC9148}}.
+See {{Section 4.7 of RFC9148}}.
 
 ## Enrollment of Static DH Keys {#static-dh-keys}
 
