@@ -582,7 +582,8 @@ Table of Contents
 
    *  The endpoints supports the following CoAP options: OSCORE, Uri-
       Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and
-      Accept.
+      Accept.  EST-oscore servers MUST implement Block1 and Block2.
+      EST-oscore clients MUST implement Block2 and MAY implement Block1.
 
    *  The EST URLs based on https:// are translated to coap://, but with
       mandatory use of the CoAP OSCORE option.  In case DTLS is
@@ -613,9 +614,7 @@ Table of Contents
    It is recommended to prevent 6LoWPAN fragmentation, since it involves
    an error-prone datagram reassembly.  To limit the size of the CoAP
    payload, this document specifies the requirements on implementing
-   CoAP options Block1 and Block2.  EST-oscore servers MUST implement
-   Block1 and Block2.  EST-oscore clients MUST implement Block2 and MAY
-   implement Block1.
+   CoAP options Block1 and Block2 (see Section 4.4).
 
 4.7.  Delayed Responses
 
