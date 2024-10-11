@@ -377,13 +377,15 @@ The function /skc is not available when using CBOR-encoded objects, and for serv
 | /skg     | 101 | TBD6 |
 {: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
-## Message Bindings
+## Message Bindings {#message-bindings}
 
 Note that the EST-oscore message characteristics are identical to those specified in Section 4.4 of {{RFC9148}}.
 It is therefore required that
 
   * The EST-oscore endpoints support delayed responses
   * The endpoints supports the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
+    EST-oscore servers MUST implement Block1 and Block2.
+    EST-oscore clients MUST implement Block2 and MAY implement Block1.
   * The EST URLs based on https:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
     In case DTLS is additionally used, the translation target is the scheme "coaps", instead of "coap".
 
@@ -399,9 +401,7 @@ Together with various measures listed in this document such as CBOR-encoded payl
 Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource constrained networks such as IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
 
 It is recommended to prevent 6LoWPAN fragmentation, since it involves an error-prone datagram reassembly.
-To limit the size of the CoAP payload, this document specifies the requirements on implementing CoAP options Block1 and Block2.
-EST-oscore servers MUST implement Block1 and Block2.
-EST-oscore clients MUST implement Block2 and MAY implement Block1.
+To limit the size of the CoAP payload, this document specifies the requirements on implementing CoAP options Block1 and Block2 (see {{message-bindings}}).
 
 ## Delayed Responses
 
