@@ -127,7 +127,7 @@ One optimization of certificate enrollment targeting IoT deployments is specifie
 This document describes a method for protecting EST payloads over CoAP or HTTP with OSCORE {{RFC8613}}.
 OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported.
 OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data.
-Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between between CoAP and HTTP.
+Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between CoAP and HTTP.
 
 OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR {{RFC8949}}, and COSE {{RFC9052}} {{RFC9053}}, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH {{RFC9031}}, or for securing CoAP group messages {{I-D.ietf-core-oscore-groupcomm}}.
 Where OSCORE is implemented and used for communication security, the reuse of OSCORE for other purposes, such as enrollment, reduces the code footprint.
@@ -143,7 +143,7 @@ How the EST-oscore server verifies the identity of the client prior to issuing a
 EST-oscore defines a number of optimizations with respect to EST-coaps.
 The performance of certificate enrollment and certificate-based authentication described in this document includes the use of:
 
-* Compact representations of X.509 certificates (see {{I-D.ietf-cose-cbor-encoded-cert}})
+* Compact CBOR representations of X.509 certificates (see {{I-D.ietf-cose-cbor-encoded-cert}})
 * Certificates by reference (see {{RFC9360}})
 * Compact, CBOR representations of EST payloads (see {{I-D.ietf-cose-cbor-encoded-cert}})
 
@@ -174,13 +174,13 @@ The term "Trust Anchor" follows the terminology of {{RFC6024}}:
 The public key is used to verify digital signatures, and the associated data is used to constrain the types of information for which the trust anchor is authoritative."
 
 Apart from enrolling signature keys, this document also specifies how to enroll static DH keys.
-Instead of signing, possession of the private static DH key may be proved by generating a MAC given the recipients public DH key.
-Therefore this document extends the definition of the term "Trust Anchor" in a sense that its public key can also be used for MAC generation for static DH proof of possession procedures defined.
+Instead of signing, possession of the private static DH key may be proved by generating a MAC given the recipient's public DH key.
+Therefore this document extends the definition of the term "Trust Anchor": the corresponding public key can also be used for MAC generation for static DH proof of possession procedures.
 
 # Authentication
 
 This specification replaces, or complements, the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
-During initial enrollment, the EST-oscore client and server run EDHOC {{RFC9528}} to authenticate and establish the OSCORE Security Context used to protect the messages conveying EST payloads.
+During initial enrollment, the EST-oscore client and server run EDHOC {{RFC9528}} to authenticate and establish the OSCORE Security Context used to protect the messages carrying EST payloads.
 
 The EST-oscore client MUST play the role of the EDHOC Initiator.
 The EST-oscore server MUST play the role of the EDHOC Responder.
@@ -191,13 +191,13 @@ The client must authenticate the server before accepting any server response.
 The server must authenticate the client.
 These requirements are fullfilled when using EDHOC {{RFC9528}}.
 
-The server must also provide relevant information to the CA for decision about issuing a certificate.
+The server must also provide relevant information to the CA to support its decision about issuing a certificate.
 
 ## EDHOC
 
-EDHOC supports authentication with certificates/raw public keys (referred to as "credentials"), and the credentials may either be transported in the protocol, or referenced.
+EDHOC supports authentication with certificates or raw public keys (referred to as "credentials"), and the credentials may either be transported in the protocol, or referenced.
 This is determined by the identifier of the credential of the endpoint, ID_CRED_x for x= Initiator/Responder, which is transported in an EDHOC message.
-This identifier may be the credential itself (in which case the credential is transported), or a pointer such as a URI to the credential (e.g., x5u, see {{RFC9360}}) or some other identifier which enables the receiving endpoint to retrieve the credential.
+This identifier may be the credential itself (in which case the credential is transported), or a pointer such as a URI of the credential (e.g., x5u, see {{RFC9360}}) or some other identifier which enables the receiving endpoint to retrieve the credential.
 
 ## Certificate-based Authentication
 
@@ -237,7 +237,7 @@ Additionally, subsequent EDHOC sessions using static DH keys for authentication 
 
 # Protocol Design and Layering
 
-EST-oscore uses CoAP {{RFC7252}} and Block-Wise {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
+EST-oscore uses CoAP {{RFC7252}} and Block-Wise transfer {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
 Instead of DTLS record layer, OSCORE {{RFC8613}} is used to protect the messages conveying the EST payloads.
 External Authorization Data (EAD) fields of EDHOC are intentionally not used to carry EST payloads because EDHOC needs not be executed in the case of re-enrollment.
 The DTLS handshake is complemented by or replaced with EDHOC {{RFC9528}}.
@@ -254,7 +254,7 @@ Protocol design also allows that OSCORE and EDHOC messages are carried within th
 |        CoAP or HTTP         |
 +-----------------------------+
 ~~~~~~~~~~~
-{: #fig-stack title="EST protected with OSCORE."}
+{: #fig-stack title="The stack diagram of EST protected with OSCORE."}
 {: artwork-align="center"}
 
 EST-oscore follows much of the EST-coaps and EST design.
@@ -398,14 +398,14 @@ It is therefore required that
 
 See Section 4.5 in {{RFC9148}}.
 
-## Message fragmentation
+## Message Fragmentation
 
 The EDHOC key exchange is optimized for message overhead, in particular the use of static DH keys instead of signature keys for authentication (e.g., method 3 of {{RFC9528}}).
 Together with various measures listed in this document such as CBOR-encoded payloads {{RFC8949}}, CBOR certificates {{I-D.ietf-cose-cbor-encoded-cert}}, certificates by reference ({{optimizations}}), and trust anchors without signature ({{crts}}), a significant reduction of message sizes can be achieved.
 
 Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource constrained networks such as IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
 
-It is recommended to prevent IP fragmentation, since it involves an error-prone datagram reassembly.
+It is recommended to prevent 6LoWPAN fragmentation, since it involves an error-prone datagram reassembly.
 To limit the size of the CoAP payload, this document specifies the requirements on implementing CoAP options Block1 and Block2.
 EST-oscore servers MUST implement Block1 and Block2.
 EST-oscore clients MUST implement Block2 and MAY implement Block1.
