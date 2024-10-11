@@ -223,12 +223,12 @@ Table of Contents
    information for which the trust anchor is authoritative."
 
    Apart from enrolling signature keys, this document also specifies how
-   to enroll static DH keys.  Instead of signing, possession of the
-   private static DH key may be proved by generating a MAC given the
-   recipient's public DH key.  Therefore this document extends the
-   definition of the term "Trust Anchor": the corresponding public key
-   can also be used for MAC generation for static DH proof of possession
-   procedures.
+   to enroll static Diffie-Hellman (DH) keys.  Instead of signing,
+   possession of the private static DH key may be proved by generating a
+   MAC given the recipient's public DH key.  Therefore this document
+   extends the definition of the term "Trust Anchor": the corresponding
+   public key can also be used for MAC generation for static DH proof of
+   possession procedures.
 
 3.  Authentication
 
