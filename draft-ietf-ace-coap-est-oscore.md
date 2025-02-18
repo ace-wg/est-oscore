@@ -60,6 +60,7 @@ normative:
   RFC8446:
   RFC9147:
   RFC9360:
+  RFC8392:
   I-D.ietf-cose-cbor-encoded-cert:
   I-D.ietf-core-oscore-edhoc:
 
@@ -255,6 +256,7 @@ Protocol design also allows that OSCORE and EDHOC messages are carried within th
 {: artwork-align="center"}
 
 EST-oscore follows much of the EST-coaps and EST design.
+This includes the need to authenticate the EST-server before performing any request on the different EST endpoints specified in this document.
 
 ## Discovery and URI     {#discovery}
 
@@ -292,11 +294,10 @@ The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} an
 ### /crts {#crts}
 
 EST-coaps provides the /crts operation.
-A successful request from the client to this resource will be answered with a bag of certificates which is subsequently installed in the Explicit TA.
+A successful request from the client to this resource will be answered with a bag of certificates which is subsequently installed in the TA database, resulting in Explicit TAs.
 
-A trust anchor is commonly a self-signed certificate of the CA public key.
-In order to reduce transport overhead, the trust anchor could be just the CA public key and associated data (see {{terminology}}), e.g., the SubjectPublicKeyInfo, or a public key certificate without the signature.
-In either case they can be compactly encoded, e.g. using CBOR encoding {{I-D.ietf-cose-cbor-encoded-cert}}.
+A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
+In order to reduce transport overhead, the trust anchor could be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}, or a CWT Claims Set (CCS) {{RFC8392}}, containing the CA public key and associated data without a signature.
 
 ## Payload formats
 
