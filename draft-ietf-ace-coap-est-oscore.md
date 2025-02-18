@@ -166,7 +166,7 @@ The term "Trust Anchor" follows the terminology of {{RFC6024}}:
 "A trust anchor represents an authoritative entity via a public key and associated data.
 The public key is used to verify digital signatures, and the associated data is used to constrain the types of information for which the trust anchor is authoritative."
 
-Apart from enrolling signature keys, this document also specifies how to enroll static Diffie-Hellman (DH) keys.
+Apart from enrolling certificates with keys that are used for signing, this document also specifies how to enroll certificates with keys that are used for DH operations (static DH keys).
 Instead of signing, possession of the private static DH key may be proved by generating a MAC given the recipient's public DH key.
 Therefore this document extends the definition of the term "Trust Anchor": the corresponding public key can also be used for MAC generation for static DH proof of possession procedures.
 
