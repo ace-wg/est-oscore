@@ -117,9 +117,9 @@ One of the challenges with deploying a Public Key Infrastructure (PKI) for the I
 
 One optimization of certificate enrollment targeting IoT deployments is specified in EST-coaps {{RFC9148}}, which defines a version of Enrollment over Secure Transport {{RFC7030}} for transporting EST payloads over CoAP {{RFC7252}} and DTLS {{RFC9147}}, instead of HTTP and TLS {{RFC8446}}.
 
-This document describes a method for protecting EST payloads over CoAP or HTTP with OSCORE {{RFC8613}}.
+This document describes a method for protecting EST payloads over CoAP with OSCORE {{RFC8613}}.
 OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported.
-OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data.
+OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data (see {{Section 11 of RFC8613}}).
 Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between CoAP and HTTP.
 
 OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR {{RFC8949}}, and COSE {{RFC9052}} {{RFC9053}}, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH {{RFC9031}}, or for securing CoAP group messages {{I-D.ietf-core-oscore-groupcomm}}.
