@@ -358,7 +358,10 @@ Table of Contents
 
          Figure 1: The stack diagram of EST protected with OSCORE.
 
-   EST-oscore follows much of the EST-coaps and EST design.
+   EST-oscore follows much of the EST-coaps and EST design.  This
+   includes the need to authenticate the EST-server before performing
+   any request on the different EST endpoints specified in this
+   document.
 
 4.1.  Discovery and URI
 
@@ -410,14 +413,16 @@ Table of Contents
 
    EST-coaps provides the /crts operation.  A successful request from
    the client to this resource will be answered with a bag of
-   certificates which is subsequently installed in the Explicit TA.
+   certificates which is subsequently installed in the TA database,
+   resulting in Explicit TAs.
 
    A trust anchor is commonly a self-signed certificate of the CA public
-   key.  In order to reduce transport overhead, the trust anchor could
-   be just the CA public key and associated data (see Section 2), e.g.,
-   the SubjectPublicKeyInfo, or a public key certificate without the
-   signature.  In either case they can be compactly encoded, e.g. using
-   CBOR encoding [I-D.ietf-cose-cbor-encoded-cert].
+   key, of the format indicated by the CoAP Accept option present in the
+   request.  In order to reduce transport overhead, the trust anchor
+   could be a CBOR encoding of an X.509 certificate
+   [I-D.ietf-cose-cbor-encoded-cert], or a CWT Claims Set (CCS)
+   [RFC8392], containing the CA public key and associated data without a
+   signature.
 
 4.3.  Payload formats
 
@@ -825,6 +830,10 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [RFC8392]  Jones, M., Wahlstroem, E., Erdtman, S., and H. Tschofenig,
+              "CBOR Web Token (CWT)", RFC 8392, DOI 10.17487/RFC8392,
+              May 2018, <https://www.rfc-editor.org/info/rfc8392>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
