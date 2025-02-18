@@ -61,8 +61,8 @@ normative:
   RFC9147:
   RFC9360:
   RFC8392:
+  RFC9668:
   I-D.ietf-cose-cbor-encoded-cert:
-  I-D.ietf-core-oscore-edhoc:
 
 informative:
 
@@ -218,7 +218,7 @@ Connection-based proof-of-possession using the challengePassword attribute of th
 
 This section contains optional behavior that may be used to reduce message sizes or round trips based on the application configuration.
 
-* The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips {{I-D.ietf-core-oscore-edhoc}}.
+* The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips {{RFC9668}}.
 
 * The enrolled certificates MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
@@ -241,7 +241,7 @@ External Authorization Data (EAD) fields of EDHOC are intentionally not used to 
 The DTLS handshake is complemented by or replaced with EDHOC {{RFC9528}}.
 {{fig-stack}} below shows the layered EST-oscore architecture.
 Note that {{fig-stack}} does not illustrate the potential use of DTLS.
-Protocol design also allows that OSCORE and EDHOC messages are carried within the same CoAP message, as per {{I-D.ietf-core-oscore-edhoc}}.
+Protocol design also allows that OSCORE and EDHOC messages are carried within the same CoAP message, as per {{RFC9668}}.
 
 ~~~~~~~~~~~ aasvg
              +----------------+
@@ -430,9 +430,9 @@ To generate a MAC according to the algorithm outlined in {{Section 6 of RFC6955}
 In the general case, the EST client MAY obtain the CA certs including the CA's DH certificate using the /crts function using an explicit request/response flow.
 The obtained certificate indicates the DH group parameters which MUST be respected by the EST client when generating its own DH key pair.
 
-As an optimization, when EDHOC precedes the enrollment and combined OSCORE-EDHOC flow is being used in EDHOC message_3 and message_4 per {{I-D.ietf-core-oscore-edhoc}}, the client MUST use the public ephemeral key of the EDHOC Responder, G_Y, as the recipient public key in the algorithm outlined in {{Section 6 of RFC6955}}.
+As an optimization, when EDHOC precedes the enrollment and combined OSCORE-EDHOC flow is being used in EDHOC message_3 and message_4 per {{RFC9668}}, the client MUST use the public ephemeral key of the EDHOC Responder, G_Y, as the recipient public key in the algorithm outlined in {{Section 6 of RFC6955}}.
 When generating its DH key pair, the client uses the group parameters as indicated by the EDHOC cipher suite in use in the EDHOC session.
-Because the combined delivery is used per {{I-D.ietf-core-oscore-edhoc}}, the client has already in EDHOC message_2 obtained the ephemeral key G_Y of the server.
+Because the combined delivery is used per {{RFC9668}}, the client has already in EDHOC message_2 obtained the ephemeral key G_Y of the server.
 
 # HTTP-CoAP Proxy {#proxying}
 
@@ -509,7 +509,7 @@ This document does not require any IANA registrations.
 
 The message flow starts with the EST client sending EDHOC message_1.
 The EDHOC handshake follows and concludes with the EDHOC message_3.
-EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{I-D.ietf-core-oscore-edhoc}}.
+EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{RFC9668}}.
 The OSCORE enrollment request contains a CoAP POST to the /sen endpoint.
 This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
 In response, the client receives the application/cose-c509-cert object which contains the certificate.
