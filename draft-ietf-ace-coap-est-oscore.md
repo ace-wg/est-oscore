@@ -173,7 +173,9 @@ Therefore this document extends the definition of the term "Trust Anchor": the c
 # Authentication
 
 This specification replaces, or complements, the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
-During initial enrollment, the EST-oscore client and server run EDHOC {{RFC9528}} to authenticate and establish the OSCORE Security Context used to protect the messages carrying EST payloads.
+The enrollment using EST-oscore is based on the existence of an OSCORE Security Context protecting the EST payloads.
+This Security Context is typically established through an EDHOC session preceding the initial enrollment.
+Re-enrollment does not require a new EDHOC session.
 
 The EST-oscore client MUST play the role of the EDHOC Initiator.
 The EST-oscore server MUST play the role of the EDHOC Responder.
