@@ -1,6 +1,6 @@
 # Protecting EST Payloads with OSCORE
 
-This is the working area for the IETF [ACE Working Group](https://datatracker.ietf.org/wg/ace/documents/) Internet-Draft, "Protecting EST Payloads with OSCORE".
+This is the working area for the IETF [ACE Working Group](https://datatracker.ietf.org/group/ace/documents/) Internet-Draft, "Protecting EST Payloads with OSCORE".
 
 * [Editor's Copy](https://ace-wg.github.io/est-oscore/#go.draft-ietf-ace-coap-est-oscore.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-ace-coap-est-oscore)
