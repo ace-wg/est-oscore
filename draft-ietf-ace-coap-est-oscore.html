@@ -1407,26 +1407,27 @@ Connection-based proof-of-possession using the challengePassword attribute of th
         <h3 id="name-optimizations">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-optimizations" class="section-name selfRef">Optimizations</a>
         </h3>
+<p id="section-3.4-1">This section contains optional behavior that may be used to reduce message sizes or round trips based on the application configuration.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.4-1.1">
-            <p id="section-3.4-1.1.1">The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips <span>[<a href="#I-D.ietf-core-oscore-edhoc" class="cite xref">I-D.ietf-core-oscore-edhoc</a>]</span>.<a href="#section-3.4-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.4-2.1">
+            <p id="section-3.4-2.1.1">The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips <span>[<a href="#I-D.ietf-core-oscore-edhoc" class="cite xref">I-D.ietf-core-oscore-edhoc</a>]</span>.<a href="#section-3.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-1.2">
-            <p id="section-3.4-1.2.1">The enrolled certificates MAY be the CBOR-encoded certificates defined in <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-3.4-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.4-2.2">
+            <p id="section-3.4-2.2.1">The enrolled certificates MAY be the CBOR-encoded certificates defined in <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-3.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-1.3">
-            <p id="section-3.4-1.3.1">The enrolled client certificate MAY be referenced instead of transported <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
+          <li class="normal" id="section-3.4-2.3">
+            <p id="section-3.4-2.3.1">The enrolled client certificate MAY be referenced instead of transported <span>[<a href="#RFC9360" class="cite xref">RFC9360</a>]</span>.
 The EST-oscore server MAY use information in the credential identifier field of the EDHOC message (ID_CRED_x) to access the EST-oscore client certificate, e.g., in a directory or database provided by the issuer.
-In this case the certificate may not need to be transported over a constrained link between EST client and server.<a href="#section-3.4-1.3.1" class="pilcrow">¶</a></p>
+In this case the certificate may not need to be transported over a constrained link between EST client and server.<a href="#section-3.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-1.4">
-            <p id="section-3.4-1.4.1">Conversely, the response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself.
-The EST-oscore server MAY in the enrollment response to the EST-oscore client include a pointer to a directory or database where the certificate can be retrieved.<a href="#section-3.4-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.4-2.4">
+            <p id="section-3.4-2.4.1">Conversely, the response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself.
+The EST-oscore server MAY in the enrollment response to the EST-oscore client include a pointer to a directory or database where the certificate can be retrieved.<a href="#section-3.4-2.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-1.5">
-            <p id="section-3.4-1.5.1">The PKCS#10 object MAY request a certificate for a static DH key instead of a signature key.
+          <li class="normal" id="section-3.4-2.5">
+            <p id="section-3.4-2.5.1">The PKCS#10 object MAY request a certificate for a static DH key instead of a signature key.
 This may result in a more compact request because the use of static DH keys may imply a proof-of-posession using a MAC, which is shorter than a signature.
-Additionally, subsequent EDHOC sessions using static DH keys for authentication have less overhead than key exchange protocols using signature-based authentication credentials.<a href="#section-3.4-1.5.1" class="pilcrow">¶</a></p>
+Additionally, subsequent EDHOC sessions using static DH keys for authentication have less overhead than key exchange protocols using signature-based authentication credentials.<a href="#section-3.4-2.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
