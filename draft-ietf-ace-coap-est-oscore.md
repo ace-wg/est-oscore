@@ -215,6 +215,8 @@ Connection-based proof-of-possession using the challengePassword attribute of th
 
 ## Optimizations {#optimizations}
 
+This section contains optional behavior that may be used to reduce message sizes or round trips based on the application configuration.
+
 * The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips {{I-D.ietf-core-oscore-edhoc}}.
 
 * The enrolled certificates MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
