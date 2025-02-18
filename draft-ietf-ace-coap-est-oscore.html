@@ -1356,7 +1356,9 @@ Therefore this document extends the definition of the term "Trust Anchor": the c
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
       </h2>
 <p id="section-3-1">This specification replaces, or complements, the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.
-During initial enrollment, the EST-oscore client and server run EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span> to authenticate and establish the OSCORE Security Context used to protect the messages carrying EST payloads.<a href="#section-3-1" class="pilcrow">¶</a></p>
+The enrollment using EST-oscore is based on the existence of an OSCORE Security Context protecting the EST payloads.
+This Security Context is typically established through an EDHOC session preceding the initial enrollment.
+Re-enrollment does not require a new EDHOC session.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">The EST-oscore client MUST play the role of the EDHOC Initiator.
 The EST-oscore server MUST play the role of the EDHOC Responder.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">The EST-oscore clients and servers must perform mutual authentication.
