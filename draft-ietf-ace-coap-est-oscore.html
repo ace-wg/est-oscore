@@ -1345,7 +1345,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-2-3">The term "Trust Anchor" follows the terminology of <span>[<a href="#RFC6024" class="cite xref">RFC6024</a>]</span>:
 "A trust anchor represents an authoritative entity via a public key and associated data.
 The public key is used to verify digital signatures, and the associated data is used to constrain the types of information for which the trust anchor is authoritative."<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">Apart from enrolling signature keys, this document also specifies how to enroll static Diffie-Hellman (DH) keys.
+<p id="section-2-4">Apart from enrolling certificates with keys that are used for signing, this document also specifies how to enroll certificates with keys that are used for DH operations (static DH keys).
 Instead of signing, possession of the private static DH key may be proved by generating a MAC given the recipient's public DH key.
 Therefore this document extends the definition of the term "Trust Anchor": the corresponding public key can also be used for MAC generation for static DH proof of possession procedures.<a href="#section-2-4" class="pilcrow">¶</a></p>
 </section>
