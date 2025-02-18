@@ -91,7 +91,7 @@ Table of Contents
      4.5.  CoAP response codes
      4.6.  Message Fragmentation
      4.7.  Delayed Responses
-     4.8.  Enrollment of Static DH Keys
+     4.8.  Enrollment of Certificates with Static DH Keys
    5.  HTTP-CoAP Proxy
    6.  Security Considerations
      6.1.  Server-generated Private Keys
@@ -630,16 +630,16 @@ Table of Contents
 
    See Section 4.7 of [RFC9148].
 
-4.8.  Enrollment of Static DH Keys
+4.8.  Enrollment of Certificates with Static DH Keys
 
    This section specifies how the EST client enrolls a static DH key.
    In general, a given key pair should only be used for a single
    purpose, such as key establishment, digital signature, key transport.
 
    The EST client attempting to enroll a DH key for a key usage
-   operation other than digital signature SHOULD use an alternative
-   proof-of-possession algorithm: The EST client SHOULD prepare the
-   PKCS#10 object and compute a MAC, replacing the signature, over the
+   operation other than digital signature can use an alternative proof-
+   of-possession algorithm: The EST client SHOULD prepare the PKCS#10
+   object and compute a MAC, replacing the signature, over the
    certification request information by following the steps in Section 6
    of [RFC6955].  The Key Derivation Function (KDF) and the MAC MUST be
    set to the HDKF and HMAC algorithms used by OSCORE.  The KDF and MAC
@@ -647,6 +647,14 @@ Table of Contents
    HMAC, which by default is SHA-256.  When EDHOC is used, then the hash
    algorithm is the application hash algorithm of the selected cipher
    suite.
+
+   In some cases, it may be beneficial to exceptionally use the static
+   DH private key associated to the public key used in enrollment for a
+   one-time signing operation of the CSR.  While a key pair should only
+   be used for a single purpose (e.g. key establishment or signing),
+   this exceptional use for one-time signing of the CSR is allowed, as
+   discussed in Section 5.6.3.2 of [SP-800-56A] and Section 5.2 of
+   [SP-800-57].
 
    To generate a MAC according to the algorithm outlined in Section 6 of
    [RFC6955], the client needs to know the public DH key of the proof-
@@ -667,14 +675,6 @@ Table of Contents
    Because the combined delivery is used per
    [I-D.ietf-core-oscore-edhoc], the client has already in EDHOC
    message_2 obtained the ephemeral key G_Y of the server.
-
-   In some cases, it may be beneficial to exceptionally use the static
-   DH private key associated to the public key used in enrollment for a
-   one-time signing operation of the CSR.  While a key pair should only
-   be used for a single purpose (e.g. key establishment or signing),
-   this exceptional use for one-time signing of the CSR is allowed, as
-   discussed in Section 5.6.3.2 of [SP-800-56A] and Section 5.2 of
-   [SP-800-57].
 
 5.  HTTP-CoAP Proxy
 
