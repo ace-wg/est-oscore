@@ -203,6 +203,7 @@ During the initial enrollment the client SHOULD populate its Explicit TA databas
 
 The EST client and EST server certificate SHOULD conform to {{RFC7925}}.
 The EST client and/or EST server certificate MAY be a (natively signed) CBOR certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
+The EST client indicates its preference for the type of the certificate it supports through the Accept option included in the request to the EST server.
 
 ## Channel Binding {#channel-binding}
 
