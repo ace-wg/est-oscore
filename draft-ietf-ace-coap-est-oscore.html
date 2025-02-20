@@ -1384,7 +1384,7 @@ This identifier may be the credential itself (in which case the credential is tr
         </h3>
 <p id="section-3.2-1">EST-oscore, like EST-coaps, supports certificate-based authentication between the EST client and server.
 The client MUST be configured with an Implicit or Explicit Trust Anchor (TA) <span>[<a href="#RFC7030" class="cite xref">RFC7030</a>]</span> database, enabling the client to authenticate the server.
-During the initial enrollment the client SHOULD populate its Explicit TA database and use it for subsequent authentications.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+The requirements on managing the Implicit and Explicit TA databases are discussed in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-9.1" class="relref">Section 9.1</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc9148#section-9.2" class="relref">Section 9.2</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> and apply to EST-oscore.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">The EST client and EST server certificate SHOULD conform to <span>[<a href="#RFC7925" class="cite xref">RFC7925</a>]</span>.
 The EST client and/or EST server certificate MAY be a (natively signed) CBOR certificate <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.
 The EST client indicates its preference for the type of the certificate it supports through the Accept option included in the request to the EST server.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
