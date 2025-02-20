@@ -146,8 +146,8 @@ The performance of certificate enrollment and certificate-based authentication d
 The protection of EST payloads defined in this document builds on EST-coaps {{RFC9148}} but transport layer security is replaced, or complemented, by protection of the transfer- and application layer data (i.e., CoAP message fields and payload).
 This specification deviates from EST-coaps in the following respects:
 
-* The DTLS record layer is replaced by, or complemented with, OSCORE.
-* The DTLS handshake is replaced by, or complemented with, the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}, and makes use of the following features:
+* The DTLS record layer is replaced by OSCORE.
+* The DTLS handshake is replaced by the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}, and makes use of the following features:
    * Authentication based on certificates is complemented with authentication based on raw public keys.
    * Authentication based on signature keys is complemented with authentication based on static Diffie-Hellman keys, for certificates/raw public keys.
    * Authentication based on certificate by value is complemented with authentication based on certificate/raw public keys by reference.
@@ -173,7 +173,7 @@ Therefore this document extends the definition of the term "Trust Anchor": the c
 
 # Authentication
 
-This specification replaces, or complements, the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
+This specification replaces the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
 The enrollment using EST-oscore is based on the existence of an OSCORE Security Context protecting the EST payloads.
 This Security Context is typically established through an EDHOC session preceding the initial enrollment.
 Re-enrollment does not require a new EDHOC session.
@@ -238,9 +238,8 @@ Additionally, subsequent EDHOC sessions using static DH keys for authentication 
 EST-oscore uses CoAP {{RFC7252}} and Block-Wise transfer {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
 Instead of DTLS record layer, OSCORE {{RFC8613}} is used to protect the messages conveying the EST payloads.
 External Authorization Data (EAD) fields of EDHOC are intentionally not used to carry EST payloads because EDHOC needs not be executed in the case of re-enrollment.
-The DTLS handshake is complemented by or replaced with EDHOC {{RFC9528}}.
+The DTLS handshake is replaced with EDHOC {{RFC9528}}.
 {{fig-stack}} below shows the layered EST-oscore architecture.
-Note that {{fig-stack}} does not illustrate the potential use of DTLS.
 Protocol design also allows that OSCORE and EDHOC messages are carried within the same CoAP message, as per {{RFC9668}}.
 
 ~~~~~~~~~~~ aasvg
@@ -275,7 +274,6 @@ Example:
 ~~~~~~~~~~~
 
 The use of the "osc" attribute is REQUIRED.
-In scenarios where OSCORE and DTLS are combined, the absence of the "osc" attribute might wrongly suggest that the EST server is actually using EST-coaps, because of the scheme "coaps", when it is using EST-oscore.
 
 ## Mandatory/optional EST Functions {#est-functions}
 
@@ -392,7 +390,6 @@ It is therefore required that
     EST-oscore servers MUST implement Block1 and Block2.
     EST-oscore clients MUST implement Block2 and MAY implement Block1.
   * The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
-    In case DTLS is additionally used, the scheme "coaps" remains in use.
 
 ## CoAP response codes
 
@@ -445,7 +442,6 @@ Therefore the concept "Registrar" and its required trust relation with EST serve
 The mappings between CoAP and HTTP referred to in Section 8.1 of {{RFC9148}} apply, and additional mappings resulting from the use of OSCORE are specified in Section 11 of {{RFC8613}}.
 
 OSCORE provides end-to-end security between EST Server and EST Client.
-The additional use of TLS and DTLS is optional.
 If a secure association is needed between the EST Client and the CoAP-to-HTTP Proxy, this may also rely on OSCORE {{I-D.tiloca-core-oscore-capable-proxies}}.
 
 ~~~~~~~~~~~ aasvg
@@ -456,7 +452,7 @@ If a secure association is needed between the EST Client and the CoAP-to-HTTP Pr
        |                           |                             |
    .------.  HTTP   .-----------------.   CoAP   .-----------.   |
    | EST  |<------->|  CoAP-to-HTTP   |<-------->| EST Client|   |
-   |Server|  (TLS)  |      Proxy      |  (DTLS)  '-----------'   |
+   |Server|  (TLS)  |      Proxy      |          '-----------'   |
    '------'         '-----------------'                          |
                                    |                             |
        <------------------------------------------------>        |
