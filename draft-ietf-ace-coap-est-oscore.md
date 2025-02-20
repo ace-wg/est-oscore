@@ -201,7 +201,7 @@ EST-oscore, like EST-coaps, supports certificate-based authentication between th
 The client MUST be configured with an Implicit or Explicit Trust Anchor (TA) {{RFC7030}} database, enabling the client to authenticate the server.
 During the initial enrollment the client SHOULD populate its Explicit TA database and use it for subsequent authentications.
 
-The EST client certificate SHOULD conform to {{RFC7925}}.
+The EST client and EST server certificate SHOULD conform to {{RFC7925}}.
 The EST client and/or EST server certificate MAY be a (natively signed) CBOR certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 ## Channel Binding {#channel-binding}
