@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 22 August 2025                                             RISE
+Expires: 24 August 2025                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                        18 February 2025
+                                                        20 February 2025
 
 
                   Protecting EST Payloads with OSCORE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 August 2025.
+   This Internet-Draft will expire on 24 August 2025.
 
 Copyright Notice
 
@@ -275,9 +275,9 @@ Table of Contents
    enrollment the client SHOULD populate its Explicit TA database and
    use it for subsequent authentications.
 
-   The EST client certificate SHOULD conform to [RFC7925].  The EST
-   client and/or EST server certificate MAY be a (natively signed) CBOR
-   certificate [I-D.ietf-cose-cbor-encoded-cert].
+   The EST client and EST server certificate SHOULD conform to
+   [RFC7925].  The EST client and/or EST server certificate MAY be a
+   (natively signed) CBOR certificate [I-D.ietf-cose-cbor-encoded-cert].
 
 3.3.  Channel Binding
 
