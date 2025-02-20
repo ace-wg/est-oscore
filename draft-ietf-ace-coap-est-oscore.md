@@ -487,14 +487,15 @@ It is therefore important to use multiple randomness sources to seed the cryptog
 ## Considerations on Channel Binding
 
 {{Section 3 of RFC9148}} specifies that the use of connection-based channel binding is optional, and achieves it by including the tls-unique value in the CSR.
-This specification when used with EDHOC for the enrollment of static DH keys achieves connection-based channel binding by using the EDHOC ephemeral key of the responder as the public key in the proof-of-possession algorithm which generates a PKCS#10 MAC.
+As a special case, this specification when used with EDHOC for the enrollment of static DH keys achieves connection-based channel binding by using the EDHOC ephemeral key of the responder as the public key in the proof-of-possession algorithm which generates a PKCS#10 MAC.
 Therefore, connection-based channel binding is in this case achieved without any additional overhead.
 
 Other cases include pre-shared OSCORE contexts and the case where the signature key used for signing the CSR is different from the key used in the EDHOC run.
 In these other cases, this specification makes explicit channel binding based on the challengePassword attribute in PKCS#10 requests OPTIONAL.
 For example, the challengePassword attribute could be used for freshness in the case of pre-shared OSCORE contexts and a re-enrollment request.
 
-How challengePassword is generated is outside of the scope of this specification and can be specified by an application profile.
+EST-servers MUST support the challengePassword attribute in PKCS#10 requests.
+How challengePassword is processed is outside of the scope of this specification and can be specified by an application profile.
 
 # IANA Considerations  {#iana}
 
