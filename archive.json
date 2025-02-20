@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-11T01:46:22.609011+00:00",
+  "timestamp": "2025-02-20T01:06:11.735146+00:00",
   "repo": "ace-wg/est-oscore",
   "labels": [
     {
@@ -47,6 +47,21 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "ietf-118",
+      "description": "Presented during IETF-118",
+      "color": "A7C2A0"
+    },
+    {
+      "name": "ietf-119",
+      "description": "Presented during IETF-119",
+      "color": "DA5FE1"
+    },
+    {
+      "name": "editorial",
+      "description": "Editorial issue",
+      "color": "E3E1E6"
     }
   ],
   "issues": [
@@ -80,6 +95,1372 @@
       "createdAt": "2023-07-07T08:55:40Z",
       "updatedAt": "2023-07-09T09:05:05Z",
       "closedAt": "2023-07-09T09:05:05Z",
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOJrmt1M5x78FT",
+      "title": "Consolidate references",
+      "url": "https://github.com/ace-wg/est-oscore/issues/5",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> * \u201cEST-coaps ([RFC9148])\u201d\r\nThis is in parathesis, other references are not.\r\n\u00a0\r\n> * OLD \u201cDTLS\u00a0[[RFC6347](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC6347)]\u00a0[[RFC9147](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC9147)]\u201d\r\nNEW \u201cDTLS\u00a0[[RFC6347](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC6347)]\u201d\r\n\u00a0\r\n> RFC 6347 is obsoleted. I think the rule is to not refer to obsolete RFC unless needed.\r\n\u00a0\r\n> * \u201dinstead of HTTP\u00a0[[RFC9110](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC9110)]\u00a0[[RFC9112](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC9112)]\u00a0and TLS\u00a0[[RFC8446](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC8446)]\u201d\r\n\u00a0\r\n> Any reason that this is referring to HTTP/1.1 only? HTTP/2 and HTTP/3 seems like much better more modern options.\r\n>\r\n> *  I-D.ietf-cose-x509 has been published as RFC 9360\r\n>\r\n> * OLD: Section 4 of [[RFC6955](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC6955)]\r\nNEW: Section 6 of [[RFC6955](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC6955)]",
+      "createdAt": "2023-09-25T13:39:43Z",
+      "updatedAt": "2023-10-13T09:50:08Z",
+      "closedAt": "2023-10-13T09:50:07Z",
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOJrmt1M5x78mR",
+      "title": "Fix boilerplate",
+      "url": "https://github.com/ace-wg/est-oscore/issues/6",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> * You seem to use the old BCP14 boilerplate. Use {::boilerplate bcp14} in md",
+      "createdAt": "2023-09-25T13:40:48Z",
+      "updatedAt": "2023-10-13T09:49:57Z",
+      "closedAt": "2023-10-13T09:49:57Z",
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOJrmt1M5x798E",
+      "title": "Terminology rewrite to account for static DH keys",
+      "url": "https://github.com/ace-wg/est-oscore/issues/7",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> * The trust anchor terminology from RFC 6024 \u201dused to verify digital Signatures\u201d does not work with 3/4 of the EDHOC methods. Needs to be rewritten.\r\n\r\n> * \u201dis the SubjectPublicKeyInfo structure\u201d\u2028How does this work efficiently with EDHOC?",
+      "createdAt": "2023-09-25T13:43:33Z",
+      "updatedAt": "2024-02-14T15:37:45Z",
+      "closedAt": "2024-02-14T15:37:45Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Proposal: Remove the following sentence:\r\n\r\n> One example of specifying more compact alternatives to X.509 certificates for exchanging trust anchor information is provided by the TrustAnchorInfo structure of [[RFC5914](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC5914)], the mandatory parts of which essentially is the SubjectPublicKeyInfo structure [[RFC5280](https://www.ietf.org/archive/id/draft-ietf-ace-coap-est-oscore-02.html#RFC5280)], i.e., an algorithm identifier followed by a public key.\r\n\r\nAdd a note specifying that we are also using static DH keys which cannot be used for signature generation but rather a MAC given the recipients public key.\r\n\r\n- Expand on specifying more compact certificates using C509 or CWT instead of X.509 certs.",
+          "createdAt": "2023-10-17T10:13:28Z",
+          "updatedAt": "2023-10-17T10:13:28Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOJrmt1M5x8FqU",
+      "title": "Trust Anchor database is always required",
+      "url": "https://github.com/ace-wg/est-oscore/issues/8",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> * A Trust Anchor database is always required, not just for certificates (I have not read RFC 7030). \u201d enabling the client to authenticate the server\u201d is always required.\r\n\r\nSee Subsection \"Certificate-based Authentication\".",
+      "createdAt": "2023-09-25T13:59:19Z",
+      "updatedAt": "2024-02-14T15:28:28Z",
+      "closedAt": "2024-02-14T15:28:28Z",
+      "comments": []
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOJrmt1M5x8pI0",
+      "title": "Describe connection-based proof-of-posession",
+      "url": "https://github.com/ace-wg/est-oscore/issues/9",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> \u201dConnection-based proof-of-possession\u201d, I assume this means the client might not be authenticated (verify identity) in EDHOC. In that case this needs to be described and discussed.",
+      "createdAt": "2023-09-25T15:06:48Z",
+      "updatedAt": "2023-10-23T08:18:21Z",
+      "closedAt": "2023-10-23T08:18:21Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "- `challengePassword` could be used for freshness in the case when pre-shared OSCORE context is used.\r\n- expand on `challengePassword` usage for re-enrollemnt when EDHOC is not \"fresh\".\r\n\r\nProposal: Remove connection-based proof-of-posession terminology from the draft as we now calculate the MAC using ephemeral DH key of the server/Responder, which effectively binds the EDHOC session to the CSR. Move the discussion to the Security Considerations section discussing this.",
+          "createdAt": "2023-10-17T09:57:58Z",
+          "updatedAt": "2023-10-17T09:57:58Z"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOJrmt1M5x8qxF",
+      "title": "Length of the edhoc-unique byte string",
+      "url": "https://github.com/ace-wg/est-oscore/issues/10",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> Should \u201d32 bytes\u201d seems a bit much for something trying to be lightweight.\r\n\r\nSee Section on \"Channel Binding\":\r\n\r\n> Unless otherwise indicated by an application profile, the length SHOULD be set to 32 bytes.",
+      "createdAt": "2023-09-25T15:10:21Z",
+      "updatedAt": "2023-10-23T08:18:22Z",
+      "closedAt": "2023-10-23T08:18:22Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@emanjon how about reducing the length of the edhoc-unique string to 16 bytes? Any specific guidelines to follow?",
+          "createdAt": "2023-10-13T09:49:28Z",
+          "updatedAt": "2023-10-13T09:49:28Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Issue becomes obsolete with #33 ",
+          "createdAt": "2023-10-20T14:54:20Z",
+          "updatedAt": "2023-10-20T14:54:20Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOJrmt1M5x8tea",
+      "title": "Explicitly state the type of certificate in \"Optimizations\"",
+      "url": "https://github.com/ace-wg/est-oscore/issues/11",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> Section 3.4 talks about \u201dcertificates\u201d. It is not clear which types of certificates this is about. EST-oscore use certificates on two layers (In EDHOC and on top of OSCORE).",
+      "createdAt": "2023-09-25T15:16:09Z",
+      "updatedAt": "2023-10-23T08:21:00Z",
+      "closedAt": "2023-10-23T08:21:00Z",
+      "comments": []
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOJrmt1M5x8uVl",
+      "title": "Illustrate the use of draft-ietf-core-oscore-edhoc",
+      "url": "https://github.com/ace-wg/est-oscore/issues/12",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> * Figure 1 does also not illustrate the use of I-D.ietf-core-oscore-edhoc ",
+      "createdAt": "2023-09-25T15:17:57Z",
+      "updatedAt": "2023-10-19T13:06:38Z",
+      "closedAt": "2023-10-19T13:06:38Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "As a reminder, here is the current figure:\r\n\r\n```\r\n             +----------------+\r\n             |  EST messages  |\r\n+------------+----------------+\r\n|    EDHOC   |    OSCORE      |\r\n+------------+----------------+\r\n|        CoAP or HTTP         |\r\n+-----------------------------+\r\n```\r\n\r\nI am not sure how to better illustrate the combined use of EDHOC and OSCORE in the protocol stack figure. In I-D.ietf-core-oscore-edhoc, EDHOC messages are prepended to the OSCORE messages and transported within CoAP payload. The current figure illustrates that. EST messages in this draft are currently transported as OSCORE payload, which is also depicted in the figure.\r\n\r\nProposal is to add new text:\r\n\r\nNEW:\r\nProtocol design also allows that OSCORE and EDHOC messages are carried within the same CoAP message, as per {{I-D.ietf-core-oscore-edhoc}}.\r\n\r\nCC: @marco-tiloca-sics ",
+          "createdAt": "2023-10-13T14:05:29Z",
+          "updatedAt": "2023-10-13T14:05:29Z"
+        },
+        {
+          "author": "marco-tiloca-sics",
+          "authorAssociation": "NONE",
+          "body": "How about this radical redesign of the figure?\r\n\r\n```\r\n+------------+----------------+\r\n|    EDHOC   |  EST messages  |\r\n+------------+----------------+\r\n|        CoAP or HTTP         |\r\n|      +----------------------|\r\n|      |        OSCORE        |\r\n+------+----------------------+\r\n```\r\n\r\nWhen using the original EDHOC workflow, you traverse the \"stack\" as follows:\r\n\r\n1. EDHOC message_1 -> CoAP -> wire\r\n2. EDHOC message_2 -> CoAP -> wire\r\n3. EDHOC message_3 -> CoAP -> wire\r\n4. EST messages -> CoAP -> OSCORE -> wire\r\n5. EST messages -> CoAP -> OSCORE -> wire\r\n...\r\n\r\nWhen using the optimized EDHOC workflow, you traverse the \"stack\" as follows:\r\n\r\n1. EDHOC message_1 -> CoAP -> wire\r\n2. EDHOC message_2 -> CoAP -> wire\r\n3. EST messages -> CoAP -> OSCORE + EDHOC message_3 -> wire\r\n4. EST messages -> CoAP -> OSCORE -> wire",
+          "createdAt": "2023-10-13T14:42:28Z",
+          "updatedAt": "2023-10-13T14:42:28Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks @marco-tiloca-sics for the proposal! I am still more in favor of the text addition to the original figure, since the figure is more traditional in terms of the stack \"traversal\". I am afraid this might cause more confusion than clarity when looked at without an additional explanation. Happy to hear other opinions\r\n\r\nCC: @gselander @emanjon",
+          "createdAt": "2023-10-13T15:20:44Z",
+          "updatedAt": "2023-10-13T15:20:44Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'm fine with the simplified figure with just removed transport.",
+          "createdAt": "2023-10-17T10:33:15Z",
+          "updatedAt": "2023-10-17T10:33:15Z"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "I_kwDOJrmt1M5x8uvj",
+      "title": "Update figures",
+      "url": "https://github.com/ace-wg/est-oscore/issues/13",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> Figures 1 and 2 would look much nicer with aasvg\r\n> > \u201c|        UDP or TCP           |\u201d\r\nI suggest deleting this layer. Both CoAP and HTTP can be transported over other (or more)( or less) things. Having UDP and TCP in this figure do not add anything.\r\n\r\n> Figure 3 would look much nicer as a Table.\r\n\r\n\r\n",
+      "createdAt": "2023-09-25T15:18:52Z",
+      "updatedAt": "2023-10-17T10:14:38Z",
+      "closedAt": "2023-10-17T10:14:38Z",
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOJrmt1M5x8v82",
+      "title": "Update RFC 9148 ?",
+      "url": "https://github.com/ace-wg/est-oscore/issues/14",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> * EST with hop-by-hop protection over a proxy seems like a very bad security architecture. Unless RFC 9148 makes this NOT RECOMMENDED, I think this draft should update RFC 9148 and do that. Server generated private keys visible to proxies should be MUST NOT. I have not read RFC 9148.",
+      "createdAt": "2023-09-25T15:21:17Z",
+      "updatedAt": "2024-02-22T19:08:49Z",
+      "closedAt": "2024-02-22T19:08:49Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Section 5 of RFC9148 indeed discusses the HTTPS-CoAPs \"Registrar\" which acts as a HTTP-CoAP proxy and enables the EST-server to talk only HTTP/TLS. While RFC9148 mentions a possibility of encrypting server-generated keys end-to-end using CMS object security, it does not mandate it. RFC9148 does not mention recommendations on this architecture.\r\n\r\n@mcr: Do you have an opinion on this issue?",
+          "createdAt": "2023-10-13T13:13:24Z",
+          "updatedAt": "2023-10-13T13:13:24Z"
+        },
+        {
+          "author": "mcr",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I agree that server generated keys MUST NOT be visible to a proxy.\r\nI don't think that this should make outlaw server generated keys, if they can be secured end-to-end.  That RFC9148 is allowed to rely upon transport security is acceptable, because there is transport security.  If EST-OSCORE can not provide end to end transport security, then I agree, it must mandate CMS object security, or it must forbid server generated keys.",
+          "createdAt": "2023-10-13T19:14:02Z",
+          "updatedAt": "2023-10-13T19:14:02Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "Agree with what (I think) the IETF 118 WG consensus was: to not update RFC 9148 on this aspect.\r\n\r\nAlthough it may not be advisable to use this \"proxy\" architecture i.e. \"Registrar\" of section 5, the underlying idea of it was that the \"Registrar\" is a trusted component of the PKI infrastructure just like a BRSKI Registrar (RA) is or an EST Server (RA) is.  So it's not like a generic CoAP-to-HTTP proxy that would suddenly learn the deepest secrets of the network.  \r\n\r\nIn some deployments, the Registrar may be co-located on the EST server even. This is handy to add CoAP to the EST server without needing to mess with the original codebase of the EST server. ",
+          "createdAt": "2023-11-11T16:19:58Z",
+          "updatedAt": "2023-11-11T16:19:58Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "IETF 118 consensus on this issue was not to update RFC 9148 on recommendations regarding the \"proxy\" architecture. Closing.",
+          "createdAt": "2024-02-22T19:08:49Z",
+          "updatedAt": "2024-02-22T19:08:49Z"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOJrmt1M5x8xhg",
+      "title": "How does a Client obtain the DH key of a Server",
+      "url": "https://github.com/ace-wg/est-oscore/issues/15",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> *  \u201d The EST client obtained the CA certs including the CA's DH certificate using the /crts function\u201d\r\nThis seems very inefficient. Why not just use G_Y from EDHOC? The Client/Initiator can use the cipher suite to get the curve it wants. I think this should be added as on option.",
+      "createdAt": "2023-09-25T15:24:26Z",
+      "updatedAt": "2023-10-23T08:35:18Z",
+      "closedAt": "2023-10-23T08:35:18Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Using `G_Y`, i.e. the EDHOC ephemeral key of the responder, to generate the PoP in the CSR would bind the current run of EDHOC to the enrollment request: Similarly to #17 this does not play nicely with re-enrollment because EDHOC may not be executed during re-enrollment.\r\n\r\nHowever, since the client (EDHOC Initiator) authenticated the server (EDHOC Responder) during the execution of EDHOC, the client must know the server's `CRED_R`. Therefore, as a possible optimization, the client can use the server's `CRED_R` to generate a PoP in its CSR, and skip querying the `/crts` resource. Would that make sense @emanjon?\r\n\r\nCC: @gselander ",
+          "createdAt": "2023-10-13T12:53:38Z",
+          "updatedAt": "2023-10-13T12:53:38Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Proposal: \r\n- if EDHOC precedes the enrollment and combined delivery is being used, MUST use `G_Y` of the server/Responder to generate PoP.\r\n- If EDHOC does not precede the enrollment, use the available static DH key of the server/Responder or request from `/crts`\r\n\r\n( if a combined delivery through draft-ietf-core-oscore-edhoc is being used, we are already in the EDHOC session and `G_Y` is readily available.)",
+          "createdAt": "2023-10-17T09:45:20Z",
+          "updatedAt": "2023-10-17T09:45:20Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOJrmt1M5x8zk2",
+      "title": "Delete the sentence on HKDF",
+      "url": "https://github.com/ace-wg/est-oscore/issues/16",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> \u201cAs per [RFC8613], the HKDF MUST be one of the HMAC-based HKDF [RFC5869] algorithms defined for COSE [RFC9052].\u201d\r\n >\r\n> I would say that the quoted sentence is an erratum in OSCORE. I would suggest deleting that sentence. Should be one of the HMAC algorithms defined for COSE or one of the hash functions defined for COSE. COSE does not have any general HKDFs defined. They are \u201cdirect+HKDF-SHA-512\u201d and only make sense if you use them in COSE and not in OSCORE. EDHOC specifies that the output to OSCORE can be HMAC-SHA-384.",
+      "createdAt": "2023-09-25T15:28:22Z",
+      "updatedAt": "2023-10-17T09:16:26Z",
+      "closedAt": "2023-10-17T09:16:26Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "action taken to delete the sentence",
+          "createdAt": "2023-10-13T10:28:10Z",
+          "updatedAt": "2023-10-13T10:28:10Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOJrmt1M5x80CP",
+      "title": "Use of EAD fields of EDHOC to transport EST?",
+      "url": "https://github.com/ace-wg/est-oscore/issues/17",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n>  \u201cExternal Authorization Data (EAD) fields of EDHOC are\r\nintentionally not used to carry EST payloads because EDHOC needs not\r\nbe executed in the case of re-enrollment.\u201d\r\nThis seems to me like the wrong decision. Using EAD would be much more efficient for the first enrollment. How common and important is re-enrollment? By using EDHOC efficiently I think the client might be able to send the CSR in message_3 and get the cert in message_4.",
+      "createdAt": "2023-09-25T15:29:22Z",
+      "updatedAt": "2024-01-05T15:15:35Z",
+      "closedAt": "2024-01-05T15:15:34Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@emanjon With a lifetime of an IoT device on the order of several years, we definitely need to support the case of re-enrollment which may occur pending certificate expiration. Having separate code paths for re-enrollment and initial enrollment significantly complicates the implementation of the protocol. This would be the case if we opt for EDHOC EAD transport during initial enrollment and OSCORE-based transport during re-enrollment.\r\n\r\nOne option would be to require EDHOC be executed on re-enrollment, just like during the initial enrollment. Given the PSK-based rekeying work that is going to happen in LAKE, we could transport the re-enrollment messages in the optimized rekeyed handshake. We'd still need to keep the dependency on OSCORE in the draft in order to support other EST functions, like `/crts`. Given that, there would still be two separate code paths in the implementation: one for `/sen` and `/sren`-targeted interactions transported via EDHOC and its EAD fields; one code path for e.g. the `/crts` function transported via OSCORE.\r\n\r\nSecond option would be to keep things as-is, but to mention the use of draft-ietf-core-oscore-edhoc and piggyback OSCORE message within the EDHOC handshake. That way, the initial enrollment can happen, as you suggest, in message_3 and message_4.\r\n\r\nI think I am in favor of option 2. What are your thoughts on this?\r\n\r\nCC: @gselander  ",
+          "createdAt": "2023-10-13T10:12:04Z",
+          "updatedAt": "2023-10-13T10:12:04Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Agree, option 2 is good.",
+          "createdAt": "2023-10-17T10:13:51Z",
+          "updatedAt": "2023-10-17T10:13:51Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The draft discusses the use of `draft-ietf-core-oscore-edhoc` in Section 3.4 on Optimizations. Closing the issue.",
+          "createdAt": "2024-01-05T15:15:34Z",
+          "updatedAt": "2024-01-05T15:15:34Z"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOJrmt1M5x84Wd",
+      "title": "Clarify that issuing C509 certs is optional",
+      "url": "https://github.com/ace-wg/est-oscore/issues/18",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> The document makes heavy use of EDHOC and states that C509 might be use as an optimization. Other parts of the draft seems 100% ASN.1. EDHOC makes heavy use of CWT/CSS/C509. It would make sense to be able to request the server to issue C509 certificates. Currently that does not seem to be possible.",
+      "createdAt": "2023-09-25T15:38:21Z",
+      "updatedAt": "2024-02-14T16:07:36Z",
+      "closedAt": "2024-02-14T16:07:36Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Note: Check how the negotiation is done when using C509. Accept header. ",
+          "createdAt": "2023-10-17T10:06:22Z",
+          "updatedAt": "2023-10-17T10:06:22Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Addressed by #37 ",
+          "createdAt": "2024-01-05T15:10:24Z",
+          "updatedAt": "2024-01-05T15:11:20Z"
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOJrmt1M5x85I4",
+      "title": "Clarify scope in the introduction and the abstract",
+      "url": "https://github.com/ace-wg/est-oscore/issues/19",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> This is probably handled by other drafts, but I think the draft should summarize some very basic high-level things in the introduction. Is the client assumed to have some form of credential before starting EST-oscore. In that case what kind of credential. The whole point of certificates is to bind a public key with an identity. How does the server verify the identity? If things are out of scope, it is often best to state that.",
+      "createdAt": "2023-09-25T15:39:36Z",
+      "updatedAt": "2024-04-29T12:33:03Z",
+      "closedAt": "2024-04-29T12:33:03Z",
+      "comments": [
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "I think the abstract text currently misses the most important aspect: the fact that we're defining an OSCORE-protected version of EST-coaps, i.e. that replaces DTLS with OSCORE.\r\n\r\nOther major improvements, if we include those, may be mentioned as well - I'm thinking of the additional CBOR based Content-Format alternatives that were discussed in #34   (but only once these alternatives are ready and included in the content).",
+          "createdAt": "2023-11-11T16:09:49Z",
+          "updatedAt": "2023-11-11T16:09:49Z"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOJrmt1M5x8665",
+      "title": "Use Oxford comma",
+      "url": "https://github.com/ace-wg/est-oscore/issues/20",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From John Mattsson's review (https://mailarchive.ietf.org/arch/msg/ace/h85KdNLkMxqzCZjJlY-fGlPEyVw/):\r\n\r\n> \"Constrained Application Protocol (CoAP), Concise Binary Object Representation (CBOR) and the CBOR Object Signing and Encryption (COSE) format\"\r\n            ... and more\r\n >\r\n> IETF uses the Oxford comma.",
+      "createdAt": "2023-09-25T15:42:37Z",
+      "updatedAt": "2024-02-22T19:02:12Z",
+      "closedAt": "2024-02-22T19:02:12Z",
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOJrmt1M5yqdmD",
+      "title": "Add acks",
+      "url": "https://github.com/ace-wg/est-oscore/issues/21",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-03T09:40:20Z",
+      "updatedAt": "2023-10-13T09:50:20Z",
+      "closedAt": "2023-10-13T09:50:20Z",
+      "comments": []
+    },
+    {
+      "number": 28,
+      "id": "I_kwDOJrmt1M50DkAn",
+      "title": "Additional optimization in 3.4",
+      "url": "https://github.com/ace-wg/est-oscore/issues/28",
+      "state": "CLOSED",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add one bullet describing optionality to enroll static DH keys. Something like: \r\n\r\nThe PKCS#10 request MAY request a certificate for a static DH key instead of a signature key resulting in a more compact CSR with a MAC instead of a signature. Additionally, subsequent EDHOC sessions using static DH keys for authentication has less overhead that key exchange protocols using signature based authentication credentials.\r\n\r\n\r\n",
+      "createdAt": "2023-10-17T10:29:00Z",
+      "updatedAt": "2023-10-23T08:31:04Z",
+      "closedAt": "2023-10-23T08:31:04Z",
+      "comments": []
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOJrmt1M50DlMS",
+      "title": "Adding message flow example",
+      "url": "https://github.com/ace-wg/est-oscore/issues/29",
+      "state": "CLOSED",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Good with illustration. Perhaps one with and one without combined EDHOC-OSCORE delivery. For inspiration, see examples in \r\nhttps://datatracker.ietf.org/doc/html/draft-ietf-ace-edhoc-oscore-profile-02#name-examples",
+      "createdAt": "2023-10-17T10:31:54Z",
+      "updatedAt": "2024-07-08T07:17:33Z",
+      "closedAt": "2024-07-08T07:17:33Z",
+      "comments": []
+    },
+    {
+      "number": 34,
+      "id": "I_kwDOJrmt1M50fjV7",
+      "title": "Payload formats should explicitly mention CBOR-encoded objects",
+      "url": "https://github.com/ace-wg/est-oscore/issues/34",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Table 2 ({{table_mediatypes}}) currently gives a summary of media types carried within request and responses for each of the supported EST functions: \r\n\r\n```\r\n|  URI  | Content-Format                                       | #IANA |\r\n| /crts | N/A                                            (req) |   -   |\r\n|       | application/pkix-cert                          (res) |  287  |\r\n|       | application/pkcs-7-mime;smime-type=certs-only  (res) |  281  |\r\n| /sen  | application/pkcs10                             (req) |  286  |\r\n|       | application/pkix-cert                          (res) |  287  |\r\n|       | application/pkcs-7-mime;smime-type=certs-only  (res) |  281  |\r\n| /sren | application/pkcs10                             (req) |  286  |\r\n|       | application/pkix-cert                          (res) |  287  |\r\n|       | application/pkcs-7-mime;smime-type=certs-only  (res) |  281  |\r\n| /skg  | application/pkcs10                             (req) |  286  |\r\n|       | application/multipart-core                     (res) |   62  |\r\n| /skc  | application/pkcs10                             (req) |  286  |\r\n|       | application/multipart-core                     (res) |   62  |\r\n| /att  | N/A                                            (req) |   -   |\r\n|       | application/csrattrs                           (res) |  285  |\r\n```\r\n\r\nThe Content-Format identifiers are however all related to ASN.1-encoded structures:\r\n- PKCS#7\r\n- PKCS#10\r\n- PKCS#8\r\n\r\nWe should have the equivalents for CBOR-encoded objects. `I-D.ietf-cose-cbor-encoded-cert` currently defines Media Type `application/cose-c509` with a usage parameter that allows to indicate a certificate chain. Media Type for PKCS#10 is missing. CBOR encoding and media type for `PKCS#8` is also missing in `I-D.ietf-cose-cbor-encoded-cert`. \r\n\r\nOnce this is added in `I-D.ietf-cose-cbor-encoded-cert`, this document should register appropriate CoAP Content-Format identifiers for a given media type.\r\n\r\nCC: @gselander @emanjon",
+      "createdAt": "2023-10-20T14:38:14Z",
+      "updatedAt": "2024-02-14T16:07:36Z",
+      "closedAt": "2024-02-14T16:07:36Z",
+      "comments": [
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "Should a CBOR version of application/csrattrs also be considered? That format had an issue that the semantics were not understood by most people and not clearly defined as well; see https://www.ietf.org/id/draft-ietf-lamps-rfc7030-csrattrs-07.html \r\nSo not sure if that's something to stir into now.",
+          "createdAt": "2023-11-11T16:04:51Z",
+          "updatedAt": "2023-11-11T16:04:51Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "See update to https://github.com/cose-wg/CBOR-certificates/issues/136",
+          "createdAt": "2023-11-30T14:45:46Z",
+          "updatedAt": "2023-11-30T14:45:46Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Should a CBOR version of application/csrattrs also be considered? That format had an issue that the semantics were not understood by most people and not clearly defined as well; see https://www.ietf.org/id/draft-ietf-lamps-rfc7030-csrattrs-07.html\r\n> So not sure if that's something to stir into now.\r\n\r\n@EskoDijk what is in your opinion the best way forward regarding `csrattrs`? Note that [draft-ietf-cose-cbor-encoded-cert-07](https://www.ietf.org/archive/id/draft-ietf-cose-cbor-encoded-cert-07.html#name-c509-attributes-registry) already specifies the CBOR versions of different attributes, so what remains to be done seems to be the specification of the high-level `csrattrs` structure. Does this belong to EST-oscore?",
+          "createdAt": "2024-01-05T14:56:53Z",
+          "updatedAt": "2024-01-05T14:56:53Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "> @EskoDijk what is in your opinion the best way forward regarding csrattrs? ... Does this belong to EST-oscore?\r\n\r\nIf the `csrattrs` (`att`) format and resource is included in EST-oscore in any way (currently as OPTIONAL) then the draft must also define the format of this resource. It can re-use the existing format from EST-coaps for sure. However, since C509 \"CBOR versions\" are provided for all the other resources/payloads it would be strange to not offer this for the `att` resource.   It could be noted that this is left for future work (in this case it would be less strange -- understandable, since it's an optional feature, and there's some ongoing work still to clarify its use.)\r\n\r\nAnd it would then belong to EST-oscore, since the original application/csrattrs format is also specified purely in EST scope in RFC 7030.  (Or else it could go into a followup document of EST-oscore.)\r\n\r\nI agree that the CBOR version of the format itself should be easy to define, re-using the already specified CBOR versions of the different attributes. So the syntax should be good - semantics is still to be clarified further in another document then.\r\n\r\n",
+          "createdAt": "2024-01-08T09:40:50Z",
+          "updatedAt": "2024-01-08T09:40:50Z"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "I_kwDOJrmt1M50fn7Z",
+      "title": "Normative requirements on Content-Format support (ASN.1 / CBOR)",
+      "url": "https://github.com/ace-wg/est-oscore/issues/35",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Given that some Content-Formats may be CBOR-encoded objects, a question is what should be the normative requirements that should be listed for EST-clients and EST-servers.\r\n\r\nHere is a proposal to keep backward compatibility:\r\n\r\n> EST-server SHOULD support both ASN.1 and CBOR-encoded objects.\r\n> It is up to the client to support only ASN.1, CBOR encoding, or both.\r\n> As a reminder, Content-Format negotiation happens through CoAP's `Accept` option present in the requests.\r\n",
+      "createdAt": "2023-10-20T14:48:59Z",
+      "updatedAt": "2024-02-14T16:23:53Z",
+      "closedAt": "2024-02-14T16:23:53Z",
+      "comments": [
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Content type negotiation may take place inside object, see\r\nhttps://github.com/cose-wg/CBOR-certificates/issues/77#issuecomment-849721718",
+          "createdAt": "2023-10-23T07:22:48Z",
+          "updatedAt": "2023-10-23T07:26:12Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Comment at IETF-118 from Esko:\r\n\r\n>ED: I hope I am not interrupting. We can phrase it with a capital SHOULD. And to add some exception to say that is ok not to support both. (\u2026) In ANIMA WG we offer many options and the Constrained Client picks up one. (\u2026).\r\nThere is a problem coming from the EST-COAP RFC\r\nIn general it is ok for the client to support only one format, but the server should support both. (avoid asking for non-supported format)\r\nAt ANIMA WG we are also looking at other formats, we have a problem with the PK(\u2026) we are looking for another format>",
+          "createdAt": "2023-11-10T15:53:14Z",
+          "updatedAt": "2023-11-10T15:53:14Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Comment at IETF-118 from @marco-tiloca-sics:\r\n\r\n> I think this proposal is good. On the negotiation, the Accept option is critical. So, if you want negotiation to be possible in general, you have to say that the EST-server MUST support the Accept option. You already have a section with this kind of requirements where you can say that.",
+          "createdAt": "2023-11-10T15:53:42Z",
+          "updatedAt": "2023-11-10T15:53:42Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "To clarify my comment from IETF 118: it would be nice to have a \"MUST\" on the server to support both the RFC 9148 ASN.1 formats, and any new formats if defined by this draft (which could be the \"CBOR formats\" mentioned).\r\n\r\nThough I'm not fully sure what the intended CBOR formats are: it could be e.g. a C509 certificate instead of an X509 certificate (which is application/pkix-cert, 287). Or it could be that another CBOR format was  intended as alternative to an ASN.1 format.",
+          "createdAt": "2023-11-11T15:40:20Z",
+          "updatedAt": "2023-11-11T15:40:20Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "And the problem I mentioned in RFC 9148, which possibly needs to be corrected in this document, is the following text in 4.3:\r\n\r\n> Content-Format 281 MUST be supported by EST-coaps servers. Servers MAY also support Content-Format 287.\r\n\r\nThis means 287 is optional for a server. However a client may only support 287. As indicated by the following text:\r\n\r\n> It is up to the client to support only Content-Format 281, 287 or both.\r\n\r\nSo that means the protocol doesn't work necessarily if the client chooses only 287.  One way to solve it is to make both types mandatory on the server. But, in the ANIMA WG we have discovered that there are some management problems if the client uses type 287 only; it's a very limited method of getting only one CA certificate.  So a better solution will be to ensure the client does not use a single request asking for 287, but something more intelligent that enables it to get multiple CA certificates if needed.   \r\n\r\nIn ANIMA WG we want to do this without using the PKCS#7 container format 281, which is useless overhead in our case: the only thing we need is just a \"bag\" of X509 certificates and we're working on an efficient method to get the elements from this \"bag\".",
+          "createdAt": "2023-11-11T15:50:12Z",
+          "updatedAt": "2023-11-11T15:50:12Z"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "I_kwDOJrmt1M52faz0",
+      "title": "Consider the use of challengePassword for signature keys without EDHOC",
+      "url": "https://github.com/ace-wg/est-oscore/issues/36",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Related to #9.\r\n\r\n@gselander:\r\n> So, at least for static DH, challenge password is not needed. Therefore optionality is good. Then we should think through the case when the csr is signed with a signature key not used in EDHOC, maybe we need a recommendation in that case.",
+      "createdAt": "2023-11-10T16:25:39Z",
+      "updatedAt": "2024-04-29T12:32:19Z",
+      "closedAt": "2024-04-29T12:32:18Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "As a reminder, use of `challengePassword` in the specification is OPTIONAL and left up to the application profile:\r\n\r\n> How challengePassword is generated is outside of the scope of this specification and can be specified by an application profile.\r\n\r\n The proposal is to update the text in order to mention the case of CSR signed with a key different from the one used in EDHOC, but to leave the optionality and the exact specification to the application profile.\r\n\r\nThe alternative is to define the use of `EDHOC_Exporter` interface which would populate the `challengePassword` field.",
+          "createdAt": "2024-04-24T15:01:13Z",
+          "updatedAt": "2024-04-24T15:01:13Z"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "id": "I_kwDOJrmt1M597vpC",
+      "title": "Content-Format support for DER-encoded ASN.1 objects",
+      "url": "https://github.com/ace-wg/est-oscore/issues/38",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft currently mandates that Content-Format 281 MUST be supported by the server and Content-Format 287 MAY be supported by the server:\r\n\r\n> Content-Format 281 MUST be supported by EST-oscore servers. Servers MAY also support Content-Format 287. It is up to the client to support only Content-Format 281, 287 or both.\r\n\r\nThis is an issue in RFC9148 as it may lead to interoperability issues where clients request/support 287 but server only supports 281.\r\n\r\nThis issue aims at fixing this in the EST-oscore document.\r\n\r\nCC: @EskoDijk\r\n",
+      "createdAt": "2024-02-01T15:36:32Z",
+      "updatedAt": "2024-03-04T14:37:43Z",
+      "closedAt": "2024-03-04T14:37:43Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@EskoDijk wrote:\r\n\r\n> And the problem I mentioned in RFC 9148, which possibly needs to be corrected in this document, is the following text in 4.3:\r\n> \r\n> > Content-Format 281 MUST be supported by EST-coaps servers. Servers MAY also support Content-Format 287.\r\n> \r\n> This means 287 is optional for a server. However a client may only support 287. As indicated by the following text:\r\n> \r\n> > It is up to the client to support only Content-Format 281, 287 or both.\r\n> \r\n> So that means the protocol doesn't work necessarily if the client chooses only 287. One way to solve it is to make both types mandatory on the server. But, in the ANIMA WG we have discovered that there are some management problems if the client uses type 287 only; it's a very limited method of getting only one CA certificate. So a better solution will be to ensure the client does not use a single request asking for 287, but something more intelligent that enables it to get multiple CA certificates if needed.\r\n> \r\n> In ANIMA WG we want to do this without using the PKCS#7 container format 281, which is useless overhead in our case: the only thing we need is just a \"bag\" of X509 certificates and we're working on an efficient method to get the elements from this \"bag\".\r\n",
+          "createdAt": "2024-02-01T15:49:41Z",
+          "updatedAt": "2024-02-01T15:49:41Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@EskoDijk:Has this progressed further in ANIMA in a way that I could reference it from this document? Is there a document you could point me to? \r\n\r\n(I created a PR with the simplest solution to mandate 287 for servers (PR #39) for now, but don't plan on merging it until this is resolved. )",
+          "createdAt": "2024-02-01T15:59:21Z",
+          "updatedAt": "2024-02-01T15:59:21Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "@malishav Thanks for looking into this. There's now a new revision of cBRSKI where this issue is addressed, see text in https://datatracker.ietf.org/doc/html/draft-ietf-anima-constrained-voucher#brski-est-extensions-registrar (Section 6.6).\r\n\r\nBesides this, cBRSKI also adds in Seciton 6.5.5 a new Content-Format for the /crts resources specifically. See https://datatracker.ietf.org/doc/html/draft-ietf-anima-constrained-voucher#name-multipart-content-format-fo \r\nThis is a simpler/alternative container for multiple certs that uses CBOR-based \"multipart-core\" instead of PKCS.\r\n\r\nI've just created the issue https://github.com/anima-wg/constrained-voucher/issues/295 , seeing that cBRSKI doesn't yet mandate support for 287 but the Pledge does rely on it.\r\n\r\n",
+          "createdAt": "2024-02-01T16:20:51Z",
+          "updatedAt": "2024-02-01T16:20:51Z"
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOJrmt1M5-ytoX",
+      "title": "State sufficient conditions for a signed CSR to be used to enrol a ECDH public key",
+      "url": "https://github.com/ace-wg/est-oscore/issues/43",
+      "state": "CLOSED",
+      "author": "gselander",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We describe the use of ECDH in the CSR for proving possession of the private key when enrolling a public key to be used with static ECDH based authentication. We should also state that for curves like P-256, P-384, P-521 it is allowed to prove possession by signing the CSR with the same private key: \r\n\r\n----\r\n\r\n800-56A Revision 3\r\nhttps://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-56Ar3.pdf\r\n \r\n5.6.3.2 Specific Requirements on Static Key Pairs\r\n \r\n\"A static key pair may be used in more than one key-establishment scheme. However,\r\none static public/private key pair shall not be used for different purposes (for\r\nexample, a digital-signature key pair is not to be used for key establishment or vice\r\nversa; key-usage restrictions could be enforced by a CA when generating certificates)\r\nwith the following possible exception for ECC and FIPS 186-type FFC domain\r\nparameters: when requesting the (initial) certificate for a public static key-\r\nestablishment key, the key-establishment private key associated with the public key\r\nmay be used to sign the certificate request. See SP 800-57 on Key Usage for further\r\ninformation. A key-establishment key pair generated using safe-prime domain\r\nparameters shall not ever be used for the generation of a digital signature.\"\r\n \r\n \r\n800-57 Part 1 Revision 5\r\nhttps://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf\r\n \r\n5.2 Key Usage\r\n \r\n\"This Recommendation permits the use of a private key-transport or key-agreement key to generate\r\na digital signature for the following special case:\r\n \r\nWhen requesting the (initial) certificate for a static key-establishment key that was generated\r\nas specified in FIPS 186 (see SP 800-56A and SP 800-56B), the corresponding private key\r\nmay be used to sign the certificate request. Refer to Section 8.1.5.1.1.2.\"\r\n \r\n8.1.5.1.1.2 Submission to a Registration Authority or Certification Authority\r\n \r\n\"The (reputed) owner should provide POP by performing operations with the private key that\r\nsatisfy the indicated key use. For example, if a key pair is intended for RSA digital signature\r\ngeneration, the CA may provide information to be signed using the owner\u2019s private key. If the CA\r\ncan correctly verify the signature using the corresponding public key, then the owner has\r\nestablished POP. However, when a key pair is intended to support key establishment (i.e., either\r\nkey agreement or key transport), and the key pair was generated as specified in FIPS 186 (see\r\nSP 800-56A and SP 800-56B), POP may also be afforded by using the private key to digitally sign\r\nthe certificate request (although this is not the preferred method). The private key-establishment\r\nkey (i.e., the private key-agreement or private key-transport key) shall not be used to perform\r\nsignature operations after certificate issuance.\r\n\r\n",
+      "createdAt": "2024-02-09T14:07:33Z",
+      "updatedAt": "2024-03-04T14:26:46Z",
+      "closedAt": "2024-03-04T14:26:46Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The action item is to add a MAY on using digital signature with static DH key just for enrollment, but to keep PoP with a MAC for efficiency reasons.",
+          "createdAt": "2024-02-15T09:06:14Z",
+          "updatedAt": "2024-02-15T09:06:14Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@gselander could you check if the text in #45 resolves this issue?",
+          "createdAt": "2024-02-22T18:52:46Z",
+          "updatedAt": "2024-02-22T18:52:46Z"
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "id": "I_kwDOJrmt1M6FRU_3",
+      "title": "Align the private key container with issue #150 in the c509 github page.",
+      "url": "https://github.com/ace-wg/est-oscore/issues/47",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-04-10T15:43:09Z",
+      "updatedAt": "2024-04-10T16:20:41Z",
+      "closedAt": "2024-04-10T16:20:41Z",
+      "comments": []
+    },
+    {
+      "number": 52,
+      "id": "I_kwDOJrmt1M6LYxmg",
+      "title": "CDDL structure of /csrattrs",
+      "url": "https://github.com/ace-wg/est-oscore/issues/52",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current version of the text contains the following EDITOR NOTE:\r\n\r\n> EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to appropriate document for its semantics.\r\n\r\nThis issue aims at specifying the CDDL of /csrattrs.",
+      "createdAt": "2024-06-06T15:24:31Z",
+      "updatedAt": "2024-06-06T15:50:05Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "See https://github.com/ace-wg/est-oscore/issues/34",
+          "createdAt": "2024-06-06T15:31:06Z",
+          "updatedAt": "2024-06-06T15:31:06Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Reference `draft-ietf-lamps-rfc7030-csrattrs`",
+          "createdAt": "2024-06-06T15:50:04Z",
+          "updatedAt": "2024-06-06T15:50:04Z"
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "id": "I_kwDOJrmt1M6NOtNZ",
+      "title": "Clarify initial authentication",
+      "url": "https://github.com/ace-wg/est-oscore/issues/53",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft needs to clarify how the initial authentication is established. \r\n\r\nEsko wrote:\r\n> From a quick scan in the draft I didn\u2019t see much text on how the client got its initial authentication information (eg a X509 certificate, or other) that it needs to establish the first secure transport.\r\nAny ideas on that?  Is it like BRSKI (using the IDevID certificate for the first connection, after that using LDevID certificate for future connections) ? Or rather a PSK-based initial access? (Or maybe all these options are potentially in scope)",
+      "createdAt": "2024-06-24T07:20:09Z",
+      "updatedAt": "2025-02-18T16:37:12Z",
+      "closedAt": "2025-02-18T16:37:12Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "G\u00f6ran wrote:\r\n\r\n> In general we have tried to follow EST-CoAPs unless other optimizations or features seemed relevant. I haven\u2019t checked if it mentions initial authentication, but the mindset has been some existing credential, like IDevID, or a previously made authentication. For example, running EST-OSCORE immediately following the voucher-based authorization (draft-ietf-lake-authz), optimally using combined EDHOC and OSCORE protocol (draft-ietf-core-oscore-edhoc), would enable authentication, authorization and certificate enrolment completed in two round trips and avoiding the transport of some duplicate information. That is something that we defintiely should clarify.",
+          "createdAt": "2024-06-24T07:20:32Z",
+          "updatedAt": "2024-06-24T07:20:32Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The draft currently states:\r\n\r\n> Prior to running EST-oscore, the protocol defined in this specification, there must exist a trust relation between the EST-oscore client and the EST-oscore server.\r\nThis trust relation may be based on the pre-shared OSCORE security context, or based on the common root of trust.\r\nIn case there is a pre-shared OSCORE security context, the CoAP exchange carrying EST payloads can occur immediately.\r\nIn case there is a common root of trust, a security handshake based on the Ephemeral Diffie-Hellman over COSE (EDHOC, {{RFC9528}}) protocol needs to occur prior to running CoAP.\r\nHow this trust relation is established is out of scope of this document.\r\n\r\n\r\n@gselander I believe the existing text is clear that the initial authentication credentials are out of scope of the document. Let me know what do you think.",
+          "createdAt": "2024-07-01T07:51:09Z",
+          "updatedAt": "2024-07-01T07:51:09Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think this is fine. This comment came from Esko's first scan, let's see if the comment remains after the review. ",
+          "createdAt": "2024-07-04T08:39:50Z",
+          "updatedAt": "2024-07-04T08:39:50Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@EskoDijk see comments above",
+          "createdAt": "2024-07-04T13:32:08Z",
+          "updatedAt": "2024-07-04T13:32:08Z"
+        },
+        {
+          "author": "EskoDijk",
+          "authorAssociation": "NONE",
+          "body": "Good, this text helps. For EST in general the initial trust relation establishment is mostly out of scope. It defines the Explicit Trust Anchor database for that and a few rules around it. The same would apply here.",
+          "createdAt": "2024-07-08T10:02:03Z",
+          "updatedAt": "2024-07-08T10:02:03Z"
+        }
+      ]
+    },
+    {
+      "number": 54,
+      "id": "I_kwDOJrmt1M6ODkuC",
+      "title": "Selection of the type of enrollment credentials",
+      "url": "https://github.com/ace-wg/est-oscore/issues/54",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Consider leveraging EDHOC cipher suite negotiation as the preliminary knowledge for which type of credential to enroll during the enrollment request. Could state this as a recommendation. ",
+      "createdAt": "2024-07-01T09:18:18Z",
+      "updatedAt": "2024-07-01T09:18:18Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 55,
+      "id": "I_kwDOJrmt1M6Usrzz",
+      "title": "Add whitespace between table content and table caption",
+      "url": "https://github.com/ace-wg/est-oscore/issues/55",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "wontfix",
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nThere could be one line of whitespace between table content and table caption. This would be visually more clear.",
+      "createdAt": "2024-08-29T14:57:27Z",
+      "updatedAt": "2025-02-18T16:37:34Z",
+      "closedAt": "2025-02-18T16:37:34Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Not sure how to do this in markdown, parking the issue for now.",
+          "createdAt": "2024-10-11T13:27:54Z",
+          "updatedAt": "2024-10-11T13:27:54Z"
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "id": "I_kwDOJrmt1M6Ussue",
+      "title": "Unify spelling of \"enrollment\"",
+      "url": "https://github.com/ace-wg/est-oscore/issues/56",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nSpelling \u201cenrolment\u201d vs \u201cenrollment\u201d - unify",
+      "createdAt": "2024-08-29T14:58:23Z",
+      "updatedAt": "2024-10-11T13:33:17Z",
+      "closedAt": "2024-10-11T13:33:16Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Closed with #81 ",
+          "createdAt": "2024-10-11T13:33:16Z",
+          "updatedAt": "2024-10-11T13:33:16Z"
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "id": "I_kwDOJrmt1M6UsuF9",
+      "title": "Add CoAPs  as a transport in the abstract",
+      "url": "https://github.com/ace-wg/est-oscore/issues/57",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nAbstract\r\n \r\n> \u2026 is a certificate provisioning protocol over HTTPS.\r\n\r\nIt\u2019s currently defined over HTTPS or CoAPS, not just HTTPS. (RFC 7030 / 9148 respectively.)  Best to mention both these transports already here in the 1st sentence.",
+      "createdAt": "2024-08-29T14:59:52Z",
+      "updatedAt": "2024-10-11T13:45:12Z",
+      "closedAt": "2024-10-11T13:45:12Z",
+      "comments": []
+    },
+    {
+      "number": 58,
+      "id": "I_kwDOJrmt1M6Usu8t",
+      "title": "Clarify in the abstract that the CBOR-encoded certs are optionally used",
+      "url": "https://github.com/ace-wg/est-oscore/issues/58",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n> \u2026 also leverages the certificate structures defined in [I-D.ietf-cose-cbor-encoded-cert].\r\n\r\nSentence could be clarified to say that the CBOR encoded certs are optionally used! Now it\u2019s not clear at high level if CBOR replaces X509 certificates always or that it\u2019s optionally used.",
+      "createdAt": "2024-08-29T15:00:54Z",
+      "updatedAt": "2024-10-11T13:49:05Z",
+      "closedAt": "2024-10-11T13:49:05Z",
+      "comments": []
+    },
+    {
+      "number": 59,
+      "id": "I_kwDOJrmt1M6Usw44",
+      "title": "Clarify the use of HTTP",
+      "url": "https://github.com/ace-wg/est-oscore/issues/59",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nIntroduction\r\n \r\nParagraph 3 explains that EST can be carried over HTTP protected with OSCORE. This part could still be clarified: I initially thought the intention was to enable HTTP transport without needing CoAP at all i.e. in none of the communication legs.  This interpretation then conflicts with many following parts of the document that only mention CoAP and not HTTP used by the client. For example, paragraph 5 mentions \u201c\u2026 context, the CoAP exchange carrying \u2026 \u201c which  then triggers the question whether this is really a CoAP exchange, or whether it can also be a HTTP exchange?\r\nMaybe the intention was to support only CoAP for the client side; which might be carried as HTTP for a particular network segment? (e.g. from proxy to EST server).\r\nNot sure how to resolve this; it depends on the intention of how HTTP is supposed to be used and this is not yet fully clear to me.",
+      "createdAt": "2024-08-29T15:03:06Z",
+      "updatedAt": "2025-02-18T16:08:35Z",
+      "closedAt": "2025-02-18T16:08:35Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OLD: \r\n> This document describes a method for protecting EST payloads over CoAP or HTTP with OSCORE [[RFC8613]. OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported. OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data. Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between CoAP and HTTP.\r\n\r\nNEW:\r\n>This document describes a method for protecting EST payloads over CoAP with OSCORE [RFC8613]. OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported. OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data [Section 11 of RFC 8613]. Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between CoAP and HTTP.",
+          "createdAt": "2024-11-03T13:17:47Z",
+          "updatedAt": "2024-11-03T13:17:47Z"
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "id": "I_kwDOJrmt1M6UsxTh",
+      "title": "Typos and clarifications throughout the document",
+      "url": "https://github.com/ace-wg/est-oscore/issues/60",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nIntroduction: \r\n> \u2026 translating between between\r\n(remove double word)\r\n\r\n> * Compact representations f X.509 \u2026\r\nCompact CBOR representations of X.509 \u2026\r\n\r\nTerminology:\r\n> recipients public DH key\r\nrecipient\u2019s public DH key\r\n\r\n> Therefore this document \u2026 procedures defined.\r\nLast sentence is complex and could be improved (grammar-wise). What does \u201cits\u201d refer to? \u201cdefined\u201d refers to something defined where?\r\n\r\n3. Authentication\r\n\r\n> \u2026 conveying EST payloads.\r\n\u201ccarrying EST payloads\u201d  is maybe more clear?\r\n\r\n> \u2026 to the CA for decision about \u2026\r\n\u201cto the CA to support its decision about\u201d ?  Or \u201cto the CA for the decisions about\u201d ?\r\n\r\n3.1 EDHOC\r\n> certificates/raw public keys\r\nMaybe better to clarify \u201ccertificates or raw public keys\u201d ?\r\n\r\n> \u2026 URI to the credential \u2026\r\n\u201cURI of the credential\u201d is perhaps more accurate? Since the I stands for Identifier. It identifies the credential.\r\n\r\n4. Protocol Design and Layering\r\n \r\n> Block-Wise\r\n-> \u201cBlock-Wise transfer\u201d\r\n \r\nFigure 1 caption: best to mention the term \u201cstack diagram\u201d in the caption.\r\n\r\n4.6 Message fragmentation\r\n\r\n(Use caps \u2018F\u2019 here)\r\n \r\n>> \u2026 to prevent IP fragmentation \u2026\r\nto prevent 6LoWPAN fragmentation",
+      "createdAt": "2024-08-29T15:03:37Z",
+      "updatedAt": "2024-10-11T13:33:36Z",
+      "closedAt": "2024-10-11T13:33:36Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Closed with #81 ",
+          "createdAt": "2024-10-11T13:33:36Z",
+          "updatedAt": "2024-10-11T13:33:36Z"
+        }
+      ]
+    },
+    {
+      "number": 61,
+      "id": "I_kwDOJrmt1M6Us0Kl",
+      "title": "Revise Section 1.1 ",
+      "url": "https://github.com/ace-wg/est-oscore/issues/61",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nOperational Differences with EST-coaps\r\n \r\n> \u2026 the following respects:\r\n\r\nthe following aspects:\r\n \r\nThere is some repetition in the text. E.g. paragraph 1 overlaps with bullet 1 content. And bullet 2 subbullet 3 overlaps with bullet 2 of Section 1. I think that Section 1 and 1.1 could be easily joined together and compressed.\r\n(Or maybe I misunderstood the purpose of 1.1.)\r\n \r\nBullet 2, subbullet 1: \u201cis complemented with\u201d -> unclear exactly what \u201ccomplemented\u201d means here. Is using raw public keys an optional thing the client can invoke? Or does it need to do both?\r\nSimilar questions for subbullet 2 and 3.",
+      "createdAt": "2024-08-29T15:06:30Z",
+      "updatedAt": "2024-11-03T13:20:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 62,
+      "id": "I_kwDOJrmt1M6Us2gv",
+      "title": "Expand DH acronym in the Terminology section",
+      "url": "https://github.com/ace-wg/est-oscore/issues/62",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n2. Terminology\r\n \r\nSection may expand acronym \u201cDH\u201d when used first time.",
+      "createdAt": "2024-08-29T15:09:24Z",
+      "updatedAt": "2024-10-11T16:04:43Z",
+      "closedAt": "2024-10-11T16:04:43Z",
+      "comments": []
+    },
+    {
+      "number": 63,
+      "id": "I_kwDOJrmt1M6Us4om",
+      "title": "Clarify what we mean by enrollment of signature keys",
+      "url": "https://github.com/ace-wg/est-oscore/issues/63",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n> Apart from enrolling signature keys, \u2026\r\n\r\nThis is unclear to me! The purpose of EST was explained to be \u201ccertificate provisioning\u201d or \u201ccertificate enrollment\u201d (assumed to be synonyms). Now it\u2019s signature key enrollment ? Doesn\u2019t sound familiar and may need some more details. Maybe it points to the fact that an identity (consisting of a device\u2019s public key and associated private key) gets enrolled into a domain, at the same time that a certificate is provisioned into the device? Could we say \u201capart from enrollment based on signature keys, \u2026 \u201c ?",
+      "createdAt": "2024-08-29T15:11:32Z",
+      "updatedAt": "2025-02-18T16:12:01Z",
+      "closedAt": "2025-02-18T16:12:01Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OLD: \r\n> Apart from enrolling signature keys, this document also specifies how to enroll static DH keys.\r\n\r\nNEW:\r\n> Apart from enrolling certificates with keys that are used for signing, this document also specifies how to enroll certificates with keys that are used for DH operations (static DH keys).",
+          "createdAt": "2024-11-03T13:25:41Z",
+          "updatedAt": "2024-11-03T13:25:41Z"
+        }
+      ]
+    },
+    {
+      "number": 64,
+      "id": "I_kwDOJrmt1M6Us7vC",
+      "title": "Clarify that EDHOC may not need to be re-run for re-enrollment",
+      "url": "https://github.com/ace-wg/est-oscore/issues/64",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n3. Authentication\r\n \r\n>> During initial enrollment \u2026 payloads.\r\n\r\nIs EDHOC only run during the initial / first enrollment \u2013 and then never again? Or does it in some cases need to be \u201crefreshed\u201d before doing a re-enrollment?\r\n",
+      "createdAt": "2024-08-29T15:14:41Z",
+      "updatedAt": "2025-02-18T15:54:05Z",
+      "closedAt": "2025-02-18T15:54:05Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OLD: \r\n> During initial enrollment, the EST-oscore client and server run EDHOC [RFC9528] to authenticate and establish the OSCORE Security Context used to protect the messages carrying EST payloads.\r\n\r\nNEW:\r\n> The enrollment using EST-oscore is based on the existence of an OSCORE Security Context protecting the EST payloads. This Security Context is typically established through an EDHOC session preceding the initial enrollment. Re-enrollment does not require a new EDHOC session.",
+          "createdAt": "2024-11-03T13:33:00Z",
+          "updatedAt": "2024-11-03T13:33:00Z"
+        }
+      ]
+    },
+    {
+      "number": 65,
+      "id": "I_kwDOJrmt1M6UtECd",
+      "title": "Clarify how Explicit TA database should be populated",
+      "url": "https://github.com/ace-wg/est-oscore/issues/65",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n3.2 Certificate-based Authentication\r\n \r\n>> \u2026 client SHOULD populate its Explicit TA database \u2026\r\nThere\u2019s  a requirement on the client here, but what should the client do concretely? Are there some details needed on how to do this? And with whom are the \u201csubsequent authentications\u201d made, only with EST servers or with any servers/peers in the domain? (If it concerns EST server then it\u2019s in scope of this spec.)\r\nAnd what are the exception cases of the SHOULD ?  It\u2019s also not so clear here how this requirement differs from RFC 9148 requirements on Explicit and Implicit TA database.\r\n",
+      "createdAt": "2024-08-29T15:19:48Z",
+      "updatedAt": "2024-11-03T13:44:43Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Reference the text from RFC 9148 on Implicit/Explicit TA database requirements and how they are populated (Section 9.1 of RFC 9148 and Section 9.2 of RFC 9148).",
+          "createdAt": "2024-11-03T13:44:32Z",
+          "updatedAt": "2024-11-03T13:44:43Z"
+        }
+      ]
+    },
+    {
+      "number": 66,
+      "id": "I_kwDOJrmt1M6UtLz7",
+      "title": "Should server's certificate conform to RFC7925?",
+      "url": "https://github.com/ace-wg/est-oscore/issues/66",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n3.2 Certificate-based Authentication\r\n\r\n> \u2026 EST client certificate SHOULD conform to [RFC7925] \u2026\r\n\r\nThat holds also for the server certificate, I think? If the server\u2019s cert is not lightweight, then just optimizing the client\u2019s cert helps only for 50%. RFC 7925 defines the profile for both client and server.",
+      "createdAt": "2024-08-29T15:26:08Z",
+      "updatedAt": "2024-11-03T13:46:12Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Change to include EST server certificate conformant with [RFC7925].",
+          "createdAt": "2024-11-03T13:46:11Z",
+          "updatedAt": "2024-11-03T13:46:11Z"
+        }
+      ]
+    },
+    {
+      "number": 67,
+      "id": "I_kwDOJrmt1M6UtMpf",
+      "title": "Clarify that client can select the certificate type to be returned by the server",
+      "url": "https://github.com/ace-wg/est-oscore/issues/67",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n>> \u2026 EST server certificate MAY be a (natively signed) CBOR certificate \u2026\r\n\r\nThis MAY would imply that all clients MUST support the CBOR certificate \u2013 was that intended?  It would be better if the client could select either option and the EST server would support both and adapt to the client\u2019s choice.\r\nIf that\u2019s not possible then having a defined \u201cprofile\u201d can be useful \u2013 e.g. a system implementation would need to pick either the X509 cert profile or the CBOR cert profile and then all devices in the system including the EST server support that choice according to the profile.",
+      "createdAt": "2024-08-29T15:27:30Z",
+      "updatedAt": "2024-11-03T13:48:50Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This is indeed possible through the Accept option and the corresponding Content-Format identifier. Clarify that the Client may include this option in the request specifying what it supports.",
+          "createdAt": "2024-11-03T13:48:50Z",
+          "updatedAt": "2024-11-03T13:48:50Z"
+        }
+      ]
+    },
+    {
+      "number": 68,
+      "id": "I_kwDOJrmt1M6UtPHQ",
+      "title": "Add introductory text and clarify the Optimization bullets",
+      "url": "https://github.com/ace-wg/est-oscore/issues/68",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "editorial"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n3.4 Optimizations\r\n \r\nThere should be some introductory text before the bullets. E.g. explain there will follow some optional behaviours that a client can be configured / programmed to use, in order to reduce one of message size / round-trips / \u2026 .\r\nPerhaps split into optimizations that a client can decide to use, and optimizations that a server can decide to use?\r\n ",
+      "createdAt": "2024-08-29T15:31:46Z",
+      "updatedAt": "2025-02-18T15:57:35Z",
+      "closedAt": "2025-02-18T15:57:35Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "NEW:\r\n> This section contains optional behavior that may be used to reduce message sizes or round trips based on the application configuration.",
+          "createdAt": "2024-11-03T13:57:45Z",
+          "updatedAt": "2024-11-03T13:57:45Z"
+        }
+      ]
+    },
+    {
+      "number": 69,
+      "id": "I_kwDOJrmt1M6UtSZ9",
+      "title": "Transporting certificates by reference: open questions",
+      "url": "https://github.com/ace-wg/est-oscore/issues/69",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nDifference between bullet 3 and 4 is not very clear yet. Bullet 3 mentions \u201cenrolled client certificate\u201d \u2013 is this the domain certificate that\u2019s created due to the enrollment process? I suppose the client can\u2019t use this optimization when it\u2019s not yet enrolled?\r\n\r\nIn bullet 4:\r\n\r\n- is the advantage here that the client never has to actually access/download its own domain certificate? E.g. it keeps using a reference to it, instead of the actual certificate?   Does this mean that all future/potential servers and peers will have to support this \u201ccert reference\u201d instead of the real cert?\r\n\r\n- when would the EST server return the reference rather than the full certificate?  It seems the client is also obliged to support the cert references then, adding to its codebase.\r\n\r\nAll of the \u201ccertificate reference\u201d optimizations seem to complicate matters in terms of interoperability. If device 1 MAY send a reference, this forces device 2 to support (MUST) a method to get the certificate using this reference to e.g. check it. (Is this correct?)\r\nThere should also be more detail about what from RFC 9360 is used for this \u2013 e.g. specify the x5u header as the default option for this? (Now it\u2019s just mentioned as example.)",
+      "createdAt": "2024-08-29T15:37:40Z",
+      "updatedAt": "2024-08-29T15:37:40Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 70,
+      "id": "I_kwDOJrmt1M6UtU6O",
+      "title": "Discovery of EST-OSCORE resources",
+      "url": "https://github.com/ace-wg/est-oscore/issues/70",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n4.1 Discovery and URI\r\n \r\nThe server uses the \u201cosc\u201d attributes to signal OSCORE support. This is fine, however, the re-use of the existing resource type name \u201cace.est.sen\u201d also means it would support the original EST-coaps protocol.\r\nThis gives a clash in resource definitions when the EST server wants to provide EST-with-OSCORE-over-DTLS which is stated as one of the options of this protocol.\r\nIn this case, a regular EST-coaps client will see a resource of type \u201cace.est.sen\u201d which it recognizes and which is hosted at a URL that has a coaps:// protocol, which it recognizes, and so it would assume this EST server would support EST-coaps. (It would ignore the \u201cosc\u201d attribute, not knowing it.) So this gives a conflict in resource type name use, because the EST server maybe doesn\u2019t intend to support EST-coaps classic and only intends to support EST-OSCORE. But now it\u2019s impossible to express this using link format.  (Or do we intend to make EST-coaps support mandatory for such case?)",
+      "createdAt": "2024-08-29T15:41:58Z",
+      "updatedAt": "2024-11-03T14:01:51Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Remove DTLS at the side of the Client. Check if this solves the comment of Esko.",
+          "createdAt": "2024-11-03T14:01:51Z",
+          "updatedAt": "2024-11-03T14:01:51Z"
+        }
+      ]
+    },
+    {
+      "number": 71,
+      "id": "I_kwDOJrmt1M6UtYSl",
+      "title": "Clarify /crts text",
+      "url": "https://github.com/ace-wg/est-oscore/issues/71",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n4.2.1 /crts\r\n \r\n>> \u2026 which is subsequently installed in the Explicit TA.\r\n\u201cTA\u201d here should be \u201cTA database\u201d. And it could be clarified that the \u201cinstalled in\u201d part only happens of course if the server has been properly authenticated. I think the original EST protocol in Section 4.1.1 allows a client to request /cacerts without having yet authenticated the EST server.\r\n\r\nSecond paragraph: \u201ccould be just the CA public key \u2026 or \u2026 without the signature\u201d -> in this case the Content-Format would be a different one, I presume \u2013 a format that can encode this reduced information instead of the regular Content-formats defined by EST-coaps. Now it reads as if the server can just leave away information but that\u2019s not correct I think.  The client might request a specific Content-Format for the /crts resource, one with all bells and whistles included, and the server needs to oblige to this request.\r\n ",
+      "createdAt": "2024-08-29T15:47:57Z",
+      "updatedAt": "2025-02-18T16:24:06Z",
+      "closedAt": "2025-02-18T16:24:06Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OLD:\r\nEST-oscore follows much of the EST-coaps and EST design.\r\n\r\nNEW:\r\nEST-oscore follows much of the EST-coaps and EST design. This includes the need to authenticate the EST-server before performing any request on the different EST endpoints specified in this document. \r\n\r\nOLD: \r\n> EST-coaps provides the /crts operation. A successful request from the client to this resource will be answered with a bag of certificates which is subsequently installed in the Explicit TA.\r\n\r\nNEW:\r\n> EST-coaps provides the /crts operation. A successful request from the client to this resource will be answered with a bag of certificates which is subsequently installed in the TA database, resulting in Explicit TAs.\r\n\r\nOLD:\r\n> A trust anchor is commonly a self-signed certificate of the CA public key.\r\nIn order to reduce transport overhead, the trust anchor could be just the CA public key and associated data (see {{terminology}}), e.g., the SubjectPublicKeyInfo, or a public key certificate without the signature.\r\nIn either case they can be compactly encoded, e.g. using CBOR encoding {{I-D.ietf-cose-cbor-encoded-cert}}.\r\n\r\nNEW:\r\n> A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.\r\nIn order to reduce transport overhead, the trust anchor could be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}, or a CWT Claims Set (CCS) {{RFC8392}}, containing the CA public key and associated data without a signature.",
+          "createdAt": "2024-11-03T14:37:44Z",
+          "updatedAt": "2024-11-03T14:37:44Z"
+        }
+      ]
+    },
+    {
+      "number": 72,
+      "id": "I_kwDOJrmt1M6Utb1f",
+      "title": "Consider future Content-Format identifier when responding to /skg",
+      "url": "https://github.com/ace-wg/est-oscore/issues/72",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n4.3.2 CBOR-encoded Objects\r\n \r\n> In the case of CBOR-encoded request \u2026 also CBOR encoded.\r\nThere\u2019s also the client\u2019s Accept option that comes into play. There could be a future content-format that the client would specify in the Accept option; in which case the response could be another format than 62.\r\nBut agree that when no Accept option is specified, then 62 is returned with CBOR-encoded contents.\r\n ",
+      "createdAt": "2024-08-29T15:53:37Z",
+      "updatedAt": "2024-11-03T14:59:56Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "There is an issue in current Table 5 in that Content-Format 101 is used instead of TBD10 (application/cose-c509-privkey).",
+          "createdAt": "2024-11-03T14:56:23Z",
+          "updatedAt": "2024-11-03T14:56:23Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Rewrite Section 4.3.2 in order to have analog paragraphs to Section 4.3.1 and particularly make sure that the text is compatible with the negotiation through the Accept option.",
+          "createdAt": "2024-11-03T14:59:55Z",
+          "updatedAt": "2024-11-03T14:59:55Z"
+        }
+      ]
+    },
+    {
+      "number": 73,
+      "id": "I_kwDOJrmt1M6UtdOO",
+      "title": "Clarifications in Message Bindings section",
+      "url": "https://github.com/ace-wg/est-oscore/issues/73",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n> endpoints support delayed responses\r\n\r\nText here could refer to Section 4.7 of RFC 9148.\r\n \r\nFinal bullet: \u201cEST URLs based on https:// are\u201d -> this seems incorrect, it would probably need to be \u201cEST-coaps URLs based on coaps:// are translated to coap:// , but with \u2026 \u201c",
+      "createdAt": "2024-08-29T15:55:45Z",
+      "updatedAt": "2024-10-11T15:59:20Z",
+      "closedAt": "2024-10-11T15:59:20Z",
+      "comments": []
+    },
+    {
+      "number": 74,
+      "id": "I_kwDOJrmt1M6UtfG7",
+      "title": "Avoid duplicate normative requirements",
+      "url": "https://github.com/ace-wg/est-oscore/issues/74",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n4.6 Message fragmentation\r\n\r\nLast paragraphs Block1/Block2 requirements: these are repeats of section 4.4 requirements. Should try to avoid duplicate normative requirements.\r\nIf needed, refer back to the requirements made elsewhere.",
+      "createdAt": "2024-08-29T15:58:31Z",
+      "updatedAt": "2024-10-11T15:22:19Z",
+      "closedAt": "2024-10-11T15:22:19Z",
+      "comments": []
+    },
+    {
+      "number": 75,
+      "id": "I_kwDOJrmt1M6Utf-7",
+      "title": "Clarifications in Enrollment of Static DH Keys Section",
+      "url": "https://github.com/ace-wg/est-oscore/issues/75",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n4.8 Enrollment of Static DH Keys\r\n \r\n>> \u2026 how the EST client enrolls a static DH key\r\nSee earlier comment about enrolling keys vs enrolling devices or certificates. Terminology is a bit unclear to me.\r\n \r\nParagraph 2: there are 2 SHOULD requirements here \u2013 it seems it\u2019s in fact only 1 requirement? Reduce to one SHOULD, if possible. Also if the SHOULD is not followed, what are the alternatives?\r\n \r\n>> In some cases, it may be beneficial \u2026\r\nWhich cases? Maybe this is further detailed in the SP- references given later on?",
+      "createdAt": "2024-08-29T15:59:53Z",
+      "updatedAt": "2025-02-18T16:33:52Z",
+      "closedAt": "2025-02-18T16:33:52Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Rename section to \"Enrollment of Certificates with Static DH Keys\"",
+          "createdAt": "2024-11-03T15:02:06Z",
+          "updatedAt": "2024-11-03T15:02:26Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OLD: \r\n\r\nThe EST client attempting to enroll a DH key for a key usage operation other than digital signature SHOULD use an alternative proof-of-possession algorithm:\r\nThe EST client SHOULD prepare the PKCS#10 object and compute a MAC, replacing the signature, over the certification request information by following the steps in {{Section 6 of RFC6955}}.\r\n\r\nNEW:\r\nThe EST client attempting to enroll a DH key for a key usage operation other than digital signature can use an alternative proof-of-possession algorithm:\r\nThe EST client SHOULD prepare the PKCS#10 object and compute a MAC, replacing the signature, over the certification request information by following the steps in {{Section 6 of RFC6955}}.",
+          "createdAt": "2024-11-03T15:05:36Z",
+          "updatedAt": "2024-11-03T15:05:36Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Move the last paragraph starting with \"In some cases\" to be clear that it is an exception case to the SHOULD in the second paragraph.",
+          "createdAt": "2024-11-03T15:06:28Z",
+          "updatedAt": "2024-11-03T15:06:28Z"
+        }
+      ]
+    },
+    {
+      "number": 76,
+      "id": "I_kwDOJrmt1M6UtjEG",
+      "title": "Protocol support in HTTP-CoAP proxy section",
+      "url": "https://github.com/ace-wg/est-oscore/issues/76",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n5. HTTP-CoAP Proxy\r\n \r\n>> \u2026 use of TLS and DTLS is optional \u2026\r\nUse of TLS or DTLS is optional\r\n \r\nIt\u2019s optional for the client to use: it determines which protocol is initiated.  Is it mandatory for the Proxy to support all of the options NoSec, OSCORE, TLS and DTLS  for the first leg from the client ? Or do we assume \u201cprofiles\u201d where the deployer of the Proxy knows what all the EST clients will support/use?\r\nIn case of CoAP-over-TLS, what scheme would be used? (would we have to mention in that case that discovery would yield e.g. \u201ccoap+tls\u201d scheme in the links? That seems to add more complexity / options to this specification. )",
+      "createdAt": "2024-08-29T16:04:54Z",
+      "updatedAt": "2024-11-03T15:09:13Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Remove DTLS part from the Client, leaving TLS only at the EST-server side. ",
+          "createdAt": "2024-11-03T15:09:13Z",
+          "updatedAt": "2024-11-03T15:09:13Z"
+        }
+      ]
+    },
+    {
+      "number": 77,
+      "id": "I_kwDOJrmt1M6UtksI",
+      "title": "Consider adding a reference for vulnerabilities in hardware RNGs",
+      "url": "https://github.com/ace-wg/est-oscore/issues/77",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "wontfix"
+      ],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n6.1 Server-generated Private Keys\r\n \r\n>> \u2026 it has been shown that many available hardware modules \u2026\r\nIs there some reference for this claim? Maybe not needed in this doc if it\u2019s generally known.  But I didn\u2019t know it.",
+      "createdAt": "2024-08-29T16:07:44Z",
+      "updatedAt": "2025-02-18T16:37:51Z",
+      "closedAt": "2025-02-18T16:37:51Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@EskoDijk: this statement comes after listening to a research talk available on YouTube: https://bishopfox.com/blog/youre-doing-iot-rng and https://www.youtube.com/watch?v=Zuqw0-jZh9Y.\r\n\r\nI don't think it's appropriate as a reference for the draft, however, but let me know if you disagree.",
+          "createdAt": "2024-10-11T14:22:26Z",
+          "updatedAt": "2024-10-11T14:22:26Z"
+        }
+      ]
+    },
+    {
+      "number": 78,
+      "id": "I_kwDOJrmt1M6UtmGQ",
+      "title": "Optionality of challengePassword for servers?",
+      "url": "https://github.com/ace-wg/est-oscore/issues/78",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n6.2 Considerations on Channel Binding\r\n \r\n>> \u2026 PKCS#10 requests OPTIONAL\r\nIs this OPTIONAL for the client? Does the server need to support this channel binding always?",
+      "createdAt": "2024-08-29T16:10:11Z",
+      "updatedAt": "2024-11-03T15:33:55Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Make clear in Section 6.2 that the achieved channel binding is a special case, not the general one.\r\n\r\nComment that EST-server MUST be able to support the challengePassword and how the processing is done is defined by the application.",
+          "createdAt": "2024-11-03T15:33:54Z",
+          "updatedAt": "2024-11-03T15:33:54Z"
+        }
+      ]
+    },
+    {
+      "number": 79,
+      "id": "I_kwDOJrmt1M6Utmy8",
+      "title": "Remove remnant IANA registration",
+      "url": "https://github.com/ace-wg/est-oscore/issues/79",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n7.1 EDHOC Exporter Label Registry\r\nIt\u2019s not clear to me what this is and how/when TBD4 is used. It\u2019s not mentioned anywhere else in the draft.",
+      "createdAt": "2024-08-29T16:11:26Z",
+      "updatedAt": "2024-10-11T14:13:51Z",
+      "closedAt": "2024-10-11T14:13:50Z",
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Closed with #85 ",
+          "createdAt": "2024-10-11T14:13:50Z",
+          "updatedAt": "2024-10-11T14:13:50Z"
+        }
+      ]
+    },
+    {
+      "number": 80,
+      "id": "I_kwDOJrmt1M6Utnbi",
+      "title": "Consolidate references",
+      "url": "https://github.com/ace-wg/est-oscore/issues/80",
+      "state": "CLOSED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n8.2  Informative References\r\n \r\nIt looks like some references need to be normative. There\u2019s some IETF guidance for this case that any optionally implemented function requires the spec for that function to be Normatively referenced. Because the one implementing this option needs to follow that specification and normatively implement it.  \u201cInformative\u201d is purely background info that an implementer would not have to implement even with all options enabled.  See e.g. https://datatracker.ietf.org/doc/statement-iesg-iesg-statement-normative-and-informative-references-20060419/\r\n \r\n[I-D.ietf-core-oscore-edhoc]\r\n \r\n[I-D.ietf-cose-cbor-encoded-cert]\r\n-> normative, because using these CBOR encoded certs is an option in the implementation.\r\n \r\n[RFC8446]\r\n-> normative, because it looks like the client could use TLS, and for sure the EST server could use TLS.\r\n \r\n[RFC7627]\r\n-> Normative, in case using TLS is OPTIONAL for an implementation. (E.g. so far in the draft it looks like an EST client could use TLS, or the leg between Proxy and EST server could use TLS.)\r\n \r\n[RFC9147]\r\n-> normative since DTLS can be optionally used as extra transport security?\r\n \r\n[RFC9360]\r\n-> normative since it looks like a client or server can optionally use a certificate by reference. Assuming we want x5u to be the default option for this.\r\n \r\nSome references are not used it seems:\r\n \r\n[RFC2985] -> not used?\r\n[RFC2986] -> not used?\r\n[RFC5280] -> not used?\r\n[RFC5869] -> not used?\r\n[RFC5914] -> not used?\r\n[RFC7627] -> not used?\r\n ",
+      "createdAt": "2024-08-29T16:12:31Z",
+      "updatedAt": "2024-10-11T14:06:22Z",
+      "closedAt": "2024-10-11T14:06:21Z",
       "comments": []
     }
   ],
@@ -160,6 +1541,1199 @@
           "updatedAt": "2023-07-09T09:04:58Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOJrmt1M5bxRFI",
+      "title": "#21: Add acknowledgments",
+      "url": "https://github.com/ace-wg/est-oscore/pull/22",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-03T09:42:48Z",
+      "updatedAt": "2023-10-23T14:29:28Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "c2925213385f97649a12296b4d632aade4982f85",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "21-add-acks",
+      "headRefOid": "8b4b060c76e19a2afbaf3720b692afa562591c20",
+      "closedAt": "2023-10-13T09:50:19Z",
+      "mergedAt": "2023-10-13T09:50:19Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "48b494b99ebc83860d038754c96eb954d8afb256"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5iwhls",
+          "commit": {
+            "abbreviatedOid": "8b4b060"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-04T07:56:26Z",
+          "updatedAt": "2023-10-04T07:56:26Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOJrmt1M5byRdp",
+      "title": "#5: Consolidate references",
+      "url": "https://github.com/ace-wg/est-oscore/pull/23",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-03T12:27:28Z",
+      "updatedAt": "2023-10-23T14:29:07Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "c2925213385f97649a12296b4d632aade4982f85",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "5-consolidate-references",
+      "headRefOid": "68beafc0d5875c4b618d4b0cc802c61dabae7d7b",
+      "closedAt": "2023-10-13T09:50:06Z",
+      "mergedAt": "2023-10-13T09:50:06Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "6bf6291a98a6ab65779413492a7b669e3ae473bb"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5iwith",
+          "commit": {
+            "abbreviatedOid": "68beafc"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-04T07:57:19Z",
+          "updatedAt": "2023-10-04T07:57:19Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOJrmt1M5byU3X",
+      "title": "#6: Fix boilerplate",
+      "url": "https://github.com/ace-wg/est-oscore/pull/24",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-03T12:34:18Z",
+      "updatedAt": "2023-10-23T14:29:14Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "c2925213385f97649a12296b4d632aade4982f85",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "6-fix-boilerplate",
+      "headRefOid": "3b8008b29bfd186a40925dc8347dca2d669654d2",
+      "closedAt": "2023-10-13T09:49:56Z",
+      "mergedAt": "2023-10-13T09:49:56Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "dca0f459f66d14f52dcd3d3afc699940b7480dab"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5iwjJ-",
+          "commit": {
+            "abbreviatedOid": "3b8008b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-10-04T07:57:41Z",
+          "updatedAt": "2023-10-04T07:57:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOJrmt1M5cuY8L",
+      "title": "#16: Delete the sentence referencing COSE HKDF algorithms",
+      "url": "https://github.com/ace-wg/est-oscore/pull/25",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-13T10:27:39Z",
+      "updatedAt": "2023-10-19T13:14:57Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "48b494b99ebc83860d038754c96eb954d8afb256",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "16-delete-the-sentence-on-hkdf",
+      "headRefOid": "2c8e6d006d3544f2212dd488de59def821b1c920",
+      "closedAt": "2023-10-17T09:16:25Z",
+      "mergedAt": "2023-10-17T09:16:25Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "72eaee16303fd6b219a715f38cf153d8b7e8d791"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOJrmt1M5cvd7K",
+      "title": "13 update figures",
+      "url": "https://github.com/ace-wg/est-oscore/pull/26",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-13T13:43:13Z",
+      "updatedAt": "2023-10-19T13:15:08Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "48b494b99ebc83860d038754c96eb954d8afb256",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "13-update-figures",
+      "headRefOid": "8c4720201798ab86a1921d84a9ca1ad55f599159",
+      "closedAt": "2023-10-17T10:14:37Z",
+      "mergedAt": "2023-10-17T10:14:37Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "5cc235e95327a83d6f421934c2e9b605267a7907"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDOJrmt1M5cvoKs",
+      "title": "#12: Sentence to clarify that combined use of EDHOC and OSCORE is supported",
+      "url": "https://github.com/ace-wg/est-oscore/pull/27",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-13T14:10:49Z",
+      "updatedAt": "2023-10-19T13:14:47Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "48b494b99ebc83860d038754c96eb954d8afb256",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "12-illustrate-the-use-of-draft-ietf-core-oscore-edhoc",
+      "headRefOid": "ca5b2b09118125fbdb48152fe931b24291dcf0f4",
+      "closedAt": "2023-10-19T13:06:37Z",
+      "mergedAt": "2023-10-19T13:06:37Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "86455062969796ba7ef84b77aee15463e57816a8"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOJrmt1M5dRfym",
+      "title": "#11: Explicit certificate type in Optimizations",
+      "url": "https://github.com/ace-wg/est-oscore/pull/30",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-19T13:12:35Z",
+      "updatedAt": "2023-10-23T08:21:32Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "bf7ed3f409681fc49f9d299155a8a9e291dabec1",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "11-explicitly-state-the-type-of-certificate-in-optimizations",
+      "headRefOid": "f440b47017cb2b34b8b206489be4e9e7fa10c3f7",
+      "closedAt": "2023-10-23T08:20:59Z",
+      "mergedAt": "2023-10-23T08:20:59Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "13decbf8fe9a8107323dcacb406c6726a6b8cc76"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5kuYKU",
+          "commit": {
+            "abbreviatedOid": "f440b47"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Looks good",
+          "createdAt": "2023-10-20T12:00:17Z",
+          "updatedAt": "2023-10-23T08:19:59Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOJrmt1M5dRoVR",
+      "title": "#28: List Static DH certs as an optimization",
+      "url": "https://github.com/ace-wg/est-oscore/pull/31",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-19T13:29:59Z",
+      "updatedAt": "2023-10-23T08:31:26Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "13decbf8fe9a8107323dcacb406c6726a6b8cc76",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "28-additional-optimization-in-34",
+      "headRefOid": "50c72ecd0effc6a564165c2842743c44a2b21991",
+      "closedAt": "2023-10-23T08:31:03Z",
+      "mergedAt": "2023-10-23T08:31:03Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "f9dff26404a3262c64af6aa9b25c04ee1f92056a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5kuZG7",
+          "commit": {
+            "abbreviatedOid": "50c72ec"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2023-10-20T12:02:52Z",
+          "updatedAt": "2023-10-23T08:28:47Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOJrmt1M5dR7yB",
+      "title": "#15: Use ephemeral key for PoP generation when enrolling static DH keys",
+      "url": "https://github.com/ace-wg/est-oscore/pull/32",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-19T14:07:14Z",
+      "updatedAt": "2023-10-23T08:35:59Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "f9dff26404a3262c64af6aa9b25c04ee1f92056a",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "15-how-does-a-client-obtain-the-dh-key-of-a-server",
+      "headRefOid": "58035e4c035ce1252196c7da198c01bb51536b7f",
+      "closedAt": "2023-10-23T08:35:17Z",
+      "mergedAt": "2023-10-23T08:35:17Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "1b740a1dfa4fd710e8a3c74ba5881c54b25398d3"
+      },
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@gselander argh I accidentally overwrote your commit when rebasing. Could you force-push the last version of this branch you have locally?",
+          "createdAt": "2023-10-23T08:26:55Z",
+          "updatedAt": "2023-10-23T08:26:55Z"
+        },
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> @gselander argh I accidentally overwrote your commit when rebasing. Could you force-push the last version of this branch you have locally?\r\n\r\nNo need, I was able to retrieve it. Sorry for the spam.",
+          "createdAt": "2023-10-23T08:30:26Z",
+          "updatedAt": "2023-10-23T08:30:26Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5ku4Rf",
+          "commit": {
+            "abbreviatedOid": "38413bd"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Looks good, just did some proposed editorials",
+          "createdAt": "2023-10-20T13:11:11Z",
+          "updatedAt": "2023-10-20T13:11:11Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOJrmt1M5dSszD",
+      "title": "#9: Remove generation of connection-based channel binding and rework Security Considerations",
+      "url": "https://github.com/ace-wg/est-oscore/pull/33",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-10-19T15:55:51Z",
+      "updatedAt": "2023-10-23T08:18:50Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "86455062969796ba7ef84b77aee15463e57816a8",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "9-describe-connection-based-proof-of-posession",
+      "headRefOid": "c021440a2a306bb1441e065839a814557e00d7c3",
+      "closedAt": "2023-10-23T08:18:21Z",
+      "mergedAt": "2023-10-23T08:18:20Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "bf7ed3f409681fc49f9d299155a8a9e291dabec1"
+      },
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@gselander : Could you take a closer look at this PR and possibly provide more details on what we discussed in #9",
+          "createdAt": "2023-10-19T15:56:46Z",
+          "updatedAt": "2023-10-19T15:56:46Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5kvMbK",
+          "commit": {
+            "abbreviatedOid": "06592e5"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "I'm fine with this. We should probably in future versions to remove rationale that RFC 9148 made for TLS 1.2 which is no longer relevant. ",
+          "createdAt": "2023-10-20T13:52:19Z",
+          "updatedAt": "2023-10-20T13:52:19Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOJrmt1M5iHbZb",
+      "title": "#34: Add summary Table for CBOR-encoded requests and responses.",
+      "url": "https://github.com/ace-wg/est-oscore/pull/37",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The PR adds a summary table equivalent to Table 2 for CBOR-encoded objects. One WIP item is the response to /csrattrs function.\r\n\r\nFixes #34\r\nFixes #18 ",
+      "createdAt": "2023-12-15T14:26:10Z",
+      "updatedAt": "2024-02-14T16:07:38Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "e47a6b2b69b06c5f9be7f5a3dd4bd91931ba7628",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "34-payload-formats-should-explicitly-mention-cbor-encoded-objects",
+      "headRefOid": "de9954f97f0a613cf96b7a6588b40ab85017b7de",
+      "closedAt": "2024-02-14T16:07:35Z",
+      "mergedAt": "2024-02-14T16:07:34Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "53673b42d5b00c80bb88dec4ddc675f99e438cf9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5vlcbr",
+          "commit": {
+            "abbreviatedOid": "36d9eea"
+          },
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-09T10:34:52Z",
+          "updatedAt": "2024-02-09T10:34:52Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "Add an Editors note to align with issue #150 in the c509-certs github page.",
+              "createdAt": "2024-02-09T10:34:52Z",
+              "updatedAt": "2024-02-09T10:34:52Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "id": "PR_kwDOJrmt1M5lt68q",
+      "title": "#38: Make Content-Format 287 a MUST for servers",
+      "url": "https://github.com/ace-wg/est-oscore/pull/39",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is a simple PR which changes the normative requirements on Content-Format support, as per #38.",
+      "createdAt": "2024-02-01T15:40:03Z",
+      "updatedAt": "2024-03-04T14:37:42Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "f619bb2747d705a0f208d094cf613f785390ebb4",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "38-content-format-support-for-der-encoded-asn1-objects",
+      "headRefOid": "a63f41abdc7372f182e587bdce457adebb2c6bcc",
+      "closedAt": "2024-03-04T14:37:42Z",
+      "mergedAt": "2024-03-04T14:37:42Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "a0834e7bf632770f8cbdaf71e9cbb0cc2c04bf40"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5yHHq0",
+          "commit": {
+            "abbreviatedOid": "a63f41a"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "This looks right based on the input from Esko. It may be the case that we want to profile EST-OSCORE differently than RFC 9148 in this respect, but I don't know at this moment, so let's go with this.",
+          "createdAt": "2024-03-04T14:32:00Z",
+          "updatedAt": "2024-03-04T14:32:00Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOJrmt1M5luIgC",
+      "title": "#35: Add normative text that a server MUST support both ASN.1 and CBOR",
+      "url": "https://github.com/ace-wg/est-oscore/pull/40",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR is based on PR #34 . \r\n\r\nFixes #35.",
+      "createdAt": "2024-02-01T16:09:43Z",
+      "updatedAt": "2024-02-14T16:24:31Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "53673b42d5b00c80bb88dec4ddc675f99e438cf9",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "35-normative-requirements-on-content-format-support-asn1-cbor",
+      "headRefOid": "d298e54e7e57fecaeaf131c70ccb6c6b2ed1a7e1",
+      "closedAt": "2024-02-14T16:23:52Z",
+      "mergedAt": "2024-02-14T16:23:52Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "f619bb2747d705a0f208d094cf613f785390ebb4"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 41,
+      "id": "PR_kwDOJrmt1M5mZo_V",
+      "title": "#7: Terminology update",
+      "url": "https://github.com/ace-wg/est-oscore/pull/41",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add a paragraph describing the use of static DH keys.",
+      "createdAt": "2024-02-08T16:41:46Z",
+      "updatedAt": "2024-02-14T15:39:35Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "1e4d5e0ded9416b568dd08de6b01dde3254f2d86",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "7-terminology-rewrite-to-account-for-static-dh-keys",
+      "headRefOid": "65374bf51f2d1bfbea293c632518570e53cec641",
+      "closedAt": "2024-02-14T15:37:44Z",
+      "mergedAt": "2024-02-14T15:37:44Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "e47a6b2b69b06c5f9be7f5a3dd4bd91931ba7628"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 42,
+      "id": "PR_kwDOJrmt1M5mZvoc",
+      "title": "#8: Trust anchor database is always required",
+      "url": "https://github.com/ace-wg/est-oscore/pull/42",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The PR does a simple editorial change to remove the sentence opening \"In this case\".",
+      "createdAt": "2024-02-08T16:58:27Z",
+      "updatedAt": "2024-02-14T15:39:41Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "1b740a1dfa4fd710e8a3c74ba5881c54b25398d3",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "8-trust-anchor-database-is-always-required",
+      "headRefOid": "814c1feb6aedf40445b3c6431863e52bd81908f2",
+      "closedAt": "2024-02-14T15:28:27Z",
+      "mergedAt": "2024-02-14T15:28:27Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "1e4d5e0ded9416b568dd08de6b01dde3254f2d86"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 44,
+      "id": "PR_kwDOJrmt1M5nrTCn",
+      "title": "Editorial fixes",
+      "url": "https://github.com/ace-wg/est-oscore/pull/44",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Small editorial fixes",
+      "createdAt": "2024-02-22T17:57:12Z",
+      "updatedAt": "2024-02-22T17:58:42Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "f619bb2747d705a0f208d094cf613f785390ebb4",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "editorial-fixes",
+      "headRefOid": "6ba7a1f0590b4948dca6c2c935a7eafd459103aa",
+      "closedAt": "2024-02-22T17:58:08Z",
+      "mergedAt": "2024-02-22T17:58:08Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "af49620391b197dee37cc92068eb53a59adbbdd0"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 45,
+      "id": "PR_kwDOJrmt1M5nrt9L",
+      "title": "#43: discuss that a static DH key can be used of one-time signing",
+      "url": "https://github.com/ace-wg/est-oscore/pull/45",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-22T18:52:04Z",
+      "updatedAt": "2024-03-04T14:26:45Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "af49620391b197dee37cc92068eb53a59adbbdd0",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "43-state-sufficient-conditions-for-a-signed-csr-to-be-used-to-enrol-a-ecdh-public-key",
+      "headRefOid": "9fbac8bad39db6506a48610d8471dff96e152437",
+      "closedAt": "2024-03-04T14:26:45Z",
+      "mergedAt": "2024-03-04T14:26:45Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "6b3c113a509cffe48d8efcb9f420e6720d225ab0"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJrmt1M5yHD_m",
+          "commit": {
+            "abbreviatedOid": "9fbac8b"
+          },
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-03-04T14:25:47Z",
+          "updatedAt": "2024-03-04T14:25:47Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOJrmt1M5nrxXn",
+      "title": "editorial: Use Oxford comma",
+      "url": "https://github.com/ace-wg/est-oscore/pull/46",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #20 ",
+      "createdAt": "2024-02-22T19:01:11Z",
+      "updatedAt": "2024-07-08T07:19:40Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "af49620391b197dee37cc92068eb53a59adbbdd0",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "oxford-comma",
+      "headRefOid": "859152760a6afff0359e8a5aa184cff8d590a698",
+      "closedAt": "2024-02-22T19:02:11Z",
+      "mergedAt": "2024-02-22T19:02:11Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "dde33c17a1319ad2a6709b55fb5e9533f264bc3c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 48,
+      "id": "PR_kwDOJrmt1M5sQ4Jk",
+      "title": "#47: Use the application/cose-c509-privkey struct defined in the COSE\u2026",
+      "url": "https://github.com/ace-wg/est-oscore/pull/48",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\u2026 draft",
+      "createdAt": "2024-04-10T15:47:45Z",
+      "updatedAt": "2024-04-10T16:31:00Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "a0834e7bf632770f8cbdaf71e9cbb0cc2c04bf40",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "47-align-the-private-key-container-with-issue-150-in-the-c509-github-page",
+      "headRefOid": "22961fe5fcdc442bb92550abe5bf7e3589970574",
+      "closedAt": "2024-04-10T16:20:41Z",
+      "mergedAt": "2024-04-10T16:20:41Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "9935ebc5fa352b60a48d80d74aa76457d37f354a"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 49,
+      "id": "PR_kwDOJrmt1M5s9ADf",
+      "title": "#29: Add an example of message flow with optimizations",
+      "url": "https://github.com/ace-wg/est-oscore/pull/49",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-04-17T17:40:50Z",
+      "updatedAt": "2024-07-08T07:18:08Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "cd3f9f2033f8d161516d6f765cd37a6e19346c90",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "29-adding-message-flow-example",
+      "headRefOid": "ca9b2fc3d891442eb61dd7aaeee88c2ba04030ac",
+      "closedAt": "2024-07-08T07:17:32Z",
+      "mergedAt": "2024-07-08T07:17:32Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "e21bc4b4e9b481101bea66befe8840f7aeaffb2d"
+      },
+      "comments": [
+        {
+          "author": "malishav",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Consider only showing the optimized version because the current two examples are too similar. ",
+          "createdAt": "2024-07-01T09:11:05Z",
+          "updatedAt": "2024-07-01T09:11:05Z"
+        },
+        {
+          "author": "gselander",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The optimized version looks good.",
+          "createdAt": "2024-07-04T08:41:47Z",
+          "updatedAt": "2024-07-04T08:41:47Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 50,
+      "id": "PR_kwDOJrmt1M5s9L2O",
+      "title": "#19: New abstract and clarified scope in the Introduction",
+      "url": "https://github.com/ace-wg/est-oscore/pull/50",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-04-17T18:00:40Z",
+      "updatedAt": "2024-07-08T07:18:37Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "9935ebc5fa352b60a48d80d74aa76457d37f354a",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "19-clarify-scope-in-the-introduction",
+      "headRefOid": "7375bf18a1a154932b2f38ae5f469e3541027be8",
+      "closedAt": "2024-04-29T12:33:02Z",
+      "mergedAt": "2024-04-29T12:33:02Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "3ce55a5c410b8f3b827d0a648fdc2cb75069c933"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 51,
+      "id": "PR_kwDOJrmt1M5tnXyT",
+      "title": "#36: Mention the case when CSR is signed with a key not used in EDHOC",
+      "url": "https://github.com/ace-wg/est-oscore/pull/51",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-04-24T15:03:43Z",
+      "updatedAt": "2024-07-08T07:19:10Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "9935ebc5fa352b60a48d80d74aa76457d37f354a",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "36-consider-the-use-of-challengepassword-for-signature-keys-without-edhoc",
+      "headRefOid": "a3d6aecd5df6662ab2ffe5e46c420eb4a125d10f",
+      "closedAt": "2024-04-29T12:32:18Z",
+      "mergedAt": "2024-04-29T12:32:17Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "cb1c1feb65d226bebf8fc6a29a007ab63a87884e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 81,
+      "id": "PR_kwDOJrmt1M5-WB9u",
+      "title": "Editorial fixes after Esko's review",
+      "url": "https://github.com/ace-wg/est-oscore/pull/81",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-11T13:29:38Z",
+      "updatedAt": "2024-10-11T13:36:39Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "e21bc4b4e9b481101bea66befe8840f7aeaffb2d",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "editorial-fixes",
+      "headRefOid": "a2e755b492f33e186fa50093376acbbbafcb6e67",
+      "closedAt": "2024-10-11T13:32:51Z",
+      "mergedAt": "2024-10-11T13:32:51Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "711afca467593d4dc5fbac4faf05b800d0e96041"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 82,
+      "id": "PR_kwDOJrmt1M5-WGim",
+      "title": "#57: Mention CoAPs as a transport in the first sentence of abstract",
+      "url": "https://github.com/ace-wg/est-oscore/pull/82",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-11T13:40:12Z",
+      "updatedAt": "2024-10-11T13:49:53Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "711afca467593d4dc5fbac4faf05b800d0e96041",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "57-add-coaps-as-a-transport-in-the-abstract",
+      "headRefOid": "fd75d8f0df9abf3ab4762b2418c841c1a031c885",
+      "closedAt": "2024-10-11T13:45:11Z",
+      "mergedAt": "2024-10-11T13:45:11Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "65b2e9b4bc5e8b56dd4c6e6426c57163675ea4da"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 83,
+      "id": "PR_kwDOJrmt1M5-WIrm",
+      "title": "#58: Clarify that CBOR-encoded certs are optionally used alongside X.509",
+      "url": "https://github.com/ace-wg/est-oscore/pull/83",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-11T13:44:51Z",
+      "updatedAt": "2024-10-11T13:50:01Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "65b2e9b4bc5e8b56dd4c6e6426c57163675ea4da",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "58-clarify-in-the-abstract-that-the-cbor-encoded-certs-are-optionally-used",
+      "headRefOid": "87d0117acc4cb51dbb7c21f37866838ec3dc77cd",
+      "closedAt": "2024-10-11T13:49:04Z",
+      "mergedAt": "2024-10-11T13:49:04Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "57e45c366976389b2bc1cbae765a33fc179f82db"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 84,
+      "id": "PR_kwDOJrmt1M5-WQ3a",
+      "title": "#80: Consolidate normative and informative references",
+      "url": "https://github.com/ace-wg/est-oscore/pull/84",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The PR consolidates the normative references according to the proposal raised by Esko in #80 ",
+      "createdAt": "2024-10-11T14:03:19Z",
+      "updatedAt": "2024-10-11T16:05:52Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "57e45c366976389b2bc1cbae765a33fc179f82db",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "80-consolidate-references",
+      "headRefOid": "65d05cda4f5583eebb424cdd9a72fa82e18ff905",
+      "closedAt": "2024-10-11T14:06:21Z",
+      "mergedAt": "2024-10-11T14:06:21Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "09f9b88958428083ae4fbc5fd0a454849fbaba14"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 85,
+      "id": "PR_kwDOJrmt1M5-WUBX",
+      "title": "#79: Remove remnant registration",
+      "url": "https://github.com/ace-wg/est-oscore/pull/85",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The PR removes the remnant IANA registration from the text and replaces it with a simple sentence that we do not currently require any IANA registrations.",
+      "createdAt": "2024-10-11T14:10:46Z",
+      "updatedAt": "2024-10-11T14:14:41Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "09f9b88958428083ae4fbc5fd0a454849fbaba14",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "79-remove-remnant-iana-registration",
+      "headRefOid": "8c8cb81aca993fb9b902359559ab64871b9eacdd",
+      "closedAt": "2024-10-11T14:13:27Z",
+      "mergedAt": "2024-10-11T14:13:27Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "f35b7e69bfdc03bdfe995df8d42b0ec0665279b8"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 86,
+      "id": "PR_kwDOJrmt1M5-WyXD",
+      "title": "Avoid duplicate normative requirements",
+      "url": "https://github.com/ace-wg/est-oscore/pull/86",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-11T15:19:29Z",
+      "updatedAt": "2024-10-11T15:53:48Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "f35b7e69bfdc03bdfe995df8d42b0ec0665279b8",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "74-avoid-duplicate-normative-requirements",
+      "headRefOid": "4c8653979263203be3fc2ffa63cc9fdc9afbcffc",
+      "closedAt": "2024-10-11T15:22:18Z",
+      "mergedAt": "2024-10-11T15:22:18Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "7ff6c645e66d497d83f7aa2a3ec5e2ebd679aefe"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 87,
+      "id": "PR_kwDOJrmt1M5-W_tJ",
+      "title": "#74: Corrections and references in Message Bindings section",
+      "url": "https://github.com/ace-wg/est-oscore/pull/87",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-11T15:55:04Z",
+      "updatedAt": "2024-10-11T15:59:54Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "7ff6c645e66d497d83f7aa2a3ec5e2ebd679aefe",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "73-clarifications-in-message-bindings-section",
+      "headRefOid": "13b2d7c7da67b44d8d932d36ab957a97b7dc5bdf",
+      "closedAt": "2024-10-11T15:59:19Z",
+      "mergedAt": "2024-10-11T15:59:19Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "dafe08dc5c5f7546e8d49b3b379019c641abdaa1"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 88,
+      "id": "PR_kwDOJrmt1M5-XCeD",
+      "title": "62: Expand DH upon first usage",
+      "url": "https://github.com/ace-wg/est-oscore/pull/88",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-11T16:01:49Z",
+      "updatedAt": "2024-10-11T16:05:35Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "dafe08dc5c5f7546e8d49b3b379019c641abdaa1",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "62-expand-dh-acronym-in-the-terminology-section",
+      "headRefOid": "489ca6d6116bba84b03cafb25e11d67a1f3d2f36",
+      "closedAt": "2024-10-11T16:04:42Z",
+      "mergedAt": "2024-10-11T16:04:42Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "74ed6c1e8d04ea575c637ad5ea3b490f698fed90"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 89,
+      "id": "PR_kwDOJrmt1M6LnnTX",
+      "title": "#64: Clarify that EDHOC may not need to be re-run for re-enrollment.",
+      "url": "https://github.com/ace-wg/est-oscore/pull/89",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-18T15:39:08Z",
+      "updatedAt": "2025-02-18T16:14:03Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "84b32ddfd1baccfc36ad731cd9c7344ae8484142",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "64-clarify-that-edhoc-may-need-to-be-re-run-for-re-enrollment",
+      "headRefOid": "b48958fbc6c0f53f3d0108adf7bffd5e0f86b5f6",
+      "closedAt": "2025-02-18T15:54:04Z",
+      "mergedAt": "2025-02-18T15:54:04Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "3c92f256dcde20949de4fffad7e629c7dc66e03b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 90,
+      "id": "PR_kwDOJrmt1M6Ln0pz",
+      "title": "#68: Add intro text before Optimizations",
+      "url": "https://github.com/ace-wg/est-oscore/pull/90",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-18T15:56:42Z",
+      "updatedAt": "2025-02-18T16:14:25Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "3c92f256dcde20949de4fffad7e629c7dc66e03b",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "68-add-introductory-text-and-clarify-the-optimization-bullets",
+      "headRefOid": "1a14e151d40c52c1e248bea93197ac07bfede33b",
+      "closedAt": "2025-02-18T15:57:34Z",
+      "mergedAt": "2025-02-18T15:57:34Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "c7a257ac52f61f6b0a93a8b13dc513ee3f06f0e6"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 91,
+      "id": "PR_kwDOJrmt1M6Ln8XS",
+      "title": "#59: Clarify the use of HTTP",
+      "url": "https://github.com/ace-wg/est-oscore/pull/91",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-18T16:07:47Z",
+      "updatedAt": "2025-02-18T16:14:45Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "c7a257ac52f61f6b0a93a8b13dc513ee3f06f0e6",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "59-clarify-the-use-of-http",
+      "headRefOid": "87c04acfd95dcaa25f352080e0df60c3f242b954",
+      "closedAt": "2025-02-18T16:08:33Z",
+      "mergedAt": "2025-02-18T16:08:33Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "c9a2ac0a7146f910a3f9ddbf004d4c73ad41c309"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 92,
+      "id": "PR_kwDOJrmt1M6Ln-Hr",
+      "title": "#63: Clarify what we mean by enrollment of signature keys",
+      "url": "https://github.com/ace-wg/est-oscore/pull/92",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-18T16:11:14Z",
+      "updatedAt": "2025-02-18T16:12:00Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "c9a2ac0a7146f910a3f9ddbf004d4c73ad41c309",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "63-clarify-what-we-mean-by-enrollment-of-signature-keys",
+      "headRefOid": "8ce37d4c636ebe3b93f9021637077f41c16155b3",
+      "closedAt": "2025-02-18T16:11:59Z",
+      "mergedAt": "2025-02-18T16:11:59Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "0bc14eee343c972848f45c0c5753b5a9ef19d1a2"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 93,
+      "id": "PR_kwDOJrmt1M6LoEsA",
+      "title": "#71: Clarify /crts text",
+      "url": "https://github.com/ace-wg/est-oscore/pull/93",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-18T16:23:20Z",
+      "updatedAt": "2025-02-18T16:24:05Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "0bc14eee343c972848f45c0c5753b5a9ef19d1a2",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "71-clarify-crts-text",
+      "headRefOid": "f405b97bc4f082087a7c9d5b6896bee541dfdca2",
+      "closedAt": "2025-02-18T16:24:05Z",
+      "mergedAt": "2025-02-18T16:24:05Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "0a5290a5b0856284e06a37660e415dcd0aa173d3"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 94,
+      "id": "PR_kwDOJrmt1M6LoJ24",
+      "title": "#75: Clarifications in Enrollment of Static DH Keys",
+      "url": "https://github.com/ace-wg/est-oscore/pull/94",
+      "state": "MERGED",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-18T16:33:04Z",
+      "updatedAt": "2025-02-18T16:33:51Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "0a5290a5b0856284e06a37660e415dcd0aa173d3",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "75-clarifications-in-enrollment-of-static-dh-keys-section",
+      "headRefOid": "f1c12346c977576aecf74dcfc4c380d2d789a125",
+      "closedAt": "2025-02-18T16:33:51Z",
+      "mergedAt": "2025-02-18T16:33:51Z",
+      "mergedBy": "malishav",
+      "mergeCommit": {
+        "oid": "d040c073f5abccdf6fa2cb3aaca32bc00794e8b0"
+      },
+      "comments": [],
       "reviews": []
     }
   ]
