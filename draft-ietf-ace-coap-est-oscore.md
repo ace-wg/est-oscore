@@ -378,7 +378,7 @@ The function /skc is not available when using CBOR-encoded objects, and for serv
 {{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
 
 | Function | CBOR Response, Part 1  | CBOR Response Part 2 |
-| /skg     | 101 | TBD6 |
+| /skg     | TBD10 | TBD6 |
 {: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings {#message-bindings}
