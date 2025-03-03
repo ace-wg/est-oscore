@@ -335,6 +335,7 @@ Content-Format 281 and Content-Format 287 MUST be supported by EST-oscore server
 It is up to the client to support only Content-Format 281, 287 or both.
 As indicated in {{Section 4.3 of RFC9148}}, the client will use a CoAP Accept Option in the request to express the preferred response Content-Format.
 If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format 281.
+An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g. application/cose-c509-pkcs10), when the server SHOULD respond with a CBOR-encoded object (see {{cbor}}).
 
 The generated response for /skg and /skc requests contains two parts: certificate and the corresponding private key.
 {{Section 4.8 of RFC9148}} specifies that the private key in response to /skc request may be either an encrypted (PKCS #7) or unencrypted (PKCS #8) key, depending on whether the CSR request included SMIMECapabilities.
@@ -367,18 +368,22 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |       | application/csrattrs                          | res | TBD5  |
 {: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
 
-In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
-
 EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to appropriate document for its semantics.
 
-In the case of CBOR-encoded request to /skg, the two parts of the response are also CBOR encoded.
+In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
+The EST-client indicates its preference for a CBOR-encoded object through the Accept option of CoAP (see {{Section 4.3 of RFC9148}}).
+A preference for any future Content-Format is to be expressed by the EST-client through the Accept option.
+If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format TBD6.
+An exception to this "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g. application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
+
+In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
 The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD6), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
 The function /skc is not available when using CBOR-encoded objects, and for server-side generated keys, clients MUST use the /skg function.
 
 {{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
 
 | Function | CBOR Response, Part 1  | CBOR Response Part 2 |
-| /skg     | 101 | TBD6 |
+| /skg     | TBD10 | TBD6 |
 {: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings {#message-bindings}
