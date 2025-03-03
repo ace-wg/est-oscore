@@ -1397,6 +1397,9 @@ The EST-oscore server MAY in the enrollment response to the EST-oscore client in
 This may result in a more compact request because the use of static DH keys may imply a proof-of-posession using a MAC, which is shorter than a signature.
 Additionally, subsequent EDHOC sessions using static DH keys for authentication have less overhead than key exchange protocols using signature-based authentication credentials.<a href="#section-3.4-2.5.1" class="pilcrow">¶</a></p>
 </li>
+          <li class="normal" id="section-3.4-2.6">
+            <p id="section-3.4-2.6.1">When the EDHOC handshake precedes the enrollment request, it is RECOMMENDED for the EST-client to leverage the information from the EDHOC session on the negotiated cipher suite when making a decision on which type of credential to enroll.<a href="#section-3.4-2.6.1" class="pilcrow">¶</a></p>
+</li>
         </ul>
 </section>
 </div>

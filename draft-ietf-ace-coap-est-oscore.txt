@@ -303,6 +303,11 @@ Table of Contents
       authentication have less overhead than key exchange protocols
       using signature-based authentication credentials.
 
+   *  When the EDHOC handshake precedes the enrollment request, it is
+      RECOMMENDED for the EST-client to leverage the information from
+      the EDHOC session on the negotiated cipher suite when making a
+      decision on which type of credential to enroll.
+
 4.  Protocol Design and Layering
 
    EST-oscore uses CoAP [RFC7252] and Block-Wise transfer [RFC7959] to
