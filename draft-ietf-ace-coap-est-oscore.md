@@ -219,6 +219,8 @@ The EST-oscore server MAY in the enrollment response to the EST-oscore client in
 This may result in a more compact request because the use of static DH keys may imply a proof-of-posession using a MAC, which is shorter than a signature.
 Additionally, subsequent EDHOC sessions using static DH keys for authentication have less overhead than key exchange protocols using signature-based authentication credentials.
 
+* When the EDHOC handshake precedes the enrollment request, it is RECOMMENDED for the EST-client to leverage the information from the EDHOC session on the negotiated cipher suite when making a decision on which type of credential to enroll.
+
 # Protocol Design and Layering
 
 EST-oscore uses CoAP {{RFC7252}} and Block-Wise transfer {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
