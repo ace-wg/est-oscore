@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 24 August 2025                                             RISE
+Expires: 4 September 2025                                           RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                        20 February 2025
+                                                            3 March 2025
 
 
                   Protecting EST Payloads with OSCORE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 August 2025.
+   This Internet-Draft will expire on 4 September 2025.
 
 Copyright Notice
 
@@ -490,7 +490,10 @@ Table of Contents
    the client will use a CoAP Accept Option in the request to express
    the preferred response Content-Format.  If an Accept Option is not
    included in the request, the client is not expressing any preference
-   and the server SHOULD choose format 281.
+   and the server SHOULD choose format 281.  An exception to this
+   "SHOULD" is in the case when the request contains a CBOR-encoded
+   object (e.g. application/cose-c509-pkcs10), when the server SHOULD
+   respond with a CBOR-encoded object (see Section 4.3.2).
 
    The generated response for /skg and /skc requests contains two parts:
    certificate and the corresponding private key.  Section 4.8 of
@@ -554,20 +557,28 @@ Table of Contents
             Table 4: EST functions and the associated CBOR CoAP
                         Content-Format identifiers.
 
-   In case of CBOR-encoded objects, there is a single Content-Format,
-   TBD6, that MUST be supported by both the EST-oscore servers and
-   clients.
-
    EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to
    appropriate document for its semantics.
 
-   In the case of CBOR-encoded request to /skg, the two parts of the
-   response are also CBOR encoded.  The certificate part is encoded as
-   the application/cose-c509-cert object (Content-Format identifier
-   TBD6), while the corresponding private key is encoded as application/
-   cose-c509-privkey (Content-Format identifier TBD10).  The function
-   /skc is not available when using CBOR-encoded objects, and for
-   server-side generated keys, clients MUST use the /skg function.
+   In case of CBOR-encoded objects, there is a single Content-Format,
+   TBD6, that MUST be supported by both the EST-oscore servers and
+   clients.  The EST-client indicates its preference for a CBOR-encoded
+   object through the Accept option of CoAP (see Section 4.3 of
+   [RFC9148]).  A preference for any future Content-Format is to be
+   expressed by the EST-client through the Accept option.  If an Accept
+   Option is not included in the request, the client is not expressing
+   any preference and the server SHOULD choose format TBD6.  An
+   exception to this "SHOULD" is in the case when the request contains a
+   DER-encoded ASN.1 object (e.g. application/pkcs10), when the server
+   SHOULD respond with an appropriate ASN.1 object (see Section 4.3.1).
+
+   In the case of a request to /skg, the response contains two parts:
+   certificate and the corresponding private key.  The certificate part
+   is encoded as the application/cose-c509-cert object (Content-Format
+   identifier TBD6), while the corresponding private key is encoded as
+   application/cose-c509-privkey (Content-Format identifier TBD10).  The
+   function /skc is not available when using CBOR-encoded objects, and
+   for server-side generated keys, clients MUST use the /skg function.
 
    Table 5 summarizes the Content-Format identifiers used in responses
    to the /skg function.
@@ -575,7 +586,7 @@ Table of Contents
         +==========+=======================+======================+
         | Function | CBOR Response, Part 1 | CBOR Response Part 2 |
         +==========+=======================+======================+
-        | /skg     | 101                   | TBD6                 |
+        | /skg     | TBD10                 | TBD6                 |
         +----------+-----------------------+----------------------+
 
            Table 5: Response Content-Format identifiers for /skg
