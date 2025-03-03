@@ -134,28 +134,14 @@ How this trust relation is established is out of scope of this document.
 
 How the EST-oscore server verifies the identity of the client prior to issuing a certificate is also out of scope of this specification.
 
-EST-oscore defines a number of optimizations with respect to EST-coaps.
-The performance of certificate enrollment and certificate-based authentication described in this document includes the use of:
-
-* Compact CBOR representations of X.509 certificates (see {{I-D.ietf-cose-cbor-encoded-cert}})
-* Certificates by reference (see {{RFC9360}})
-* Compact, CBOR representations of EST payloads (see {{I-D.ietf-cose-cbor-encoded-cert}})
-
-## Operational Differences with EST-coaps  {#operational}
-
-The protection of EST payloads defined in this document builds on EST-coaps {{RFC9148}} but transport layer security is replaced, or complemented, by protection of the transfer- and application layer data (i.e., CoAP message fields and payload).
-This specification deviates from EST-coaps in the following respects:
+EST-oscore defines a number of optimizations with respect to EST-coaps:
 
 * The DTLS record layer is replaced by OSCORE.
-* The DTLS handshake is replaced by the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}, and makes use of the following features:
-   * Authentication based on certificates is complemented with authentication based on raw public keys.
-   * Authentication based on signature keys is complemented with authentication based on static Diffie-Hellman keys, for certificates/raw public keys.
-   * Authentication based on certificate by value is complemented with authentication based on certificate/raw public keys by reference.
-* The EST payloads protected by OSCORE can be proxied between constrained networks supporting CoAP/CoAPs and non-constrained networks supporting HTTP/HTTPs with a CoAP-HTTP proxy protection without any security processing in the proxy (see {{proxying}}).
+* The DTLS handshake is replaced by the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
+* Compact CBOR representations of X.509 certificates and EST payloads (see {{I-D.ietf-cose-cbor-encoded-cert}}) are optionally used.
+* Certificates by reference (see {{RFC9360}}) are optionally used.
+* The EST payloads protected by OSCORE can be proxied between constrained networks supporting CoAP and non-constrained networks supporting HTTP/HTTPs with a CoAP-HTTP proxy protection without any security processing in the proxy (see {{proxying}}).
 The concept "Registrar" and its required trust relation with the EST server as described in Section 5 of {{RFC9148}} is therefore not applicable.
-
-So, while the same authentication scheme (Diffie-Hellman key exchange authenticated with transported certificates) and the same EST payloads as EST-coaps also apply to EST-oscore, the latter specifies other authentication schemes.
-The reason for these deviations is that a significant overhead can be removed in terms of message sizes and round trips by using a different handshake, public key type or transported credential, and those are independent of the actual enrollment procedure.
 
 # Terminology   {#terminology}
 
