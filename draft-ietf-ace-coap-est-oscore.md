@@ -206,14 +206,10 @@ This section contains optional behavior that may be used to reduce message sizes
 
 * The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips {{RFC9668}}.
 
-* The enrolled certificates MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+* The enrolled client certificate MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 * The enrolled client certificate MAY be referenced instead of transported {{RFC9360}}.
-The EST-oscore server MAY use information in the credential identifier field of the EDHOC message (ID_CRED_x) to access the EST-oscore client certificate, e.g., in a directory or database provided by the issuer.
-In this case the certificate may not need to be transported over a constrained link between EST client and server.
-
-* Conversely, the response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself.
-The EST-oscore server MAY in the enrollment response to the EST-oscore client include a pointer to a directory or database where the certificate can be retrieved.
+The response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself (see {{certs-by-reference}}).
 
 * The PKCS#10 object MAY request a certificate for a static DH key instead of a signature key.
 This may result in a more compact request because the use of static DH keys may imply a proof-of-posession using a MAC, which is shorter than a signature.
@@ -423,6 +419,15 @@ The obtained certificate indicates the DH group parameters which MUST be respect
 As an optimization, when EDHOC precedes the enrollment and combined OSCORE-EDHOC flow is being used in EDHOC message_3 and message_4 per {{RFC9668}}, the client MUST use the public ephemeral key of the EDHOC Responder, G_Y, as the recipient public key in the algorithm outlined in {{Section 6 of RFC6955}}.
 When generating its DH key pair, the client uses the group parameters as indicated by the EDHOC cipher suite in use in the EDHOC session.
 Because the combined delivery is used per {{RFC9668}}, the client has already in EDHOC message_2 obtained the ephemeral key G_Y of the server.
+
+## Enrollment of Certificates by Reference {#certs-by-reference}
+
+The EST client MAY indicate preference for enrolling a certificate by reference by using the CoAP Accept option.
+In this case, the EST client includes a corresponding Content-Format identifier in the Accept option indicating preference for receiving a reference instead of the actual certificate.
+Depending on the Content-Format identifier, the Accept option may indicate the preference for a specific certificate format (i.e. c5t, c5u) or a general preference for receiving the certificate by reference.
+In either case, the EST client receives the certificate in the response and MAY treat it as an opaque blob of data.
+For its interactions, the EST client is expected to use the certificate by reference without needing to access the actual certificate.
+It is out of scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.
 
 # HTTP-CoAP Proxy {#proxying}
 
