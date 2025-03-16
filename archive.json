@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-13T01:09:54.752802+00:00",
+  "timestamp": "2025-03-16T01:14:05.787844+00:00",
   "repo": "ace-wg/est-oscore",
   "labels": [
     {
@@ -772,11 +772,13 @@
       "state": "OPEN",
       "author": "malishav",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "gselander"
+      ],
       "labels": [],
       "body": "The current version of the text contains the following EDITOR NOTE:\r\n\r\n> EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to appropriate document for its semantics.\r\n\r\nThis issue aims at specifying the CDDL of /csrattrs.",
       "createdAt": "2024-06-06T15:24:31Z",
-      "updatedAt": "2024-06-06T15:50:05Z",
+      "updatedAt": "2025-03-15T11:52:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -1196,9 +1198,17 @@
       "labels": [],
       "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\nDifference between bullet 3 and 4 is not very clear yet. Bullet 3 mentions \u201cenrolled client certificate\u201d \u2013 is this the domain certificate that\u2019s created due to the enrollment process? I suppose the client can\u2019t use this optimization when it\u2019s not yet enrolled?\r\n\r\nIn bullet 4:\r\n\r\n- is the advantage here that the client never has to actually access/download its own domain certificate? E.g. it keeps using a reference to it, instead of the actual certificate?   Does this mean that all future/potential servers and peers will have to support this \u201ccert reference\u201d instead of the real cert?\r\n\r\n- when would the EST server return the reference rather than the full certificate?  It seems the client is also obliged to support the cert references then, adding to its codebase.\r\n\r\nAll of the \u201ccertificate reference\u201d optimizations seem to complicate matters in terms of interoperability. If device 1 MAY send a reference, this forces device 2 to support (MUST) a method to get the certificate using this reference to e.g. check it. (Is this correct?)\r\nThere should also be more detail about what from RFC 9360 is used for this \u2013 e.g. specify the x5u header as the default option for this? (Now it\u2019s just mentioned as example.)",
       "createdAt": "2024-08-29T15:37:40Z",
-      "updatedAt": "2024-08-29T15:37:40Z",
+      "updatedAt": "2025-03-15T09:22:58Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "chrysn",
+          "authorAssociation": "NONE",
+          "body": "One option we discussed during the hackathon was to have content-formats for that:\n1. \"COSE header map that contains a x5t\"\n2. \"COSE header map that contains a c5u\"\n3. ...\n4. \"COSE header map that contains a credential by reference\"\n\n(probably distinguished by parameters; a single representation might easily be both 1 and 4, no harm in that)",
+          "createdAt": "2025-03-15T09:22:57Z",
+          "updatedAt": "2025-03-15T09:22:57Z"
+        }
+      ]
     },
     {
       "number": 70,
@@ -1461,6 +1471,22 @@
       "createdAt": "2024-08-29T16:12:31Z",
       "updatedAt": "2024-10-11T14:06:22Z",
       "closedAt": "2024-10-11T14:06:21Z",
+      "comments": []
+    },
+    {
+      "number": 104,
+      "id": "I_kwDOJrmt1M6uKrbQ",
+      "title": "Considerations on retrieving certificates by reference",
+      "url": "https://github.com/ace-wg/est-oscore/issues/104",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "There should be a separate draft describing how to retrieve a certificate based on c5u, x5u.",
+      "createdAt": "2025-03-15T11:54:59Z",
+      "updatedAt": "2025-03-15T12:01:00Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -2965,6 +2991,32 @@
       "mergeCommit": {
         "oid": "9b8cf28445ee45f64702817477c90105129606c8"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 103,
+      "id": "PR_kwDOJrmt1M6OxFaI",
+      "title": "#69: Add section on certs by reference and reduce Optimization points",
+      "url": "https://github.com/ace-wg/est-oscore/pull/103",
+      "state": "OPEN",
+      "author": "malishav",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-15T10:30:02Z",
+      "updatedAt": "2025-03-15T10:30:03Z",
+      "baseRepository": "ace-wg/est-oscore",
+      "baseRefName": "master",
+      "baseRefOid": "9b8cf28445ee45f64702817477c90105129606c8",
+      "headRepository": "ace-wg/est-oscore",
+      "headRefName": "69-transporting-certificates-by-reference-open-questions",
+      "headRefOid": "e85954bfb36cb7a33e4794d8701b36babbd71f9a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
