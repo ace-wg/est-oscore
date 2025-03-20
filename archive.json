@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-18T01:09:33.939836+00:00",
+  "timestamp": "2025-03-20T01:08:59.564633+00:00",
   "repo": "ace-wg/est-oscore",
   "labels": [
     {
@@ -1098,7 +1098,7 @@
       "labels": [],
       "body": "Based on @EskoDijk 's review in https://mailarchive.ietf.org/arch/msg/ace/I70MHcCzSfPIy28lDqxEOcllgJw/:\r\n\r\n3.2 Certificate-based Authentication\r\n \r\n>> \u2026 client SHOULD populate its Explicit TA database \u2026\r\nThere\u2019s  a requirement on the client here, but what should the client do concretely? Are there some details needed on how to do this? And with whom are the \u201csubsequent authentications\u201d made, only with EST servers or with any servers/peers in the domain? (If it concerns EST server then it\u2019s in scope of this spec.)\r\nAnd what are the exception cases of the SHOULD ?  It\u2019s also not so clear here how this requirement differs from RFC 9148 requirements on Explicit and Implicit TA database.\r\n",
       "createdAt": "2024-08-29T15:19:48Z",
-      "updatedAt": "2025-02-20T12:23:05Z",
+      "updatedAt": "2025-03-18T23:12:47Z",
       "closedAt": "2025-02-20T12:23:05Z",
       "comments": [
         {
