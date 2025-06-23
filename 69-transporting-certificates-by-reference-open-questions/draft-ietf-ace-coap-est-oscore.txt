@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 16 September 2025                                          RISE
+Expires: 25 December 2025                                           RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                           15 March 2025
+                                                            23 June 2025
 
 
                   Protecting EST Payloads with OSCORE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 September 2025.
+   This Internet-Draft will expire on 25 December 2025.
 
 Copyright Notice
 
@@ -398,9 +398,14 @@ Table of Contents
    EST-oscore servers MUST support both the DER-encoded ASN.1 objects
    and the CBOR-encoded objects.  This means supporting formats detailed
    in Section 4.3.1 and Section 4.3.2.  It is up to the client to
-   support only DER-encoded ASN.1, CBOR encoding, or both.  As a
-   reminder, Content-Format negotiation happens through CoAP's Accept
-   option present in the requests.
+   support only DER-encoded ASN.1, CBOR encoding, or both.  Based on the
+   client encoding of the CSR (DER encoding or CBOR encoding), the
+   server is able to tell whether client prefers a DER-encoded object
+   (Section 4.3.1 or a CBOR-encoded object (Section 4.3.2) in response.
+   In addition, Content-Format negotiation for specific objects happens
+   through CoAP's Accept option present in the requests.  CoAP Accept
+   option may not be present; this is a case which carries special
+   semantics, see Section 4.3.1 and Section 4.3.2.
 
 4.3.1.  DER-encoded ASN.1 Objects
 
@@ -500,9 +505,13 @@ Table of Contents
           +-------+------------------------------+------+-------+
           |       | application/cose-c509-cert   | res  | TBD6  |
           +-------+------------------------------+------+-------+
+          |       | application/multipart-core   | res  | 62    |
+          +-------+------------------------------+------+-------+
           | /sren | application/cose-c509-pkcs10 | req  | TBD7  |
           +-------+------------------------------+------+-------+
           |       | application/cose-c509-cert   | res  | TBD6  |
+          +-------+------------------------------+------+-------+
+          |       | application/multipart-core   | res  | 62    |
           +-------+------------------------------+------+-------+
           | /skg  | application/cose-c509-pkcs10 | req  | TBD7  |
           +-------+------------------------------+------+-------+
@@ -526,14 +535,20 @@ Table of Contents
    In case of CBOR-encoded objects, there is a single Content-Format,
    TBD6, that MUST be supported by both the EST-oscore servers and
    clients.  The EST-client indicates its preference for a CBOR-encoded
-   object through the Accept option of CoAP (see Section 4.3 of
-   [RFC9148]).  A preference for any future Content-Format is to be
-   expressed by the EST-client through the Accept option.  If an Accept
-   Option is not included in the request, the client is not expressing
-   any preference and the server SHOULD choose format TBD6.  An
-   exception to this "SHOULD" is in the case when the request contains a
-   DER-encoded ASN.1 object (e.g. application/pkcs10), when the server
-   SHOULD respond with an appropriate ASN.1 object (see Section 4.3.1).
+   object through the Accept option of CoAP.  A preference for any
+   (future) Content-Format is to be expressed by the EST-client through
+   the Accept option.
+
+   If an Accept Option is not included in the request, the client is not
+   expressing preference and the server SHOULD respond with a response
+   application/multipart-core which includes the reference(s) to the
+   enrolled certificate (e.g. x5t, x5u, c5t, c5u).  The application/
+   multipart-core response MUST include the reference(s) to the enrolled
+   certificate which allow the client or any other party to resolve it
+   (e.g. through an URI).  An exception to the "SHOULD" is in the case
+   when the request contains a DER-encoded ASN.1 object (e.g.
+   application/pkcs10), when the server SHOULD respond with an
+   appropriate ASN.1 object (see Section 4.3.1).
 
    In the case of a request to /skg, the response contains two parts:
    certificate and the corresponding private key.  The certificate part
@@ -649,18 +664,16 @@ Table of Contents
 
 4.9.  Enrollment of Certificates by Reference
 
-   The EST client MAY indicate preference for enrolling a certificate by
-   reference by using the CoAP Accept option.  In this case, the EST
-   client includes a corresponding Content-Format identifier in the
-   Accept option indicating preference for receiving a reference instead
-   of the actual certificate.  Depending on the Content-Format
-   identifier, the Accept option may indicate the preference for a
-   specific certificate format (i.e. c5t, c5u) or a general preference
-   for receiving the certificate by reference.  In either case, the EST
-   client receives the certificate in the response and MAY treat it as
-   an opaque blob of data.  For its interactions, the EST client is
-   expected to use the certificate by reference without needing to
-   access the actual certificate.  It is out of scope of this
+   The EST client may indicate preference for enrolling a certificate by
+   reference.  There are two cases to distinguish: 1) any certificate
+   reference, 2) a specific Content-Format.  In the first case, the EST
+   client indicates preference for receiving any certificate by
+   reference by sending a CBOR-encoded request without the Accept
+   option.  In the second case, the EST client includes a Content-Format
+   identifier in the Accept option indicating preference for receiving a
+   specific reference (e.g. application/cose-certhash, application/cose-
+   certhash usage="c509", application/cbor containing a URI
+   [I-D.ietf-cose-cbor-encoded-cert]).  It is out of scope of this
    specification how the certificate by reference gets resolved to the
    actual certificate by other parties participating in the
    communication with the EST client.
@@ -777,9 +790,9 @@ Table of Contents
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-13, 8 January 2025,
-              <https://datatracker.ietf.org/api/v1/doc/document/draft-
-              ietf-cose-cbor-encoded-cert/>.
+              ietf-cose-cbor-encoded-cert-14, 23 June 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
+              cbor-encoded-cert-14>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -871,9 +884,9 @@ Table of Contents
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
               and R. Höglund, "Group Object Security for Constrained
               RESTful Environments (Group OSCORE)", Work in Progress,
-              Internet-Draft, draft-ietf-core-oscore-groupcomm-24, 8
-              February 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-core-oscore-groupcomm-24>.
+              Internet-Draft, draft-ietf-core-oscore-groupcomm-25, 16
+              March 2025, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-core-oscore-groupcomm-25>.
 
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
