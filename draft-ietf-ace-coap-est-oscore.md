@@ -290,7 +290,7 @@ In addition, EST-oscore allows the transport of CBOR-encoded objects, signaled v
 EST-oscore servers MUST support both the DER-encoded ASN.1 objects and the CBOR-encoded objects.
 This means supporting formats detailed in {{der}} and {{cbor}}.
 It is up to the client to support only DER-encoded ASN.1, CBOR encoding, or both.
-Based on the client encoding of the CSR (DER encoding or CBOR encoding), the server is able to tell whether client prefers a DER-encoded object ({{der}} or a CBOR-encoded object ({{cbor}}) in response.
+Based on the client encoding of the CSR (DER encoding or CBOR encoding), the server is able to tell whether client prefers a DER-encoded object ({{der}}) or a CBOR-encoded object ({{cbor}}) in response.
 In addition, Content-Format negotiation for specific objects happens through CoAP's Accept option present in the requests.
 CoAP Accept option may not be present; this is a case which carries special semantics, see {{der}} and {{cbor}}.
 
@@ -362,7 +362,7 @@ The EST-client indicates its preference for a CBOR-encoded object through the Ac
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
 
 If an Accept Option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core which includes the reference(s) to the enrolled certificate (e.g. x5t, x5u, c5t, c5u).
-The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allow the client or any other party to resolve it (e.g. through an URI).
+The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to resolve it (e.g. through an URI).
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g. application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
 In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
