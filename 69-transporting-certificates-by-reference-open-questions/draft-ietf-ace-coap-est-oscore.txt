@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 25 December 2025                                           RISE
+Expires: 8 January 2026                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                            23 June 2025
+                                                             7 July 2025
 
 
                   Protecting EST Payloads with OSCORE
@@ -57,7 +57,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 December 2025.
+   This Internet-Draft will expire on 8 January 2026.
 
 Copyright Notice
 
@@ -401,7 +401,7 @@ Table of Contents
    support only DER-encoded ASN.1, CBOR encoding, or both.  Based on the
    client encoding of the CSR (DER encoding or CBOR encoding), the
    server is able to tell whether client prefers a DER-encoded object
-   (Section 4.3.1 or a CBOR-encoded object (Section 4.3.2) in response.
+   (Section 4.3.1) or a CBOR-encoded object (Section 4.3.2) in response.
    In addition, Content-Format negotiation for specific objects happens
    through CoAP's Accept option present in the requests.  CoAP Accept
    option may not be present; this is a case which carries special
@@ -544,7 +544,7 @@ Table of Contents
    application/multipart-core which includes the reference(s) to the
    enrolled certificate (e.g. x5t, x5u, c5t, c5u).  The application/
    multipart-core response MUST include the reference(s) to the enrolled
-   certificate which allow the client or any other party to resolve it
+   certificate which allows the client or any other party to resolve it
    (e.g. through an URI).  An exception to the "SHOULD" is in the case
    when the request contains a DER-encoded ASN.1 object (e.g.
    application/pkcs10), when the server SHOULD respond with an
@@ -884,9 +884,9 @@ Table of Contents
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
               and R. Höglund, "Group Object Security for Constrained
               RESTful Environments (Group OSCORE)", Work in Progress,
-              Internet-Draft, draft-ietf-core-oscore-groupcomm-25, 16
-              March 2025, <https://datatracker.ietf.org/doc/html/draft-
-              ietf-core-oscore-groupcomm-25>.
+              Internet-Draft, draft-ietf-core-oscore-groupcomm-26, 5
+              July 2025, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-core-oscore-groupcomm-26>.
 
    [I-D.tiloca-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
