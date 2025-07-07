@@ -529,8 +529,8 @@ Table of Contents
             Table 4: EST functions and the associated CBOR CoAP
                         Content-Format identifiers.
 
-   EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to
-   appropriate document for its semantics.
+   Please note that Section 4.4 of [I-D.ietf-cose-cbor-encoded-cert]
+   defines the format and the semantics of the response to /att.
 
    In case of CBOR-encoded objects, there is a single Content-Format,
    TBD6, that MUST be supported by both the EST-oscore servers and
