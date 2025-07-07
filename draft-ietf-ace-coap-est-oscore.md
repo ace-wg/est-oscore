@@ -355,7 +355,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |       | application/csrattrs                          | res | TBD5  |
 {: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
 
-EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to appropriate document for its semantics.
+Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
 
 In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
 The EST-client indicates its preference for a CBOR-encoded object through the Accept option of CoAP.
