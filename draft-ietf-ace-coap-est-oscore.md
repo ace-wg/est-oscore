@@ -206,14 +206,10 @@ This section contains optional behavior that may be used to reduce message sizes
 
 * The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips {{RFC9668}}.
 
-* The enrolled certificates MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+* The enrolled client certificate MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 * The enrolled client certificate MAY be referenced instead of transported {{RFC9360}}.
-The EST-oscore server MAY use information in the credential identifier field of the EDHOC message (ID_CRED_x) to access the EST-oscore client certificate, e.g., in a directory or database provided by the issuer.
-In this case the certificate may not need to be transported over a constrained link between EST client and server.
-
-* Conversely, the response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself.
-The EST-oscore server MAY in the enrollment response to the EST-oscore client include a pointer to a directory or database where the certificate can be retrieved.
+The response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself (see {{certs-by-reference}}).
 
 * The PKCS#10 object MAY request a certificate for a static DH key instead of a signature key.
 This may result in a more compact request because the use of static DH keys may imply a proof-of-posession using a MAC, which is shorter than a signature.
@@ -294,7 +290,9 @@ In addition, EST-oscore allows the transport of CBOR-encoded objects, signaled v
 EST-oscore servers MUST support both the DER-encoded ASN.1 objects and the CBOR-encoded objects.
 This means supporting formats detailed in {{der}} and {{cbor}}.
 It is up to the client to support only DER-encoded ASN.1, CBOR encoding, or both.
-As a reminder, Content-Format negotiation happens through CoAP's Accept option present in the requests.
+Based on the client encoding of the CSR (DER encoding or CBOR encoding), the server is able to tell whether client prefers a DER-encoded object ({{der}}) or a CBOR-encoded object ({{cbor}}) in response.
+In addition, Content-Format negotiation for specific objects happens through CoAP's Accept option present in the requests.
+CoAP Accept option may not be present; this is a case which carries special semantics, see {{der}} and {{cbor}}.
 
 ### DER-encoded ASN.1 Objects {#der}
 
@@ -345,8 +343,10 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |       | application/cose-c509-cert                    | res | TBD6  |
 | /sen  | application/cose-c509-pkcs10                  | req | TBD7  |
 |       | application/cose-c509-cert                    | res | TBD6  |
+|       | application/multipart-core                    | res |   62  |
 | /sren | application/cose-c509-pkcs10                  | req | TBD7  |
 |       | application/cose-c509-cert                    | res | TBD6  |
+|       | application/multipart-core                    | res |   62  |
 | /skg  | application/cose-c509-pkcs10                  | req | TBD7  |
 |       | application/multipart-core                    | res |   62  |
 | /skc  | N/A                                           | req |   -   |
@@ -358,10 +358,12 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 EDITOR NOTE: Specify the CDDL structure of /csrattrs and point to appropriate document for its semantics.
 
 In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
-The EST-client indicates its preference for a CBOR-encoded object through the Accept option of CoAP (see {{Section 4.3 of RFC9148}}).
-A preference for any future Content-Format is to be expressed by the EST-client through the Accept option.
-If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format TBD6.
-An exception to this "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g. application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
+The EST-client indicates its preference for a CBOR-encoded object through the Accept option of CoAP.
+A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
+
+If an Accept Option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core which includes the reference(s) to the enrolled certificate (e.g. x5t, x5u, c5t, c5u).
+The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to resolve it (e.g. through an URI).
+An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g. application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
 In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
 The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD6), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
@@ -423,6 +425,14 @@ The obtained certificate indicates the DH group parameters which MUST be respect
 As an optimization, when EDHOC precedes the enrollment and combined OSCORE-EDHOC flow is being used in EDHOC message_3 and message_4 per {{RFC9668}}, the client MUST use the public ephemeral key of the EDHOC Responder, G_Y, as the recipient public key in the algorithm outlined in {{Section 6 of RFC6955}}.
 When generating its DH key pair, the client uses the group parameters as indicated by the EDHOC cipher suite in use in the EDHOC session.
 Because the combined delivery is used per {{RFC9668}}, the client has already in EDHOC message_2 obtained the ephemeral key G_Y of the server.
+
+## Enrollment of Certificates by Reference {#certs-by-reference}
+
+The EST client may indicate preference for enrolling a certificate by reference.
+There are two cases to distinguish: 1) any certificate reference, 2) a specific Content-Format.
+In the first case, the EST client indicates preference for receiving any certificate by reference by sending a CBOR-encoded request without the Accept option.
+In the second case, the EST client includes a Content-Format identifier in the Accept option indicating preference for receiving a specific reference (e.g. application/cose-certhash, application/cose-certhash usage="c509", application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
+It is out of scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.
 
 # HTTP-CoAP Proxy {#proxying}
 
