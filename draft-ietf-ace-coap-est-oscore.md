@@ -362,6 +362,8 @@ A preference for any (future) Content-Format is to be expressed by the EST-clien
 
 If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., x5t, x5u, c5t, c5u).
 The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to retrieve it (e.g., through an URI).
+The application/multipart-core response MAY also include the actual certificate.
+The exact contents of the application/multipart-core response are dependent on the application policy.
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
 In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
