@@ -548,6 +548,8 @@ The authors would like to thank
 {{{John Mattsson}}}
 for providing a review of the document.
 
+Work on this document has in part been supported by the Horizon Europe Framework Programme project OpenSwarm (grant agreement No. 101093046).
+
 --- fluff
 
 
