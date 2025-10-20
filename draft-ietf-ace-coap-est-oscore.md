@@ -70,8 +70,10 @@ informative:
   RFC7228:
   RFC7030:
   RFC9031:
+  RFC9110:
+  RFC9112:
   I-D.ietf-core-oscore-groupcomm:
-  I-D.tiloca-core-oscore-capable-proxies:
+  I-D.ietf-core-oscore-capable-proxies:
 
   SP-800-57:
     target: https://doi.org/10.6028/NIST.SP.800-57pt1r5
@@ -115,23 +117,23 @@ The specification also leverages the certificate structures defined in {{I-D.iet
 
 One of the challenges with deploying a Public Key Infrastructure (PKI) for the Internet of Things (IoT) is certificate enrollment, because existing enrollment protocols are not optimized for constrained environments {{RFC7228}}.
 
-One optimization of certificate enrollment targeting IoT deployments is specified in EST-coaps {{RFC9148}}, which defines a version of Enrollment over Secure Transport {{RFC7030}} for transporting EST payloads over CoAP {{RFC7252}} and DTLS {{RFC9147}}, instead of HTTP and TLS {{RFC8446}}.
+One optimization of certificate enrollment targeting IoT deployments is specified in EST-coaps {{RFC9148}}, which defines a version of Enrollment over Secure Transport {{RFC7030}} for transporting EST payloads over CoAP {{RFC7252}} and DTLS {{RFC9147}}, instead of HTTP {{RFC9110}}{{RFC9112}} and TLS {{RFC8446}}.
 
 This document describes a method for protecting EST payloads over CoAP with OSCORE {{RFC8613}}.
-OSCORE specifies an extension to CoAP which protects messages at the application layer and can be applied independently of how CoAP messages are transported.
-OSCORE can also be applied to CoAP-mappable HTTP which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data (see {{Section 11 of RFC8613}}).
-Hence EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between CoAP and HTTP.
+OSCORE specifies an extension to CoAP that protects messages at the application layer and can be applied independently of how CoAP messages are transported.
+OSCORE can also be applied to CoAP-mappable HTTP, which enables end-to-end security for mixed CoAP and HTTP transfer of application layer data (see {{Section 11 of RFC8613}}).
+Hence, EST payloads can be protected end-to-end independent of the underlying transport and through proxies translating between CoAP and HTTP.
 
 OSCORE is designed for constrained environments, building on IoT standards such as CoAP, CBOR {{RFC8949}}, and COSE {{RFC9052}} {{RFC9053}}, and has in particular gained traction in settings where message sizes and the number of exchanged messages need to be kept at a minimum, such as 6TiSCH {{RFC9031}}, or for securing CoAP group messages {{I-D.ietf-core-oscore-groupcomm}}.
 Where OSCORE is implemented and used for communication security, the reuse of OSCORE for other purposes, such as enrollment, reduces the code footprint.
 
-Prior to running EST-oscore, the protocol defined in this specification, there must exist a trust relation between the EST-oscore client and the EST-oscore server.
-This trust relation may be based on the pre-shared OSCORE security context, or based on the common root of trust.
+Prior to running EST-oscore, the protocol defined in this specification, there must exist a trust relationship between the EST-oscore client and the EST-oscore server.
+This trust relationship may be based on the pre-shared OSCORE security context, or on the common root of trust.
 In case there is a pre-shared OSCORE security context, the CoAP exchange carrying EST payloads can occur immediately.
-In case there is a common root of trust, a security handshake based on the Ephemeral Diffie-Hellman over COSE (EDHOC, {{RFC9528}}) protocol needs to occur prior to running CoAP.
-How this trust relation is established is out of scope of this document.
+In case there is a common root of trust, a security handshake based on the Ephemeral Diffie-Hellman over COSE (EDHOC, {{RFC9528}}) protocol needs to occur prior to running EST-oscore.
+How this trust relationship is established is out of the scope of this document.
 
-How the EST-oscore server verifies the identity of the client prior to issuing a certificate is also out of scope of this specification.
+How the EST-oscore server verifies the identity of the client prior to issuing a certificate is also out of the scope of this specification.
 
 EST-oscore defines a number of optimizations with respect to EST-coaps:
 
@@ -139,27 +141,27 @@ EST-oscore defines a number of optimizations with respect to EST-coaps:
 * The DTLS handshake is replaced by the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
 * Compact CBOR representations of X.509 certificates and EST payloads (see {{I-D.ietf-cose-cbor-encoded-cert}}) are optionally used.
 * Certificates by reference (see {{RFC9360}}) are optionally used.
-* The EST payloads protected by OSCORE can be proxied between constrained networks supporting CoAP and non-constrained networks supporting HTTP/HTTPs with a CoAP-HTTP proxy protection without any security processing in the proxy (see {{proxying}}).
-The concept "Registrar" and its required trust relation with the EST server as described in Section 5 of {{RFC9148}} is therefore not applicable.
+* The EST payloads protected by OSCORE can be proxied between constrained networks supporting CoAP and non-constrained networks supporting HTTP/HTTPs, through a CoAP-HTTP proxy without any security processing at the proxy (see {{proxying}}).
+The concept "Registrar" and its required trust relationship with the EST server as described in Section 5 of {{RFC9148}} is therefore not applicable.
 
 # Terminology   {#terminology}
 
 {::boilerplate bcp14}
 
-This document uses terminology from {{RFC9148}} which in turn is based on {{RFC7030}} and, in turn, on {{RFC5272}}.
+This document uses terminology from {{RFC9148}}, which in turn is based on {{RFC7030}} and, in turn, on {{RFC5272}}.
 
 The term "Trust Anchor" follows the terminology of {{RFC6024}}:
 "A trust anchor represents an authoritative entity via a public key and associated data.
 The public key is used to verify digital signatures, and the associated data is used to constrain the types of information for which the trust anchor is authoritative."
 
-Apart from enrolling certificates with keys that are used for signing, this document also specifies how to enroll certificates with keys that are used for DH operations (static DH keys).
+Apart from enrolling certificates with keys that are used for signing, this document also specifies how to enroll certificates with keys that are used for Diffie-Hellman (DH) operations (static DH keys).
 Instead of signing, possession of the private static DH key may be proved by generating a MAC given the recipient's public DH key.
-Therefore this document extends the definition of the term "Trust Anchor": the corresponding public key can also be used for MAC generation for static DH proof of possession procedures.
+Therefore, this document extends the definition of the term "Trust Anchor": the corresponding public key can also be used for MAC generation for static DH proof-of-possession procedures.
 
 # Authentication
 
 This specification replaces the DTLS handshake in EST-coaps with the lightweight authenticated key exchange protocol EDHOC {{RFC9528}}.
-The enrollment using EST-oscore is based on the existence of an OSCORE Security Context protecting the EST payloads.
+The enrollment using EST-oscore is based on the existence of an OSCORE Security Context protecting the messages conveying the EST payloads.
 This Security Context is typically established through an EDHOC session preceding the initial enrollment.
 Re-enrollment does not require a new EDHOC session.
 
@@ -170,7 +172,7 @@ The EST-oscore clients and servers must perform mutual authentication.
 The EST server and EST client are responsible for ensuring that an acceptable cipher suite is negotiated.
 The client must authenticate the server before accepting any server response.
 The server must authenticate the client.
-These requirements are fullfilled when using EDHOC {{RFC9528}}.
+These requirements are fulfilled when using EDHOC {{RFC9528}}.
 
 The server must also provide relevant information to the CA to support its decision about issuing a certificate.
 
@@ -188,7 +190,7 @@ The requirements on managing the Implicit and Explicit TA databases are discusse
 
 The EST client and EST server certificate SHOULD conform to {{RFC7925}}.
 The EST client and/or EST server certificate MAY be a (natively signed) CBOR certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
-The EST client indicates its preference for the type of the certificate it supports through the Accept option included in the request to the EST server.
+The EST client indicates its preference for the type of the certificate it supports through the CoAP Accept option included in the request to the EST server.
 
 ## Channel Binding {#channel-binding}
 
@@ -204,7 +206,7 @@ Connection-based proof-of-possession using the challengePassword attribute of th
 
 This section contains optional behavior that may be used to reduce message sizes or round trips based on the application configuration.
 
-* The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE request, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips {{RFC9668}}.
+* The third message of the EDHOC protocol, message_3, MAY be combined with an OSCORE-protected request {{RFC9668}}, enabling authenticated Diffie-Hellman key exchange and a protected CoAP request/response (which may contain an enrollment request and response) in two round trips {{RFC9668}}.
 
 * The enrolled client certificate MAY be the CBOR-encoded certificates defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
 
@@ -212,16 +214,16 @@ This section contains optional behavior that may be used to reduce message sizes
 The response to the PKCS#10 request MAY specify a reference to the enrolled certificate rather than the certificate itself (see {{certs-by-reference}}).
 
 * The PKCS#10 object MAY request a certificate for a static DH key instead of a signature key.
-This may result in a more compact request because the use of static DH keys may imply a proof-of-posession using a MAC, which is shorter than a signature.
+This may result in a more compact request because the use of static DH keys may imply a proof-of-possession using a MAC, which is shorter than a signature.
 Additionally, subsequent EDHOC sessions using static DH keys for authentication have less overhead than key exchange protocols using signature-based authentication credentials.
 
-* When the EDHOC handshake precedes the enrollment request, it is RECOMMENDED for the EST-client to leverage the information from the EDHOC session on the negotiated cipher suite when making a decision on which type of credential to enroll.
+* When the EDHOC handshake precedes the enrollment request, it is RECOMMENDED for the EST-client to leverage the information from the EDHOC session on the selected cipher suite when making a decision on which type of credential to enroll.
 
 # Protocol Design and Layering
 
 EST-oscore uses CoAP {{RFC7252}} and Block-Wise transfer {{RFC7959}} to transfer EST messages in the same way as {{RFC9148}}.
-Instead of DTLS record layer, OSCORE {{RFC8613}} is used to protect the messages conveying the EST payloads.
-External Authorization Data (EAD) fields of EDHOC are intentionally not used to carry EST payloads because EDHOC needs not be executed in the case of re-enrollment.
+Instead of the DTLS record layer, OSCORE {{RFC8613}} is used to protect the messages conveying the EST payloads.
+External Authorization Data (EAD) fields of EDHOC messages are intentionally not used to carry EST payloads because EDHOC needs not be executed in the case of re-enrollment.
 The DTLS handshake is replaced with EDHOC {{RFC9528}}.
 {{fig-stack}} below shows the layered EST-oscore architecture.
 Protocol design also allows that OSCORE and EDHOC messages are carried within the same CoAP message, as per {{RFC9668}}.
@@ -243,21 +245,19 @@ This includes the need to authenticate the EST-server before performing any requ
 
 ## Discovery and URI     {#discovery}
 
-The discovery of EST resources and the definition of the short EST-coaps URI paths specified in Section 4.1 of {{RFC9148}}, as well as the new Resource Type defined in Section 8.2 of {{RFC9148}} apply to EST-oscore.
-Support for OSCORE is indicated by the "osc" attribute defined in Section 9 of {{RFC8613}}.
+The discovery of EST resources and the definition of the short EST-coaps URI paths specified in Section 4.1 of {{RFC9148}}, as well as the new Resource Type defined in {{Section 8.2 of RFC9148}} apply to EST-oscore.
+In a web link targeting a resource for EST-oscore, it is REQUIRED to indicate that the resource is only accessible using OSCORE, by means of the "osc" target attribute defined in {{Section 9 of RFC8613}}.
 
 Example:
 
 ~~~~~~~~~~~
 
-     REQ: GET /.well-known/core?rt=ace.est.sen
+     REQ: GET /.well-known/core?rt="ace.est.sen"
 
      RES: 2.05 Content
-   </est>; rt="ace.est.sen";osc
+   </est>;rt="ace.est.sen";osc
 
 ~~~~~~~~~~~
-
-The use of the "osc" attribute is REQUIRED.
 
 ## Mandatory/optional EST Functions {#est-functions}
 
@@ -275,7 +275,7 @@ The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} an
 
 ### /crts {#crts}
 
-EST-coaps provides the /crts operation.
+EST-oscore provides the /crts operation.
 A successful request from the client to this resource will be answered with a bag of certificates which is subsequently installed in the TA database, resulting in Explicit TAs.
 
 A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
@@ -285,18 +285,17 @@ In order to reduce transport overhead, the trust anchor could be a CBOR encoding
 
 Similar to EST-coaps, EST-oscore allows transport of DER-encoded objects of a given Media-Type.
 When transporting DER-encoded objects, EST-oscore uses the same CoAP Content-Format identifiers as EST-coaps when transferring EST requests and responses.
-In addition, EST-oscore allows the transport of CBOR-encoded objects, signaled via their corresponding Media-Type.
+In addition, EST-oscore allows the transport of CBOR-encoded objects, as indicated by their corresponding Media-Type.
 
-EST-oscore servers MUST support both the DER-encoded ASN.1 objects and the CBOR-encoded objects.
-This means supporting formats detailed in {{der}} and {{cbor}}.
-It is up to the client to support only DER-encoded ASN.1, CBOR encoding, or both.
-Based on the client encoding of the CSR (DER encoding or CBOR encoding), the server is able to tell whether client prefers a DER-encoded object ({{der}}) or a CBOR-encoded object ({{cbor}}) in response.
-In addition, Content-Format negotiation for specific objects happens through CoAP's Accept option present in the requests.
-CoAP Accept option may not be present; this is a case which carries special semantics, see {{der}} and {{cbor}}.
+EST-oscore servers MUST support both the DER-encoded ASN.1 objects and the CBOR-encoded objects, i.e., they MUST support formats detailed in {{der}} and {{cbor}}.
+It is up to the client to support only DER-encoded ASN.1, only CBOR encoding, or both.
+Based on the client encoding of the CSR (DER encoding or CBOR encoding), the server is able to tell whether the client prefers a DER-encoded object ({{der}}) or a CBOR-encoded object ({{cbor}}) in response.
+In addition, Content-Format negotiation for specific objects happens through the CoAP Accept option present in the requests.
+The CoAP Accept option may not be present; this is a case which carries special semantics, see {{der}} and {{cbor}}.
 
 ### DER-encoded ASN.1 Objects {#der}
 
-{{table_mediatype_asn1}} summarizes the information from Section 4.3 in {{RFC9148}} in what concerns the transport of DER-encoded ASN.1 objects.
+{{table_mediatype_asn1}} summarizes the information from Section 4.3 in {{RFC9148}} for what concerns the transport of DER-encoded ASN.1 objects.
 
 |  URI  | Media Type                                    | Type | #IANA |
 | /crts | N/A                                           | req |   -   |
@@ -317,7 +316,7 @@ CoAP Accept option may not be present; this is a case which carries special sema
 {: #table_mediatype_asn1 cols="l l" title="EST functions and the associated ASN.1 CoAP Content-Format identifiers."}
 
 Content-Format 281 and Content-Format 287 MUST be supported by EST-oscore servers.
-It is up to the client to support only Content-Format 281, 287 or both.
+It is up to the client to support only Content-Format 281, only Content-Format 287, or both.
 As indicated in {{Section 4.3 of RFC9148}}, the client will use a CoAP Accept Option in the request to express the preferred response Content-Format.
 If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format 281.
 An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g. application/cose-c509-pkcs10), when the server SHOULD respond with a CBOR-encoded object (see {{cbor}}).
@@ -358,16 +357,16 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
 
 In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
-The EST-client indicates its preference for a CBOR-encoded object through the Accept option of CoAP.
+The EST-client indicates its preference for a CBOR-encoded object through the CoAP Accept option.
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
 
-If an Accept Option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core which includes the reference(s) to the enrolled certificate (e.g. x5t, x5u, c5t, c5u).
-The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to resolve it (e.g. through an URI).
-An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g. application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
+If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., x5t, x5u, c5t, c5u).
+The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to retrieve it (e.g., through an URI).
+An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
 In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
 The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD6), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
-The function /skc is not available when using CBOR-encoded objects, and for server-side generated keys, clients MUST use the /skg function.
+The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.
 
 {{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
 
@@ -378,10 +377,10 @@ The function /skc is not available when using CBOR-encoded objects, and for serv
 ## Message Bindings {#message-bindings}
 
 Note that the EST-oscore message characteristics are identical to those specified in Section 4.4 of {{RFC9148}}.
-It is therefore required that
+Therefore, the following applies:
 
-  * The EST-oscore endpoints support delayed responses (see {{Section 4.7 of RFC9148}})
-  * The endpoints supports the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
+  * EST-oscore endpoints MUST support delayed responses (see {{Section 4.7 of RFC9148}})
+  * EST-oscore endpoints MUST support the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
     EST-oscore servers MUST implement Block1 and Block2.
     EST-oscore clients MUST implement Block2 and MAY implement Block1.
   * The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
@@ -392,13 +391,13 @@ See Section 4.5 in {{RFC9148}}.
 
 ## Message Fragmentation
 
-The EDHOC key exchange is optimized for message overhead, in particular the use of static DH keys instead of signature keys for authentication (e.g., method 3 of {{RFC9528}}).
+The EDHOC key exchange is optimized for low message overhead, in particular when using static DH keys instead of signature keys for authentication (e.g., method 3 of {{RFC9528}}).
 Together with various measures listed in this document such as CBOR-encoded payloads {{RFC8949}}, CBOR certificates {{I-D.ietf-cose-cbor-encoded-cert}}, certificates by reference ({{optimizations}}), and trust anchors without signature ({{crts}}), a significant reduction of message sizes can be achieved.
 
-Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource constrained networks such as IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
+Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource-constrained networks such as based on IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
 
 It is recommended to prevent 6LoWPAN fragmentation, since it involves an error-prone datagram reassembly.
-To limit the size of the CoAP payload, this document specifies the requirements on implementing CoAP options Block1 and Block2 (see {{message-bindings}}).
+To limit the size of the CoAP payload, this document specifies the requirements on implementing the CoAP options Block1 and Block2 (see {{message-bindings}}).
 
 ## Delayed Responses {#delayed-responses}
 
@@ -407,45 +406,44 @@ See {{Section 4.7 of RFC9148}}.
 ## Enrollment of Certificates with Static DH Keys {#static-dh-keys}
 
 This section specifies how the EST client enrolls a static DH key.
-In general, a given key pair should only be used for a single purpose, such as key establishment, digital signature, key transport.
+In general, a given key pair should only be used for a single purpose, such as key establishment, digital signature, or key transport.
 
-The EST client attempting to enroll a DH key for a key usage operation other than digital signature can use an alternative proof-of-possession algorithm:
+The EST client attempting to enroll a DH key for a key usage operation other than digital signature can use an alternative proof-of-possession algorithm.
 The EST client SHOULD prepare the PKCS#10 object and compute a MAC, replacing the signature, over the certification request information by following the steps in {{Section 6 of RFC6955}}.
 The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF and HMAC algorithms used by OSCORE.
 The KDF and MAC is thus defined by the hash algorithm used by OSCORE in HKDF and HMAC, which by default is SHA-256.
 When EDHOC is used, then the hash algorithm is the application hash algorithm of the selected cipher suite.
 
-In some cases, it may be beneficial to exceptionally use the static DH private key associated to the public key used in enrollment for a one-time signing operation of the CSR.
-While a key pair should only be used for a single purpose (e.g. key establishment or signing), this exceptional use for one-time signing of the CSR is allowed, as discussed in Section 5.6.3.2 of {{SP-800-56A}} and Section 5.2 of {{SP-800-57}}.
+In some cases, it may be beneficial to exceptionally use the static DH private key associated with the public key used in enrollment for a one-time signing operation of the CSR.
+While a key pair should only be used for a single purpose (e.g., key establishment or signing), this exceptional use for one-time signing of the CSR is allowed, as discussed in Section 5.6.3.2 of {{SP-800-56A}} and Section 5.2 of {{SP-800-57}}.
 
-To generate a MAC according to the algorithm outlined in {{Section 6 of RFC6955}}, the client needs to know the public DH key of the proof-of-possession recipient/verifier, i.e. the EST server.
+To generate a MAC according to the algorithm outlined in {{Section 6 of RFC6955}}, the client needs to know the public DH key of the proof-of-possession recipient/verifier, i.e., the EST server.
 In the general case, the EST client MAY obtain the CA certs including the CA's DH certificate using the /crts function using an explicit request/response flow.
 The obtained certificate indicates the DH group parameters which MUST be respected by the EST client when generating its own DH key pair.
 
-As an optimization, when EDHOC precedes the enrollment and combined OSCORE-EDHOC flow is being used in EDHOC message_3 and message_4 per {{RFC9668}}, the client MUST use the public ephemeral key of the EDHOC Responder, G_Y, as the recipient public key in the algorithm outlined in {{Section 6 of RFC6955}}.
-When generating its DH key pair, the client uses the group parameters as indicated by the EDHOC cipher suite in use in the EDHOC session.
-Because the combined delivery is used per {{RFC9668}}, the client has already in EDHOC message_2 obtained the ephemeral key G_Y of the server.
+As an optimization, when EDHOC precedes the enrollment and the optimized workflow based on the EDHOC + OSCORE combined request is being used as per {{Section 3 of RFC9668}}, the client MUST use the ephemeral public key of the EDHOC Responder, G_Y, as the recipient public key in the algorithm outlined in {{Section 6 of RFC6955}}.
+When generating its DH key pair, the client uses the group parameters as indicated by the selected cipher suite used in the EDHOC session.
 
 ## Enrollment of Certificates by Reference {#certs-by-reference}
 
 The EST client may indicate preference for enrolling a certificate by reference.
-There are two cases to distinguish: 1) any certificate reference, 2) a specific Content-Format.
-In the first case, the EST client indicates preference for receiving any certificate by reference by sending a CBOR-encoded request without the Accept option.
-In the second case, the EST client includes a Content-Format identifier in the Accept option indicating preference for receiving a specific reference (e.g. application/cose-certhash, application/cose-certhash usage="c509", application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
-It is out of scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.
+There are two cases to distinguish: 1) any certificate reference, or 2) a specific Content-Format.
+In the first case, the EST client indicates preference for receiving any certificate by reference by sending a CBOR-encoded request without the CoAP Accept option.
+In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash, application/cose-certhash;usage=c509, application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
+It is out of the scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.
 
 # HTTP-CoAP Proxy {#proxying}
 
 As noted in Section 5 of {{RFC9148}}, in real-world deployments, the EST server will not always reside within the CoAP boundary.
-The EST-server can exist outside the constrained network in a non-constrained network that supports HTTP but not CoAP, thus requiring an intermediary CoAP-to-HTTP proxy.
+The EST-server can be outside the constrained network in a non-constrained network that supports HTTP but not CoAP, thus requiring an intermediary CoAP-to-HTTP proxy.
 
-Since OSCORE is applicable to CoAP-mappable HTTP (see {{Section 11 of RFC8613}}) the messages conveying the EST payloads can be protected end-to-end between the EST client and EST server, irrespective of transport protocol or potential transport layer security which may need to be terminated in the proxy, see {{fig-proxy}}.
-Therefore the concept "Registrar" and its required trust relation with EST server as described in Section 5 of {{RFC9148}} is not applicable.
+Since OSCORE is applicable to CoAP-mappable HTTP (see {{Section 11 of RFC8613}}) the messages conveying the EST payloads can be protected end-to-end between the EST client and EST server, irrespective of the transport protocol or potential transport layer security that may need to be terminated at the proxy, see {{fig-proxy}}.
+Therefore, the concept "Registrar" and its required trust relationship with EST server as described in Section 5 of {{RFC9148}} is not applicable.
 
 The mappings between CoAP and HTTP referred to in Section 8.1 of {{RFC9148}} apply, and additional mappings resulting from the use of OSCORE are specified in Section 11 of {{RFC8613}}.
 
-OSCORE provides end-to-end security between EST Server and EST Client.
-If a secure association is needed between the EST Client and the CoAP-to-HTTP Proxy, this may also rely on OSCORE {{I-D.tiloca-core-oscore-capable-proxies}}.
+OSCORE provides end-to-end security between the EST Server and EST Client.
+If a secure association is needed between the EST Client and the CoAP-to-HTTP Proxy, this may also rely on OSCORE {{I-D.ietf-core-oscore-capable-proxies}}.
 
 ~~~~~~~~~~~ aasvg
                                        Constrained-Node Network
@@ -471,16 +469,16 @@ If a secure association is needed between the EST Client and the CoAP-to-HTTP Pr
 
 ## Server-generated Private Keys
 
-This document enables the EST client to request generation of private keys and the enrollment of the corresponding public key through /skg and /skc functions.
-As discussed in {{Section 9 of RFC9148}}, the transport of private keys generated at EST-server is inherently risky.
+This document enables the EST client to request the generation of private keys and the enrollment of the corresponding public key through /skg and /skc functions.
+As discussed in {{Section 9 of RFC9148}}, the transport of private keys generated at the EST-server is inherently risky.
 The use of server-generated private keys may lead to the increased probability of digital identity theft.
 Therefore, implementations SHOULD NOT use server-generated private key EST functions.
 
-A cryptographically secure pseudo-random number generator is required to be available to generate good quality private keys on EST-clients.
-A cryptographically secure pseudo-random number generator is also a dependency of many security protocols.
+A cryptographically-secure pseudo-random number generator is required to be available to generate good quality private keys on EST-clients.
+A cryptographically-secure pseudo-random number generator is also a dependency of many security protocols.
 This includes the EDHOC protocol, which EST-oscore uses for the mutual authentication of EST-client and EST-server.
 If EDHOC is used and a secure pseudo-random number generator is available, the EST-client MUST NOT use server-generated private key EST functions.
-However, EST-oscore also allows pre-shared OSCORE contexts to be used for authentication, meaning that EDHOC may not necessarily be required in the protocol stack of an EST-client.
+However, EST-oscore also allows pre-shared OSCORE security contexts to be used for authentication, meaning that EDHOC may not necessarily be present in the protocol stack of an EST-client.
 If EDHOC is not used for authentication, and the EST-client device does not have a cryptographically secure pseudo-random number generator, then the EST-client MAY use the server-generated private key functions.
 
 Although hardware random number generators are becoming dominantly present in modern IoT devices, it has been shown that many available hardware modules contain vulnerabilities and do not produce cryptographically secure random numbers.
@@ -489,15 +487,15 @@ It is therefore important to use multiple randomness sources to seed the cryptog
 ## Considerations on Channel Binding
 
 {{Section 3 of RFC9148}} specifies that the use of connection-based channel binding is optional, and achieves it by including the tls-unique value in the CSR.
-As a special case, this specification when used with EDHOC for the enrollment of static DH keys achieves connection-based channel binding by using the EDHOC ephemeral key of the responder as the public key in the proof-of-possession algorithm which generates a PKCS#10 MAC.
+As a special case, when used with EDHOC for the enrollment of static DH keys, this specification achieves connection-based channel binding by using the EDHOC ephemeral public key of the Responder as the public key in the proof-of-possession algorithm that generates a PKCS#10 MAC.
 Therefore, connection-based channel binding is in this case achieved without any additional overhead.
 
-Other cases include pre-shared OSCORE contexts and the case where the signature key used for signing the CSR is different from the key used in the EDHOC run.
+Other cases include pre-shared OSCORE security contexts and the case where the signature key used for signing the CSR is different from the key used in the EDHOC session.
 In these other cases, this specification makes explicit channel binding based on the challengePassword attribute in PKCS#10 requests OPTIONAL.
-For example, the challengePassword attribute could be used for freshness in the case of pre-shared OSCORE contexts and a re-enrollment request.
+For example, the challengePassword attribute could be used for freshness in the case of pre-shared OSCORE security contexts and of a re-enrollment request.
 
 EST-servers MUST support the challengePassword attribute in PKCS#10 requests.
-How challengePassword is processed is outside of the scope of this specification and can be specified by an application profile.
+How challengePassword is processed is outside of the scope of this specification and can be specified by an application policy.
 
 # IANA Considerations  {#iana}
 
@@ -512,7 +510,7 @@ The EDHOC handshake follows and concludes with the EDHOC message_3.
 EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{RFC9668}}.
 The OSCORE enrollment request contains a CoAP POST to the /sen endpoint.
 This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
-In response, the client receives the application/cose-c509-cert object which contains the certificate.
+In response, the client receives the application/cose-c509-cert object that contains the certificate.
 
 ~~~~~~~~~~~ aasvg
 
