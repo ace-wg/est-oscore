@@ -168,10 +168,10 @@ Re-enrollment does not require a new EDHOC session.
 The EST-oscore client MUST play the role of the EDHOC Initiator.
 The EST-oscore server MUST play the role of the EDHOC Responder.
 
-The EST-oscore clients and servers must perform mutual authentication.
+The EST-oscore clients and servers perform mutual authentication.
 The EST server and EST client are responsible for ensuring that an acceptable cipher suite is negotiated.
-The client must authenticate the server before accepting any server response.
-The server must authenticate the client.
+The client authenticates the server before accepting any server response.
+The server authenticates the client.
 These requirements are fulfilled when using EDHOC {{RFC9528}}.
 
 The server must also provide relevant information to the CA to support its decision about issuing a certificate.
