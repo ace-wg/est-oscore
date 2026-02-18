@@ -252,11 +252,12 @@ Example:
 
 ~~~~~~~~~~~
 
-     REQ: GET /.well-known/core?rt="ace.est.sen"
+     REQ: GET /.well-known/core?rt=ace.est.sen
 
      RES: 2.05 Content
-   </est>;rt="ace.est.sen";osc
-
+       Content-Format: 40 (application/link-format)
+       Payload:
+         </est>;rt=ace.est.sen;osc
 ~~~~~~~~~~~
 
 ## Mandatory/optional EST Functions {#est-functions}
