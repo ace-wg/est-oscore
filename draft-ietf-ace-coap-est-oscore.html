@@ -1332,10 +1332,10 @@ This Security Context is typically established through an EDHOC session precedin
 Re-enrollment does not require a new EDHOC session.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">The EST-oscore client MUST play the role of the EDHOC Initiator.
 The EST-oscore server MUST play the role of the EDHOC Responder.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">The EST-oscore clients and servers must perform mutual authentication.
+<p id="section-3-3">The EST-oscore clients and servers perform mutual authentication.
 The EST server and EST client are responsible for ensuring that an acceptable cipher suite is negotiated.
-The client must authenticate the server before accepting any server response.
-The server must authenticate the client.
+The client authenticates the server before accepting any server response.
+The server authenticates the client.
 These requirements are fulfilled when using EDHOC <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The server must also provide relevant information to the CA to support its decision about issuing a certificate.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <div id="edhoc">
