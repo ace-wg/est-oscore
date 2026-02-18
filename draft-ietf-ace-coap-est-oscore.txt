@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 23 April 2026                                              RISE
+Expires: 22 August 2026                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                         20 October 2025
+                                                        18 February 2026
 
 
                   Protecting EST Payloads with OSCORE
@@ -57,11 +57,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2026.
+   This Internet-Draft will expire on 22 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -343,10 +343,12 @@ Table of Contents
 
    Example:
 
-        REQ: GET /.well-known/core?rt="ace.est.sen"
+        REQ: GET /.well-known/core?rt=ace.est.sen
 
         RES: 2.05 Content
-      </est>;rt="ace.est.sen";osc
+          Content-Format: 40 (application/link-format)
+          Payload:
+            </est>;rt=ace.est.sen;osc
 
 4.2.  Mandatory/optional EST Functions
 
@@ -800,9 +802,9 @@ Table of Contents
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-15, 18 August 2025,
+              ietf-cose-cbor-encoded-cert-16, 25 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-15>.
+              cbor-encoded-cert-16>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -901,9 +903,9 @@ Table of Contents
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
               and R. Höglund, "Group Object Security for Constrained
               RESTful Environments (Group OSCORE)", Work in Progress,
-              Internet-Draft, draft-ietf-core-oscore-groupcomm-27, 12
-              September 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-core-oscore-groupcomm-27>.
+              Internet-Draft, draft-ietf-core-oscore-groupcomm-28, 23
+              December 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-core-oscore-groupcomm-28>.
 
    [RFC5272]  Schaad, J. and M. Myers, "Certificate Management over CMS
               (CMC)", RFC 5272, DOI 10.17487/RFC5272, June 2008,
