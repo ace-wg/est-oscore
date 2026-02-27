@@ -529,13 +529,13 @@ EST Client                   EST Server
 |           POST /.well-known/est/sen |
 |           Accept: TBD3              |
 |           Content-Format: TBD4      |
-|           Payload: Serialized TBD4  |
+|           Payload: cose-c509-pkcs10 |
 |                                     |
 |     OSCORE response                 |
 |<------------------------------------+
 |           2.04 Changed              |
 |           Content-Format: TBD3      |
-|           Payload: Serialized TBD3  |
+|           Payload: cose-c509-cert   |
 
 ~~~~~~~~~~~
 {: #fig-sen-optimizations title="Enrollment EST-oscore flow with optimizations."}
