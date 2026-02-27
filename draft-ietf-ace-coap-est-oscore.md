@@ -341,14 +341,11 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |  URI  | Media Type                                    | Type | #IANA |
 | /crts | N/A                                           | req |   -   |
 |       | application/cose-c509-cert                    | res | TBD3  |
-|       | application/cose-c509-cert;usage=chain        | res | TBD15 |
 | /sen  | application/cose-c509-pkcs10                  | req | TBD4  |
 |       | application/cose-c509-cert                    | res | TBD3  |
-|       | application/cose-c509-cert;usage=chain        | res | TBD15 |
 |       | application/multipart-core                    | res |   62  |
 | /sren | application/cose-c509-pkcs10                  | req | TBD4  |
 |       | application/cose-c509-cert                    | res | TBD3  |
-|       | application/cose-c509-cert;usage=chain        | res | TBD15 |
 |       | application/multipart-core                    | res |   62  |
 | /skg  | application/cose-c509-pkcs10                  | req | TBD4  |
 |       | application/multipart-core                    | res |   62  |
@@ -360,8 +357,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 
 Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
 
-Content-Format TBD3 and Content-Format TBD15 MUST be supported by EST-oscore servers.
-It is up to the client to support only Content-Format TBD3, only Content-Format TBD15, or both.
+Content-Format TBD3 MUST be supported by both EST-oscore clients and servers.
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
 
 If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., x5t, x5u, c5t, c5u).
