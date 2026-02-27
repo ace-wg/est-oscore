@@ -277,7 +277,7 @@ The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} an
 ### /crts {#crts}
 
 EST-oscore provides the /crts operation.
-A successful request from the client to this resource will be answered with one or more certificates, subsequently installed in the TA database, resulting in Explicit TAs.
+A successful request from the client to this resource will be answered with one or more certificates, subsequently installed in the TA database (once the server is authenticated), resulting in Explicit TAs.
 
 A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
 In order to reduce transport overhead, the trust anchor could be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}, or a CWT Claims Set (CCS) {{RFC8392}}, containing the CA public key and associated data without a signature.
