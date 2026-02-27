@@ -961,28 +961,28 @@ Appendix A.  Example Enrollment With Optimizations
    response, the client receives the application/cose-c509-cert object
    that contains the certificate.
 
-                  EST Client                   EST Server
-                  |                                     |
-                  |     EDHOC message_1                 |
-                  +------------------------------------>|
-                  |     EDHOC message_2                 |
-                  |<------------------------------------+
-                  |     EDHOC message_3                 |
-                  |            +                        |
-                  |     OSCORE request to /sen          |
-                  +------------------------------------>|
-                  |           POST /.well-known/est/sen |
-                  |           Accept: TBD3              |
-                  |           Content-Format: TBD4      |
-                  |           Payload: Serialized TBD4  |
-                  |                                     |
-                  |     OSCORE response                 |
-                  |<------------------------------------+
-                  |           2.04 Changed              |
-                  |           Content-Format: TBD3      |
-                  |           Payload: Serialized TBD3  |
+  EST Client                   EST Server
+  |                                     |
+  |     EDHOC message_1                 |
+  +------------------------------------>|
+  |     EDHOC message_2                 |
+  |<------------------------------------+
+  |     EDHOC message_3                 |
+  |            +                        |
+  |     OSCORE request to /sen          |
+  +------------------------------------>|
+  |           POST /.well-known/est/sen |
+  |           Accept: TBD3              |
+  |           Content-Format: TBD4      |
+  |           Payload: Serialized application/cose-c509-pkcs10 (TBD4)  |
+  |                                     |
+  |     OSCORE response                 |
+  |<------------------------------------+
+  |           2.04 Changed              |
+  |           Content-Format: TBD3      |
+  |           Payload: Serialized application/cose-c509-cert (TBD3)  |
 
-          Figure 3: Enrollment EST-oscore flow with optimizations.
+         Figure 3: Enrollment EST-oscore flow with optimizations.
 
 Acknowledgments
 
