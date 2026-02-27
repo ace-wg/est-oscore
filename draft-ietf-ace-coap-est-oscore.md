@@ -277,7 +277,7 @@ The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} an
 ### /crts {#crts}
 
 EST-oscore provides the /crts operation.
-A successful request from the client to this resource will be answered with a bag of certificates which is subsequently installed in the TA database, resulting in Explicit TAs.
+A successful request from the client to this resource will be answered with one or more certificates, subsequently installed in the TA database, resulting in Explicit TAs.
 
 A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
 In order to reduce transport overhead, the trust anchor could be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}, or a CWT Claims Set (CCS) {{RFC8392}}, containing the CA public key and associated data without a signature.
@@ -340,25 +340,24 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 
 |  URI  | Media Type                                    | Type | #IANA |
 | /crts | N/A                                           | req |   -   |
-|       | application/cose-c509-cert                    | res | TBD6  |
-| /sen  | application/cose-c509-pkcs10                  | req | TBD7  |
-|       | application/cose-c509-cert                    | res | TBD6  |
+|       | application/cose-c509-cert                    | res | TBD3  |
+| /sen  | application/cose-c509-pkcs10                  | req | TBD4  |
+|       | application/cose-c509-cert                    | res | TBD3  |
 |       | application/multipart-core                    | res |   62  |
-| /sren | application/cose-c509-pkcs10                  | req | TBD7  |
-|       | application/cose-c509-cert                    | res | TBD6  |
+| /sren | application/cose-c509-pkcs10                  | req | TBD4  |
+|       | application/cose-c509-cert                    | res | TBD3  |
 |       | application/multipart-core                    | res |   62  |
-| /skg  | application/cose-c509-pkcs10                  | req | TBD7  |
+| /skg  | application/cose-c509-pkcs10                  | req | TBD4  |
 |       | application/multipart-core                    | res |   62  |
 | /skc  | N/A                                           | req |   -   |
 |       | N/A                                           | res |   -   |
 | /att  | N/A                                           | req |   -   |
-|       | application/csrattrs                          | res | TBD5  |
+|       | application/cose-c509-crtemplate              | res | TBD19 |
 {: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
 
 Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
 
-In case of CBOR-encoded objects, there is a single Content-Format, TBD6, that MUST be supported by both the EST-oscore servers and clients.
-The EST-client indicates its preference for a CBOR-encoded object through the CoAP Accept option.
+Content-Format TBD3 MUST be supported by both EST-oscore clients and servers.
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
 
 If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., x5t, x5u, c5t, c5u).
@@ -368,13 +367,13 @@ The exact contents of the application/multipart-core response are dependent on t
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
 In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
-The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD6), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
+The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD3), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
 The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.
 
 {{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
 
 | Function | CBOR Response, Part 1  | CBOR Response Part 2 |
-| /skg     | TBD10 | TBD6 |
+| /skg     | TBD10 | TBD3 |
 {: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings {#message-bindings}
@@ -528,15 +527,15 @@ EST Client                   EST Server
 |     OSCORE request to /sen          |
 +------------------------------------>|
 |           POST /.well-known/est/sen |
-|           Accept: TBD6              |
-|           Content-Format: TBD7      |
-|           Payload: Serialized TBD7  |
+|           Accept: TBD3              |
+|           Content-Format: TBD4      |
+|           Payload: cose-c509-pkcs10 |
 |                                     |
 |     OSCORE response                 |
 |<------------------------------------+
 |           2.04 Changed              |
-|           Content-Format: TBD6      |
-|           Payload: Serialized TBD6  |
+|           Content-Format: TBD3      |
+|           Payload: cose-c509-cert   |
 
 ~~~~~~~~~~~
 {: #fig-sen-optimizations title="Enrollment EST-oscore flow with optimizations."}
