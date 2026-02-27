@@ -5,13 +5,13 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 29 May 2026                                                RISE
+Expires: 31 August 2026                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
                                                                T. Claeys
-                                                        25 November 2025
+                                                        27 February 2026
 
 
                   Protecting EST Payloads with OSCORE
@@ -57,11 +57,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 May 2026.
+   This Internet-Draft will expire on 31 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -213,12 +213,12 @@ Table of Contents
    The EST-oscore client MUST play the role of the EDHOC Initiator.  The
    EST-oscore server MUST play the role of the EDHOC Responder.
 
-   The EST-oscore clients and servers must perform mutual
-   authentication.  The EST server and EST client are responsible for
-   ensuring that an acceptable cipher suite is negotiated.  The client
-   must authenticate the server before accepting any server response.
-   The server must authenticate the client.  These requirements are
-   fulfilled when using EDHOC [RFC9528].
+   The EST-oscore clients and servers perform mutual authentication.
+   The EST server and EST client are responsible for ensuring that an
+   acceptable cipher suite is negotiated.  The client authenticates the
+   server before accepting any server response.  The server
+   authenticates the client.  These requirements are fulfilled when
+   using EDHOC [RFC9528].
 
    The server must also provide relevant information to the CA to
    support its decision about issuing a certificate.
@@ -343,10 +343,12 @@ Table of Contents
 
    Example:
 
-        REQ: GET /.well-known/core?rt="ace.est.sen"
+        REQ: GET /.well-known/core?rt=ace.est.sen
 
         RES: 2.05 Content
-      </est>;rt="ace.est.sen";osc
+          Content-Format: 40 (application/link-format)
+          Payload:
+            </est>;rt=ace.est.sen;osc
 
 4.2.  Mandatory/optional EST Functions
 
@@ -499,55 +501,47 @@ Table of Contents
    Table 4 presents the equivalent information to Section 4.3.1 when
    CBOR-encoded objects are in use.
 
-     +=======+========================================+======+=======+
-     | URI   | Media Type                             | Type | #IANA |
-     +=======+========================================+======+=======+
-     | /crts | N/A                                    | req  | -     |
-     +-------+----------------------------------------+------+-------+
-     |       | application/cose-c509-cert             | res  | TBD3  |
-     +-------+----------------------------------------+------+-------+
-     |       | application/cose-c509-cert;usage=chain | res  | TBD15 |
-     +-------+----------------------------------------+------+-------+
-     | /sen  | application/cose-c509-pkcs10           | req  | TBD4  |
-     +-------+----------------------------------------+------+-------+
-     |       | application/cose-c509-cert             | res  | TBD3  |
-     +-------+----------------------------------------+------+-------+
-     |       | application/cose-c509-cert;usage=chain | res  | TBD15 |
-     +-------+----------------------------------------+------+-------+
-     |       | application/multipart-core             | res  | 62    |
-     +-------+----------------------------------------+------+-------+
-     | /sren | application/cose-c509-pkcs10           | req  | TBD4  |
-     +-------+----------------------------------------+------+-------+
-     |       | application/cose-c509-cert             | res  | TBD3  |
-     +-------+----------------------------------------+------+-------+
-     |       | application/cose-c509-cert;usage=chain | res  | TBD15 |
-     +-------+----------------------------------------+------+-------+
-     |       | application/multipart-core             | res  | 62    |
-     +-------+----------------------------------------+------+-------+
-     | /skg  | application/cose-c509-pkcs10           | req  | TBD4  |
-     +-------+----------------------------------------+------+-------+
-     |       | application/multipart-core             | res  | 62    |
-     +-------+----------------------------------------+------+-------+
-     | /skc  | N/A                                    | req  | -     |
-     +-------+----------------------------------------+------+-------+
-     |       | N/A                                    | res  | -     |
-     +-------+----------------------------------------+------+-------+
-     | /att  | N/A                                    | req  | -     |
-     +-------+----------------------------------------+------+-------+
-     |       | application/cose-c509-crtemplate       | res  | TBD19 |
-     +-------+----------------------------------------+------+-------+
+        +=======+==================================+======+=======+
+        | URI   | Media Type                       | Type | #IANA |
+        +=======+==================================+======+=======+
+        | /crts | N/A                              | req  | -     |
+        +-------+----------------------------------+------+-------+
+        |       | application/cose-c509-cert       | res  | TBD3  |
+        +-------+----------------------------------+------+-------+
+        | /sen  | application/cose-c509-pkcs10     | req  | TBD4  |
+        +-------+----------------------------------+------+-------+
+        |       | application/cose-c509-cert       | res  | TBD3  |
+        +-------+----------------------------------+------+-------+
+        |       | application/multipart-core       | res  | 62    |
+        +-------+----------------------------------+------+-------+
+        | /sren | application/cose-c509-pkcs10     | req  | TBD4  |
+        +-------+----------------------------------+------+-------+
+        |       | application/cose-c509-cert       | res  | TBD3  |
+        +-------+----------------------------------+------+-------+
+        |       | application/multipart-core       | res  | 62    |
+        +-------+----------------------------------+------+-------+
+        | /skg  | application/cose-c509-pkcs10     | req  | TBD4  |
+        +-------+----------------------------------+------+-------+
+        |       | application/multipart-core       | res  | 62    |
+        +-------+----------------------------------+------+-------+
+        | /skc  | N/A                              | req  | -     |
+        +-------+----------------------------------+------+-------+
+        |       | N/A                              | res  | -     |
+        +-------+----------------------------------+------+-------+
+        | /att  | N/A                              | req  | -     |
+        +-------+----------------------------------+------+-------+
+        |       | application/cose-c509-crtemplate | res  | TBD19 |
+        +-------+----------------------------------+------+-------+
 
-        Table 4: EST functions and the associated CBOR CoAP Content-
-                            Format identifiers.
+            Table 4: EST functions and the associated CBOR CoAP
+                        Content-Format identifiers.
 
    Please note that Section 4.4 of [I-D.ietf-cose-cbor-encoded-cert]
    defines the format and the semantics of the response to /att.
 
-   Content-Format TBD3 and Content-Format TBD15 MUST be supported by
-   EST-oscore servers.  It is up to the client to support only Content-
-   Format TBD3, only Content-Format TBD15, or both.  A preference for
-   any (future) Content-Format is to be expressed by the EST-client
-   through the Accept option.
+   Content-Format TBD3 MUST be supported by both EST-oscore clients and
+   servers.  A preference for any (future) Content-Format is to be
+   expressed by the EST-client through the Accept option.
 
    If a CoAP Accept option is not included in the request, the client is
    not expressing preference and the server SHOULD respond with a
@@ -805,9 +799,9 @@ Table of Contents
               Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
               M. Furuhed, "CBOR Encoded X.509 Certificates (C509
               Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-15, 18 August 2025,
+              ietf-cose-cbor-encoded-cert-16, 25 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-15>.
+              cbor-encoded-cert-16>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -906,9 +900,9 @@ Table of Contents
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
               and R. Höglund, "Group Object Security for Constrained
               RESTful Environments (Group OSCORE)", Work in Progress,
-              Internet-Draft, draft-ietf-core-oscore-groupcomm-27, 12
-              September 2025, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-core-oscore-groupcomm-27>.
+              Internet-Draft, draft-ietf-core-oscore-groupcomm-28, 23
+              December 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-core-oscore-groupcomm-28>.
 
    [RFC5272]  Schaad, J. and M. Myers, "Certificate Management over CMS
               (CMC)", RFC 5272, DOI 10.17487/RFC5272, June 2008,
