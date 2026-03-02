@@ -180,7 +180,7 @@ The server must also provide relevant information to the CA to support its decis
 
 EDHOC supports authentication with certificates or raw public keys (referred to as "credentials"), and the credentials may either be transported in the protocol, or referenced.
 This is determined by the identifier of the credential of the endpoint, ID_CRED_x for x= Initiator/Responder, which is transported in an EDHOC message.
-This identifier may be the credential itself (in which case the credential is transported), or a pointer such as a URI of the credential (e.g., x5u, see {{RFC9360}}) or some other identifier which enables the receiving endpoint to retrieve the credential.
+This identifier may be the credential itself (in which case the credential is transported), or a pointer such as a URI of the credential (e.g., c5u, see {{I-D.ietf-cose-cbor-encoded-cert}}) or some other identifier which enables the receiving endpoint to retrieve the credential.
 
 ## Certificate-based Authentication
 
@@ -360,7 +360,7 @@ Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the 
 Content-Format TBD3 MUST be supported by both EST-oscore clients and servers.
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
 
-If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., x5t, x5u, c5t, c5u).
+If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., c5t, c5u).
 The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to retrieve it (e.g., through a coap URI secured with OSCORE).
 The application/multipart-core response MAY also include the actual certificate.
 The exact contents of the application/multipart-core response are dependent on the application policy.
