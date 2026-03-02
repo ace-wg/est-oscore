@@ -380,8 +380,8 @@ Table of Contents
 
    EST-oscore provides the /crts operation.  A successful request from
    the client to this resource will be answered with one or more
-   certificates, subsequently installed in the TA database, resulting in
-   Explicit TAs.
+   certificates, subsequently installed in the TA database (once the
+   server is authenticated), resulting in Explicit TAs.
 
    A trust anchor is commonly a self-signed certificate of the CA public
    key, of the format indicated by the CoAP Accept option present in the
