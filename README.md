@@ -1,3 +1,5 @@
+<!-- regenerate: on (set to off if you edit this file) -->
+
 # Protecting EST Payloads with OSCORE
 
 This is the working area for the IETF [ACE Working Group](https://datatracker.ietf.org/group/ace/documents/) Internet-Draft, "Protecting EST Payloads with OSCORE".
@@ -13,9 +15,8 @@ This is the working area for the IETF [ACE Working Group](https://datatracker.ie
 See the
 [guidelines for contributions](https://github.com/ace-wg/est-oscore/blob/master/CONTRIBUTING.md).
 
-Contributions can be made by creating pull requests.
-The GitHub interface supports creating pull requests using the Edit (✏) button.
-
+The contributing file also has tips on how to make contributions, if you
+don't already know how to do that.
 
 ## Command Line Usage
 
