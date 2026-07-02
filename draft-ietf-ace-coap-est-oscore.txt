@@ -5,13 +5,12 @@
 ACE Working Group                                            G. Selander
 Internet-Draft                                               Ericsson AB
 Intended status: Standards Track                                 S. Raza
-Expires: 3 September 2026                                           RISE
+Expires: 3 January 2027                                             RISE
                                                               M. Furuhed
                                                                    Nexus
                                                               M. Vučinić
                                                                    Inria
-                                                               T. Claeys
-                                                            2 March 2026
+                                                             2 July 2026
 
 
                   Protecting EST Payloads with OSCORE
@@ -57,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2026.
+   This Internet-Draft will expire on 3 January 2027.
 
 Copyright Notice
 
@@ -799,12 +798,12 @@ Table of Contents
 8.1.  Normative References
 
    [I-D.ietf-cose-cbor-encoded-cert]
-              Mattsson, J. P., Selander, G., Raza, S., Höglund, J., and
-              M. Furuhed, "CBOR Encoded X.509 Certificates (C509
-              Certificates)", Work in Progress, Internet-Draft, draft-
-              ietf-cose-cbor-encoded-cert-16, 25 January 2026,
+              Mattsson, J. P., Selander, G., Raza, S., Höglund, J.,
+              Furuhed, M., and L. Liao, "CBOR Encoded X.509 Certificates
+              (C509 Certificates)", Work in Progress, Internet-Draft,
+              draft-ietf-cose-cbor-encoded-cert-20, 30 June 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cose-
-              cbor-encoded-cert-16>.
+              cbor-encoded-cert-20>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -895,9 +894,9 @@ Table of Contents
    [I-D.ietf-core-oscore-capable-proxies]
               Tiloca, M. and R. Höglund, "OSCORE-capable Proxies", Work
               in Progress, Internet-Draft, draft-ietf-core-oscore-
-              capable-proxies-05, 3 September 2025,
+              capable-proxies-06, 2 March 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-core-
-              oscore-capable-proxies-05>.
+              oscore-capable-proxies-06>.
 
    [I-D.ietf-core-oscore-groupcomm]
               Tiloca, M., Selander, G., Palombini, F., Mattsson, J. P.,
@@ -989,8 +988,11 @@ Appendix A.  Example Enrollment With Optimizations
 
 Acknowledgments
 
-   The authors would like to thank Esko Dijk, Marco Tiloca, and John
-   Mattsson for providing a review of the document.
+   The authors would like to thank Timothy Claeys for his work on the
+   initial versions of this document.
+
+   The authors would also like to thank Esko Dijk, Marco Tiloca, and
+   John Mattsson for providing a review of the document.
 
    Work on this document has in part been supported by the Horizon
    Europe Framework Programme project OpenSwarm (grant agreement No.
@@ -1016,7 +1018,3 @@ Authors' Addresses
    Mališa Vučinić
    Inria
    Email: malisa.vucinic@inria.fr
-
-
-   Timothy Claeys
-   Email: timothy.claeys@gmail.com
