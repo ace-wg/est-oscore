@@ -37,11 +37,6 @@ author:
         name: Mališa Vučinić
         org: Inria
         email: malisa.vucinic@inria.fr
-      -
-        ins: T. Claeys
-        name: Timothy Claeys
-        email: timothy.claeys@gmail.com
-
 
 normative:
 
@@ -545,7 +540,9 @@ EST Client                   EST Server
 # Acknowledgments
 {: numbered="no"}
 
-The authors would like to thank
+The authors would like to thank Timothy Claeys for his work on the initial versions of this document.
+
+The authors would also like to thank
 {{{Esko Dijk}}},
 {{{Marco Tiloca}}}, and
 {{{John Mattsson}}}
