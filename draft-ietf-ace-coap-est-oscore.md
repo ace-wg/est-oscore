@@ -410,7 +410,7 @@ In general, a given key pair should only be used for a single purpose, such as k
 
 The EST client attempting to enroll a DH key for a key usage operation other than digital signature can use an alternative proof-of-possession algorithm.
 The EST client SHOULD prepare the PKCS#10 object and compute a MAC, replacing the signature, over the certification request information by following the steps in {{Section 6 of RFC6955}}.
-The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF and HMAC algorithms used by OSCORE.
+The Key Derivation Function (KDF) and the MAC MUST be set to the HKDF and HMAC algorithms used by OSCORE.
 The KDF and MAC is thus defined by the hash algorithm used by OSCORE in HKDF and HMAC, which by default is SHA-256.
 When EDHOC is used, then the hash algorithm is the application hash algorithm of the selected cipher suite.
 
