@@ -25,8 +25,8 @@ author:
       -
         ins: S. Raza
         name: Shahid Raza
-        org: RISE
-        email: shahid.raza@ri.se
+        org: University of Glasgow
+        email: shahid.raza@glasgow.ac.uk
       -
         ins: M. Furuhed
         name: Martin Furuhed
