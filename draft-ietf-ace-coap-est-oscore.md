@@ -376,8 +376,8 @@ The function /skc is not available when using CBOR-encoded objects, and clients 
 Note that the EST-oscore message characteristics are identical to those specified in Section 4.4 of {{RFC9148}}.
 Therefore, the following applies:
 
-  * EST-oscore endpoints MUST support delayed responses (see {{Section 4.7 of RFC9148}})
-  * EST-oscore endpoints MUST support the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
+  * EST-oscore endpoints MUST support delayed responses (see {{Section 4.7 of RFC9148}}).
+  * EST-oscore endpoints MUST support the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, and Accept.
     EST-oscore servers MUST implement Block1 and Block2.
     EST-oscore clients MUST implement Block2 and MAY implement Block1.
   * The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
