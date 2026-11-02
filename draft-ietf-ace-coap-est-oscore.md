@@ -327,7 +327,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 | Function | DER-encoded ASN.1 Response, Part 1 | DER-encoded ASN.1 Response, Part 2 |
 | /skg     | 284 | 281 |
 | /skc     | 284 | 287 |
-{: #table_cft_skg_skc cols="l l" title="Response Content-Format identifiers for /skg and /skc in case of DER-encoded ASN.1 objects."}
+{: #table_cft_skg_skc cols="l l l" title="Response Content-Format identifiers for /skg and /skc in case of DER-encoded ASN.1 objects."}
 
 ### CBOR-encoded Objects {#cbor}
 
@@ -348,7 +348,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |       | N/A                                           | res |   -   |
 | /att  | N/A                                           | req |   -   |
 |       | application/cose-c509-crtemplate              | res | TBD19 |
-{: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
+{: #table_mediatype_cbor cols="l l l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
 
 Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
 
@@ -369,9 +369,10 @@ The function /skc is not available when using CBOR-encoded objects, and clients 
 
 {{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
 
-| Function | CBOR Response, Part 1  | CBOR Response Part 2 |
-| /skg     | TBD10 | TBD3 |
-{: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
+| Function | CBOR Response, Part 1 | CBOR Response, Part 2 |
+|----------|-----------------------|-----------------------|
+| /skg     | TBD10                 | TBD3                  |
+{: #table_cft_skg_cbor cols="l l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings {#message-bindings}
 
