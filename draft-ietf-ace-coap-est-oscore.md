@@ -274,7 +274,7 @@ EST-oscore provides the /crts operation.
 A successful request from the client to this resource will be answered with one or more trust anchors, which are subsequently installed in the TA database (once the server is authenticated), resulting in Explicit TAs.
 
 A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
-In order to reduce transport overhead, the trust anchor could instead be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}} or a CWT Claims Set (CCS) {{RFC8392}}, containing the CA public key and associated data without a signature.
+In order to reduce transport overhead, the trust anchor could instead be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
 
 ## Payload formats
 
@@ -392,7 +392,7 @@ See Section 4.5 in {{RFC9148}}.
 ## Message Fragmentation
 
 The EDHOC key exchange is optimized for low message overhead, in particular when using static DH keys instead of signature keys for authentication (e.g., method 3 of {{RFC9528}}).
-Together with various measures listed in this document such as CBOR-encoded payloads {{RFC8949}}, CBOR certificates {{I-D.ietf-cose-cbor-encoded-cert}}, certificates by reference ({{optimizations}}), and trust anchors without signature ({{crts}}), a significant reduction of message sizes can be achieved.
+Together with various measures listed in this document such as CBOR-encoded payloads {{RFC8949}}, CBOR certificates {{I-D.ietf-cose-cbor-encoded-cert}}, and certificates by reference ({{optimizations}}), a significant reduction of message sizes can be achieved.
 
 Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource-constrained networks such as based on IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
 
