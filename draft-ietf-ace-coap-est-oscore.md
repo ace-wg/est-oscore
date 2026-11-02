@@ -276,6 +276,22 @@ A successful request from the client to this resource will be answered with one 
 A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
 In order to reduce transport overhead, the trust anchor could instead be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
 
+The content of the response to a /crts request depends on the CoAP Accept option present in the request, as specified below.
+
+If the /crts request does not include a CoAP Accept option, the server SHOULD respond with application/pkcs7-mime;smime-type=certs-only (see {{der}}).
+Since a /crts request carries no payload, the server cannot infer a preference for CBOR-encoded objects from the encoding of the request, and the exception for CBOR-encoded requests in {{der}} does not apply.
+An EST-oscore client that prefers a CBOR-encoded response MUST include a CoAP Accept option in the request.
+
+When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/pkix-cert or application/cose-c509-cert+cbor, it MUST return only the single CA certificate of the CA that has issued, or will issue, the certificate of the current, authenticated EST-oscore client making the request.
+An exception to this rule is when the server has been configured to operate exclusively with multiple CA trust anchors: then the server MUST respond with a 4.06 (Not Acceptable) error, to signal to the client that it needs to request another Content-Format that supports retrieval of multiple CA certificates, i.e., application/pkcs7-mime;smime-type=certs-only or application/cose-c509+cbor.
+
+When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/pkcs7-mime;smime-type=certs-only or application/cose-c509+cbor without the "usage" parameter, it MUST return all the CA certificates that the client is expected to install as Explicit TAs.
+The order of the certificates carries no meaning.
+
+When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/cose-c509+cbor; usage=chain, it MUST return the chain of CA certificates of the CA that has issued, or will issue, the certificate of the current, authenticated EST-oscore client making the request.
+The chain is ordered starting with the certificate of that CA and ending with the certificate of the root CA, i.e., the trust anchor.
+If the CA that has issued, or will issue, the certificate of the client is itself the root CA, the chain consists of a single certificate.
+
 ## Payload formats
 
 Similar to EST-coaps, EST-oscore allows transport of DER-encoded objects of a given Media-Type.
@@ -335,7 +351,9 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 
 |  URI  | Media Type                                    | Type | #IANA |
 | /crts | N/A                                           | req |   -   |
-|       | application/cose-c509-cert+cbor               | res | TBD3  |
+|       | application/cose-c509-cert+cbor               | res | TBD21 |
+|       | application/cose-c509+cbor                    | res | TBD3  |
+|       | application/cose-c509+cbor; usage=chain       | res | TBD15 |
 | /sen  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
 |       | application/cose-c509-cert+cbor               | res | TBD3  |
 |       | application/multipart-core                    | res |   62  |
