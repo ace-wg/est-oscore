@@ -362,8 +362,9 @@ The exact contents of the application/multipart-core response are dependent on t
 Because x5u and c5u references are of the same type application/cbor and the corresponding CoAP Content Format (60), mixing them in the same application/multipart-core response is not supported.
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
-In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
-The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD3), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
+In the case of a request to /skg, the response is an application/multipart-core object with two parts: the private key and the corresponding certificate.
+The private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10), while the certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD3).
+As in {{der}}, the parts do not have to be in a particular order (see {{Section 4.8 of RFC9148}}); {{table_cft_skg_cbor}} shows the order used in {{RFC9148}}.
 The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.
 
 {{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
