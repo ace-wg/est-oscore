@@ -365,7 +365,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |       | application/cose-c509-cert+cbor               | res | TBD21 |
 |       | application/multipart-core                    | res |   62  |
 | /skg  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
-|       | application/multipart-core                    | res |   62  |
+|       | application/cose-c509-pem+cbor                | res | TBD11 |
 | /skc  | N/A                                           | req |   -   |
 |       | N/A                                           | res |   -   |
 | /att  | N/A                                           | req |   -   |
@@ -384,17 +384,10 @@ The exact contents of the application/multipart-core response are dependent on t
 Because x5u and c5u references are of the same type application/cbor and the corresponding CoAP Content Format (60), mixing them in the same application/multipart-core response is not supported.
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
-In the case of a request to /skg, the response is an application/multipart-core object with two parts: the private key and the corresponding certificate.
-The private key is encoded as application/cose-c509-privkey+cbor (Content-Format identifier TBD10), while the certificate part is encoded as the application/cose-c509-cert+cbor object (Content-Format identifier TBD21).
-As in {{der}}, the parts do not have to be in a particular order (see {{Section 4.8 of RFC9148}}); {{table_cft_skg_cbor}} shows the order used in {{RFC9148}}.
+In the case of a request to /skg, the response is an application/cose-c509-pem+cbor object (Content-Format identifier TBD11), i.e., a C509PEM structure ({{Section 3.6 of I-D.ietf-cose-cbor-encoded-cert}}) containing the generated private key and the corresponding certificate.
+The second element of the C509PEM structure MUST NOT be null and MUST contain the certificate enrolled for the generated private key.
+If the second element contains more than one certificate, the first certificate MUST be the enrolled certificate.
 The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.
-
-{{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
-
-| Function | CBOR Response, Part 1 | CBOR Response, Part 2 |
-|----------|-----------------------|-----------------------|
-| /skg     | TBD10                 | TBD21                 |
-{: #table_cft_skg_cbor cols="l l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings {#message-bindings}
 
