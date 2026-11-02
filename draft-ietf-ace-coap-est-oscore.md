@@ -30,8 +30,8 @@ author:
       -
         ins: M. Furuhed
         name: Martin Furuhed
-        org: Nexus
-        email: martin.furuhed@nexusgroup.com
+        org: IN Groupe
+        email: martin.furuhed@ingroupe.com
       -
         ins: M. Vučinić
         name: Mališa Vučinić
@@ -54,8 +54,8 @@ normative:
   RFC8446:
   RFC9147:
   RFC9360:
-  RFC8392:
   RFC9668:
+  RFC8710:
   I-D.ietf-cose-cbor-encoded-cert:
 
 informative:
@@ -137,7 +137,7 @@ EST-oscore defines a number of optimizations with respect to EST-coaps:
 * Compact CBOR representations of X.509 certificates and EST payloads (see {{I-D.ietf-cose-cbor-encoded-cert}}) are optionally used.
 * Certificates by reference (see {{RFC9360}}) are optionally used.
 * The EST payloads protected by OSCORE can be proxied between constrained networks supporting CoAP and non-constrained networks supporting HTTP/HTTPs, through a CoAP-HTTP proxy without any security processing at the proxy (see {{proxying}}).
-The concept "Registrar" and its required trust relationship with the EST server as described in Section 5 of {{RFC9148}} is therefore not applicable.
+The concept "Registrar" and its required trust relationship with the EST server as described in {{Section 5 of RFC9148}} is therefore not applicable.
 
 # Terminology   {#terminology}
 
@@ -239,7 +239,7 @@ This includes the need to authenticate the EST-server before performing any requ
 
 ## Discovery and URI     {#discovery}
 
-The discovery of EST resources and the definition of the short EST-coaps URI paths specified in Section 4.1 of {{RFC9148}}, as well as the new Resource Type defined in {{Section 8.2 of RFC9148}} apply to EST-oscore.
+The discovery of EST resources and the definition of the short EST-coaps URI paths specified in {{Section 4.1 of RFC9148}}, as well as the new Resource Type defined in {{Section 8.2 of RFC9148}} apply to EST-oscore.
 In a web link targeting a resource for EST-oscore, it is REQUIRED to indicate that the resource is only accessible using OSCORE, by means of the "osc" target attribute defined in {{Section 9 of RFC8613}}.
 
 Example:
@@ -257,9 +257,10 @@ Example:
 ## Mandatory/optional EST Functions {#est-functions}
 
 The EST-oscore specification has the same set of required-to-implement functions as EST-coaps.
-The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} and uses the updated URI paths (see {{discovery}}).
+The content of {{table_functions}} is adapted from {{Section 4.2 of RFC9148}} and uses the updated URI paths (see {{discovery}}).
 
 | EST functions  | EST-oscore implementation   |
+|----------------|-----------------------------|
 | /crts          | MUST                        |
 | /sen           | MUST                        |
 | /sren          | MUST                        |
@@ -271,10 +272,26 @@ The content of {{table_functions}} is adapted from Section 4.2 in {{RFC9148}} an
 ### /crts {#crts}
 
 EST-oscore provides the /crts operation.
-A successful request from the client to this resource will be answered with one or more certificates, subsequently installed in the TA database (once the server is authenticated), resulting in Explicit TAs.
+A successful request from the client to this resource will be answered with one or more trust anchors, which are subsequently installed in the TA database (once the server is authenticated), resulting in Explicit TAs.
 
 A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
-In order to reduce transport overhead, the trust anchor could be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}, or a CWT Claims Set (CCS) {{RFC8392}}, containing the CA public key and associated data without a signature.
+In order to reduce transport overhead, the trust anchor could instead be a CBOR encoding of an X.509 certificate {{I-D.ietf-cose-cbor-encoded-cert}}.
+
+The content of the response to a /crts request depends on the CoAP Accept option present in the request, as specified below.
+
+If the /crts request does not include a CoAP Accept option, the server SHOULD respond with application/pkcs7-mime;smime-type=certs-only (see {{der}}).
+Since a /crts request carries no payload, the server cannot infer a preference for CBOR-encoded objects from the encoding of the request, and the exception for CBOR-encoded requests in {{der}} does not apply.
+An EST-oscore client that prefers a CBOR-encoded response MUST include a CoAP Accept option in the request.
+
+When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/pkix-cert or application/cose-c509-cert+cbor, it MUST return only the single CA certificate of the CA that has issued, or will issue, the certificate of the current, authenticated EST-oscore client making the request.
+An exception to this rule is when the server has been configured to operate exclusively with multiple CA trust anchors: then the server MUST respond with a 4.06 (Not Acceptable) error, to signal to the client that it needs to request another Content-Format that supports retrieval of multiple CA certificates, i.e., application/pkcs7-mime;smime-type=certs-only or application/cose-c509+cbor.
+
+When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/pkcs7-mime;smime-type=certs-only or application/cose-c509+cbor without the "usage" parameter, it MUST return all the CA certificates that the client is expected to install as Explicit TAs.
+The order of the certificates carries no meaning.
+
+When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/cose-c509+cbor; usage=chain, it MUST return the chain of CA certificates of the CA that has issued, or will issue, the certificate of the current, authenticated EST-oscore client making the request.
+The chain is ordered starting with the certificate of that CA and ending with the certificate of the root CA, i.e., the trust anchor.
+If the CA that has issued, or will issue, the certificate of the client is itself the root CA, the chain consists of a single certificate.
 
 ## Payload formats
 
@@ -286,13 +303,14 @@ EST-oscore servers MUST support both the DER-encoded ASN.1 objects and the CBOR-
 It is up to the client to support only DER-encoded ASN.1, only CBOR encoding, or both.
 Based on the client encoding of the CSR (DER encoding or CBOR encoding), the server is able to tell whether the client prefers a DER-encoded object ({{der}}) or a CBOR-encoded object ({{cbor}}) in response.
 In addition, Content-Format negotiation for specific objects happens through the CoAP Accept option present in the requests.
-The CoAP Accept option may not be present; this is a case which carries special semantics, see {{der}} and {{cbor}}.
+The CoAP Accept option may not be present; this is a case which carries special semantics, see {{crts}}, {{der}}, and {{cbor}}.
 
 ### DER-encoded ASN.1 Objects {#der}
 
-{{table_mediatype_asn1}} summarizes the information from Section 4.3 in {{RFC9148}} for what concerns the transport of DER-encoded ASN.1 objects.
+{{table_mediatype_asn1}} summarizes the information from {{Section 4.3 of RFC9148}} for what concerns the transport of DER-encoded ASN.1 objects.
 
 |  URI  | Media Type                                    | Type | #IANA |
+|-------|-----------------------------------------------|------|-------|
 | /crts | N/A                                           | req |   -   |
 |       | application/pkix-cert                         | res |  287  |
 |       | application/pkcs7-mime;smime-type=certs-only  | res |  281  |
@@ -308,90 +326,90 @@ The CoAP Accept option may not be present; this is a case which carries special 
 |       | application/multipart-core                    | res |   62  |
 | /att  | N/A                                           | req |   -   |
 |       | application/csrattrs                          | res |  285  |
-{: #table_mediatype_asn1 cols="l l" title="EST functions and the associated ASN.1 CoAP Content-Format identifiers."}
+{: #table_mediatype_asn1 cols="l l l l" title="EST functions and the associated ASN.1 CoAP Content-Format identifiers."}
 
 Content-Format 281 and Content-Format 287 MUST be supported by EST-oscore servers.
 It is up to the client to support only Content-Format 281, only Content-Format 287, or both.
 As indicated in {{Section 4.3 of RFC9148}}, the client will use a CoAP Accept Option in the request to express the preferred response Content-Format.
 If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format 281.
-An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g. application/cose-c509-pkcs10), when the server SHOULD respond with a CBOR-encoded object (see {{cbor}}).
+An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g., application/cose-c509-pkcs10+cbor), when the server SHOULD respond with a CBOR-encoded object (see {{cbor}}).
 
-The generated response for /skg and /skc requests contains two parts: certificate and the corresponding private key.
-{{Section 4.8 of RFC9148}} specifies that the private key in response to /skc request may be either an encrypted (PKCS #7) or unencrypted (PKCS #8) key, depending on whether the CSR request included SMIMECapabilities.
+The generated response for /skg and /skc requests is an application/multipart-core object {{RFC8710}} with two parts: the private key and the corresponding certificate.
+As specified in {{Section 4.8 of RFC9148}}, the parts of the application/multipart-core response do not have to be in a particular order, since each part is preceded by its Content-Format identifier; the order in {{table_cft_skg_skc}} is the one used in {{RFC9148}}.
+{{Section 4.8 of RFC9148}} specifies that the private key in response to /skg or /skc requests may be either an encrypted (PKCS #7) or unencrypted (PKCS #8) key, depending on whether the CSR request included SMIMECapabilities.
 
 Due to the use of OSCORE, which protects the communication between the EST client and the EST server end-to-end, it is possible to return the private key to /skc or /skg as an unencrypted PKCS #8 object (Content-Format identifier 284).
 Therefore, when making the CSR to /skc or /skg, the EST client MUST NOT include SMIMECapabilities.
 As a consequence, the private key part of the response to /skc or /skg is an unencrypted PKCS #8 object.
 
 | Function | DER-encoded ASN.1 Response, Part 1 | DER-encoded ASN.1 Response, Part 2 |
+|----------|------------------------------------|------------------------------------|
 | /skg     | 284 | 281 |
 | /skc     | 284 | 287 |
-{: #table_cft_skg_skc cols="l l" title="Response Content-Format identifiers for /skg and /skc in case of DER-encoded ASN.1 objects."}
+{: #table_cft_skg_skc cols="l l l" title="Response Content-Format identifiers for /skg and /skc in case of DER-encoded ASN.1 objects."}
 
 ### CBOR-encoded Objects {#cbor}
 
 {{table_mediatype_cbor}} presents the equivalent information to {{der}} when CBOR-encoded objects are in use.
 
 |  URI  | Media Type                                    | Type | #IANA |
+|-------|-----------------------------------------------|------|-------|
 | /crts | N/A                                           | req |   -   |
-|       | application/cose-c509-cert                    | res | TBD3  |
-| /sen  | application/cose-c509-pkcs10                  | req | TBD4  |
-|       | application/cose-c509-cert                    | res | TBD3  |
+|       | application/cose-c509-cert+cbor               | res | TBD21 |
+|       | application/cose-c509+cbor                    | res | TBD3  |
+|       | application/cose-c509+cbor; usage=chain       | res | TBD15 |
+| /sen  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
+|       | application/cose-c509-cert+cbor               | res | TBD21 |
 |       | application/multipart-core                    | res |   62  |
-| /sren | application/cose-c509-pkcs10                  | req | TBD4  |
-|       | application/cose-c509-cert                    | res | TBD3  |
+| /sren | application/cose-c509-pkcs10+cbor             | req | TBD4  |
+|       | application/cose-c509-cert+cbor               | res | TBD21 |
 |       | application/multipart-core                    | res |   62  |
-| /skg  | application/cose-c509-pkcs10                  | req | TBD4  |
-|       | application/multipart-core                    | res |   62  |
+| /skg  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
+|       | application/cose-c509-pem+cbor                | res | TBD11 |
 | /skc  | N/A                                           | req |   -   |
 |       | N/A                                           | res |   -   |
 | /att  | N/A                                           | req |   -   |
-|       | application/cose-c509-crtemplate              | res | TBD19 |
-{: #table_mediatype_cbor cols="l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
+|       | application/cose-c509-crtemplate+cbor         | res | TBD19 |
+{: #table_mediatype_cbor cols="l l l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
 
 Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
 
-Content-Format TBD3 MUST be supported by both EST-oscore clients and servers.
+Content-Format TBD21 MUST be supported by EST-oscore servers, and by EST-oscore clients that support CBOR-encoded objects.
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
 
-If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., c5t, c5u).
+If a CoAP Accept option is not included in a request to /sen or /sren, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., c5t, c5u).
 The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to retrieve it (e.g., through a coap URI secured with OSCORE).
 The application/multipart-core response MAY also include the actual certificate.
 The exact contents of the application/multipart-core response are dependent on the application policy.
 Because x5u and c5u references are of the same type application/cbor and the corresponding CoAP Content Format (60), mixing them in the same application/multipart-core response is not supported.
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
-In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
-The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD3), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
+In the case of a request to /skg, the response is an application/cose-c509-pem+cbor object (Content-Format identifier TBD11), i.e., a C509PEM structure ({{Section 3.6 of I-D.ietf-cose-cbor-encoded-cert}}) containing the generated private key and the corresponding certificate.
+The second element of the C509PEM structure MUST NOT be null and MUST contain the certificate enrolled for the generated private key.
+If the second element contains more than one certificate, the first certificate MUST be the enrolled certificate.
 The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.
-
-{{table_cft_skg_cbor}} summarizes the Content-Format identifiers used in responses to the /skg function.
-
-| Function | CBOR Response, Part 1  | CBOR Response Part 2 |
-| /skg     | TBD10 | TBD3 |
-{: #table_cft_skg_cbor cols="l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings {#message-bindings}
 
-Note that the EST-oscore message characteristics are identical to those specified in Section 4.4 of {{RFC9148}}.
-Therefore, the following applies:
+The EST-oscore message characteristics are based on those specified in {{Section 4.4 of RFC9148}}.
+The following applies:
 
-  * EST-oscore endpoints MUST support delayed responses (see {{Section 4.7 of RFC9148}})
-  * EST-oscore endpoints MUST support the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
-    EST-oscore servers MUST implement Block1 and Block2.
-    EST-oscore clients MUST implement Block2 and MAY implement Block1.
+  * EST-oscore endpoints MUST support delayed responses (see {{Section 4.7 of RFC9148}}).
+  * EST-oscore endpoints MUST support the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, and Accept.
+  * EST-oscore servers MUST implement Block1 and Block2.
+  * EST-oscore clients MUST implement Block2 and MAY implement Block1.
   * The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.
 
 ## CoAP response codes
 
-See Section 4.5 in {{RFC9148}}.
+See {{Section 4.5 of RFC9148}}.
 
 ## Message Fragmentation
 
 The EDHOC key exchange is optimized for low message overhead, in particular when using static DH keys instead of signature keys for authentication (e.g., method 3 of {{RFC9528}}).
-Together with various measures listed in this document such as CBOR-encoded payloads {{RFC8949}}, CBOR certificates {{I-D.ietf-cose-cbor-encoded-cert}}, certificates by reference ({{optimizations}}), and trust anchors without signature ({{crts}}), a significant reduction of message sizes can be achieved.
+Together with various measures listed in this document such as CBOR-encoded payloads {{RFC8949}}, CBOR certificates {{I-D.ietf-cose-cbor-encoded-cert}}, and certificates by reference ({{optimizations}}), a significant reduction of message sizes can be achieved.
 
-Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource-constrained networks such as based on IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
+Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource-constrained networks such as those based on IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.
 
 It is recommended to prevent 6LoWPAN fragmentation, since it involves an error-prone datagram reassembly.
 To limit the size of the CoAP payload, this document specifies the requirements on implementing the CoAP options Block1 and Block2 (see {{message-bindings}}).
@@ -407,7 +425,7 @@ In general, a given key pair should only be used for a single purpose, such as k
 
 The EST client attempting to enroll a DH key for a key usage operation other than digital signature can use an alternative proof-of-possession algorithm.
 The EST client SHOULD prepare the PKCS#10 object and compute a MAC, replacing the signature, over the certification request information by following the steps in {{Section 6 of RFC6955}}.
-The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF and HMAC algorithms used by OSCORE.
+The Key Derivation Function (KDF) and the MAC MUST be set to the HKDF and HMAC algorithms used by OSCORE.
 The KDF and MAC is thus defined by the hash algorithm used by OSCORE in HKDF and HMAC, which by default is SHA-256.
 When EDHOC is used, then the hash algorithm is the application hash algorithm of the selected cipher suite.
 
@@ -426,18 +444,18 @@ When generating its DH key pair, the client uses the group parameters as indicat
 The EST client may indicate preference for enrolling a certificate by reference.
 There are two cases to distinguish: 1) any certificate reference, or 2) a specific Content-Format.
 In the first case, the EST client indicates preference for receiving any certificate by reference by sending a CBOR-encoded request without the CoAP Accept option.
-In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash, application/cose-certhash;usage=c509, application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
+In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash+cbor, application/cose-certhash+cbor;usage=c509, application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
 It is out of the scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.
 
 # HTTP-CoAP Proxy {#proxying}
 
-As noted in Section 5 of {{RFC9148}}, in real-world deployments, the EST server will not always reside within the CoAP boundary.
+As noted in {{Section 5 of RFC9148}}, in real-world deployments, the EST server will not always reside within the CoAP boundary.
 The EST-server can be outside the constrained network in a non-constrained network that supports HTTP but not CoAP, thus requiring an intermediary CoAP-to-HTTP proxy.
 
 Since OSCORE is applicable to CoAP-mappable HTTP (see {{Section 11 of RFC8613}}) the messages conveying the EST payloads can be protected end-to-end between the EST client and EST server, irrespective of the transport protocol or potential transport layer security that may need to be terminated at the proxy, see {{fig-proxy}}.
-Therefore, the concept "Registrar" and its required trust relationship with EST server as described in Section 5 of {{RFC9148}} is not applicable.
+Therefore, the concept "Registrar" and its required trust relationship with EST server as described in {{Section 5 of RFC9148}} is not applicable.
 
-The mappings between CoAP and HTTP referred to in Section 8.1 of {{RFC9148}} apply, and additional mappings resulting from the use of OSCORE are specified in Section 11 of {{RFC8613}}.
+The mappings between CoAP and HTTP referred to in {{Section 8.1 of RFC9148}} apply, and additional mappings resulting from the use of OSCORE are specified in {{Section 11 of RFC8613}}.
 
 OSCORE provides end-to-end security between the EST Server and EST Client.
 If a secure association is needed between the EST Client and the CoAP-to-HTTP Proxy, this may also rely on OSCORE {{I-D.ietf-core-oscore-capable-proxies}}.
@@ -506,8 +524,8 @@ The message flow starts with the EST client sending EDHOC message_1.
 The EDHOC handshake follows and concludes with the EDHOC message_3.
 EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{RFC9668}}.
 The OSCORE enrollment request contains a CoAP POST to the /sen endpoint.
-This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
-In response, the client receives the application/cose-c509-cert object that contains the certificate.
+This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10+cbor, and the Accept option set to the value application/cose-c509-cert+cbor, indicating the support for CBOR-encoded objects.
+In response, the client receives the application/cose-c509-cert+cbor object that contains the certificate.
 
 ~~~~~~~~~~~ aasvg
 
@@ -521,16 +539,16 @@ EST Client                   EST Server
 |            +                        |
 |     OSCORE request to /sen          |
 +------------------------------------>|
-|           POST /.well-known/est/sen |
-|           Accept: TBD3              |
-|           Content-Format: TBD4      |
-|           Payload: cose-c509-pkcs10 |
+|       POST /.well-known/est/sen     |
+|       Accept: TBD21                 |
+|       Content-Format: TBD4          |
+|       Payload: cose-c509-pkcs10+cbor|
 |                                     |
 |     OSCORE response                 |
 |<------------------------------------+
-|           2.04 Changed              |
-|           Content-Format: TBD3      |
-|           Payload: cose-c509-cert   |
+|       2.04 Changed                  |
+|       Content-Format: TBD21         |
+|       Payload: cose-c509-cert+cbor  |
 
 ~~~~~~~~~~~
 {: #fig-sen-optimizations title="Enrollment EST-oscore flow with optimizations."}
