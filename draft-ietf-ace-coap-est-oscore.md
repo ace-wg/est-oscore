@@ -316,7 +316,8 @@ As indicated in {{Section 4.3 of RFC9148}}, the client will use a CoAP Accept Op
 If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format 281.
 An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g. application/cose-c509-pkcs10), when the server SHOULD respond with a CBOR-encoded object (see {{cbor}}).
 
-The generated response for /skg and /skc requests contains two parts: certificate and the corresponding private key.
+The generated response for /skg and /skc requests contains two parts: the private key and the corresponding certificate.
+As specified in {{Section 4.8 of RFC9148}}, the parts of the application/multipart-core response do not have to be in a particular order, since each part is preceded by its Content-Format identifier; the order in {{table_cft_skg_skc}} is the one used in {{RFC9148}}.
 {{Section 4.8 of RFC9148}} specifies that the private key in response to /skc request may be either an encrypted (PKCS #7) or unencrypted (PKCS #8) key, depending on whether the CSR request included SMIMECapabilities.
 
 Due to the use of OSCORE, which protects the communication between the EST client and the EST server end-to-end, it is possible to return the private key to /skc or /skg as an unencrypted PKCS #8 object (Content-Format identifier 284).
