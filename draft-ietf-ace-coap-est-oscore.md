@@ -355,10 +355,10 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 |       | application/cose-c509+cbor                    | res | TBD3  |
 |       | application/cose-c509+cbor; usage=chain       | res | TBD15 |
 | /sen  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
-|       | application/cose-c509-cert+cbor               | res | TBD3  |
+|       | application/cose-c509-cert+cbor               | res | TBD21 |
 |       | application/multipart-core                    | res |   62  |
 | /sren | application/cose-c509-pkcs10+cbor             | req | TBD4  |
-|       | application/cose-c509-cert+cbor               | res | TBD3  |
+|       | application/cose-c509-cert+cbor               | res | TBD21 |
 |       | application/multipart-core                    | res |   62  |
 | /skg  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
 |       | application/multipart-core                    | res |   62  |
@@ -370,7 +370,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 
 Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
 
-Content-Format TBD3 MUST be supported by both EST-oscore clients and servers.
+Content-Format TBD21 MUST be supported by both EST-oscore clients and servers.
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.
 
 If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., c5t, c5u).
@@ -381,7 +381,7 @@ Because x5u and c5u references are of the same type application/cbor and the cor
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
 In the case of a request to /skg, the response is an application/multipart-core object with two parts: the private key and the corresponding certificate.
-The private key is encoded as application/cose-c509-privkey+cbor (Content-Format identifier TBD10), while the certificate part is encoded as the application/cose-c509-cert+cbor object (Content-Format identifier TBD3).
+The private key is encoded as application/cose-c509-privkey+cbor (Content-Format identifier TBD10), while the certificate part is encoded as the application/cose-c509-cert+cbor object (Content-Format identifier TBD21).
 As in {{der}}, the parts do not have to be in a particular order (see {{Section 4.8 of RFC9148}}); {{table_cft_skg_cbor}} shows the order used in {{RFC9148}}.
 The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.
 
@@ -389,7 +389,7 @@ The function /skc is not available when using CBOR-encoded objects, and clients 
 
 | Function | CBOR Response, Part 1 | CBOR Response, Part 2 |
 |----------|-----------------------|-----------------------|
-| /skg     | TBD10                 | TBD3                  |
+| /skg     | TBD10                 | TBD21                 |
 {: #table_cft_skg_cbor cols="l l l" title="Response Content-Format identifiers for /skg in case of CBOR-encoded objects."}
 
 ## Message Bindings {#message-bindings}
@@ -447,7 +447,7 @@ When generating its DH key pair, the client uses the group parameters as indicat
 The EST client may indicate preference for enrolling a certificate by reference.
 There are two cases to distinguish: 1) any certificate reference, or 2) a specific Content-Format.
 In the first case, the EST client indicates preference for receiving any certificate by reference by sending a CBOR-encoded request without the CoAP Accept option.
-In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash, application/cose-certhash;usage=c509, application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
+In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash+cbor, application/cose-certhash+cbor;usage=c509, application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
 It is out of the scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.
 
 # HTTP-CoAP Proxy {#proxying}
@@ -543,14 +543,14 @@ EST Client                   EST Server
 |     OSCORE request to /sen          |
 +------------------------------------>|
 |       POST /.well-known/est/sen     |
-|       Accept: TBD3                  |
+|       Accept: TBD21                 |
 |       Content-Format: TBD4          |
 |       Payload: cose-c509-pkcs10+cbor|
 |                                     |
 |     OSCORE response                 |
 |<------------------------------------+
 |       2.04 Changed                  |
-|       Content-Format: TBD3          |
+|       Content-Format: TBD21         |
 |       Payload: cose-c509-cert+cbor  |
 
 ~~~~~~~~~~~
