@@ -30,8 +30,8 @@ author:
       -
         ins: M. Furuhed
         name: Martin Furuhed
-        org: Nexus
-        email: martin.furuhed@nexusgroup.com
+        org: IN Groupe
+        email: martin.furuhed@ingroupe.com
       -
         ins: M. Vučinić
         name: Mališa Vučinić
