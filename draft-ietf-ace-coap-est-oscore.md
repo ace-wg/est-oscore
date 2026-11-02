@@ -314,7 +314,7 @@ Content-Format 281 and Content-Format 287 MUST be supported by EST-oscore server
 It is up to the client to support only Content-Format 281, only Content-Format 287, or both.
 As indicated in {{Section 4.3 of RFC9148}}, the client will use a CoAP Accept Option in the request to express the preferred response Content-Format.
 If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format 281.
-An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g. application/cose-c509-pkcs10), when the server SHOULD respond with a CBOR-encoded object (see {{cbor}}).
+An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g. application/cose-c509-pkcs10+cbor), when the server SHOULD respond with a CBOR-encoded object (see {{cbor}}).
 
 The generated response for /skg and /skc requests contains two parts: the private key and the corresponding certificate.
 As specified in {{Section 4.8 of RFC9148}}, the parts of the application/multipart-core response do not have to be in a particular order, since each part is preceded by its Content-Format identifier; the order in {{table_cft_skg_skc}} is the one used in {{RFC9148}}.
@@ -335,19 +335,19 @@ As a consequence, the private key part of the response to /skc or /skg is an une
 
 |  URI  | Media Type                                    | Type | #IANA |
 | /crts | N/A                                           | req |   -   |
-|       | application/cose-c509-cert                    | res | TBD3  |
-| /sen  | application/cose-c509-pkcs10                  | req | TBD4  |
-|       | application/cose-c509-cert                    | res | TBD3  |
+|       | application/cose-c509-cert+cbor               | res | TBD3  |
+| /sen  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
+|       | application/cose-c509-cert+cbor               | res | TBD3  |
 |       | application/multipart-core                    | res |   62  |
-| /sren | application/cose-c509-pkcs10                  | req | TBD4  |
-|       | application/cose-c509-cert                    | res | TBD3  |
+| /sren | application/cose-c509-pkcs10+cbor             | req | TBD4  |
+|       | application/cose-c509-cert+cbor               | res | TBD3  |
 |       | application/multipart-core                    | res |   62  |
-| /skg  | application/cose-c509-pkcs10                  | req | TBD4  |
+| /skg  | application/cose-c509-pkcs10+cbor             | req | TBD4  |
 |       | application/multipart-core                    | res |   62  |
 | /skc  | N/A                                           | req |   -   |
 |       | N/A                                           | res |   -   |
 | /att  | N/A                                           | req |   -   |
-|       | application/cose-c509-crtemplate              | res | TBD19 |
+|       | application/cose-c509-crtemplate+cbor         | res | TBD19 |
 {: #table_mediatype_cbor cols="l l l l" title="EST functions and the associated CBOR CoAP Content-Format identifiers."}
 
 Please note that {{Section 4.4 of I-D.ietf-cose-cbor-encoded-cert}} defines the format and the semantics of the response to /att.
@@ -363,7 +363,7 @@ Because x5u and c5u references are of the same type application/cbor and the cor
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see {{der}}).
 
 In the case of a request to /skg, the response is an application/multipart-core object with two parts: the private key and the corresponding certificate.
-The private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10), while the certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD3).
+The private key is encoded as application/cose-c509-privkey+cbor (Content-Format identifier TBD10), while the certificate part is encoded as the application/cose-c509-cert+cbor object (Content-Format identifier TBD3).
 As in {{der}}, the parts do not have to be in a particular order (see {{Section 4.8 of RFC9148}}); {{table_cft_skg_cbor}} shows the order used in {{RFC9148}}.
 The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.
 
@@ -509,8 +509,8 @@ The message flow starts with the EST client sending EDHOC message_1.
 The EDHOC handshake follows and concludes with the EDHOC message_3.
 EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in {{RFC9668}}.
 The OSCORE enrollment request contains a CoAP POST to the /sen endpoint.
-This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
-In response, the client receives the application/cose-c509-cert object that contains the certificate.
+This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10+cbor, and the Accept option set to the value application/cose-c509-cert+cbor, indicating the support for CBOR-encoded objects.
+In response, the client receives the application/cose-c509-cert+cbor object that contains the certificate.
 
 ~~~~~~~~~~~ aasvg
 
@@ -524,16 +524,16 @@ EST Client                   EST Server
 |            +                        |
 |     OSCORE request to /sen          |
 +------------------------------------>|
-|           POST /.well-known/est/sen |
-|           Accept: TBD3              |
-|           Content-Format: TBD4      |
-|           Payload: cose-c509-pkcs10 |
+|       POST /.well-known/est/sen     |
+|       Accept: TBD3                  |
+|       Content-Format: TBD4          |
+|       Payload: cose-c509-pkcs10+cbor|
 |                                     |
 |     OSCORE response                 |
 |<------------------------------------+
-|           2.04 Changed              |
-|           Content-Format: TBD3      |
-|           Payload: cose-c509-cert   |
+|       2.04 Changed                  |
+|       Content-Format: TBD3          |
+|       Payload: cose-c509-cert+cbor  |
 
 ~~~~~~~~~~~
 {: #fig-sen-optimizations title="Enrollment EST-oscore flow with optimizations."}
