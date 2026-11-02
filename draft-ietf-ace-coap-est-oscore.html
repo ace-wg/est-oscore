@@ -1082,7 +1082,7 @@ svg {
 </div>
 <div class="author">
       <div class="author-name">M. Furuhed</div>
-<div class="org">Nexus</div>
+<div class="org">IN Groupe</div>
 </div>
 <div class="author">
       <div class="author-name">M. Vučinić</div>
@@ -1289,7 +1289,7 @@ How this trust relationship is established is out of the scope of this document.
 </li>
         <li class="normal" id="section-1-8.5">
           <p id="section-1-8.5.1">The EST payloads protected by OSCORE can be proxied between constrained networks supporting CoAP and non-constrained networks supporting HTTP/HTTPs, through a CoAP-HTTP proxy without any security processing at the proxy (see <a href="#proxying" class="auto internal xref">Section 5</a>).
-The concept "Registrar" and its required trust relationship with the EST server as described in Section 5 of <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> is therefore not applicable.<a href="#section-1-8.5.1" class="pilcrow">¶</a></p>
+The concept "Registrar" and its required trust relationship with the EST server as described in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-5" class="relref">Section 5</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> is therefore not applicable.<a href="#section-1-8.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -1441,7 +1441,7 @@ This includes the need to authenticate the EST-server before performing any requ
         <h3 id="name-discovery-and-uri">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-discovery-and-uri" class="section-name selfRef">Discovery and URI</a>
         </h3>
-<p id="section-4.1-1">The discovery of EST resources and the definition of the short EST-coaps URI paths specified in Section 4.1 of <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>, as well as the new Resource Type defined in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-8.2" class="relref">Section 8.2</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> apply to EST-oscore.
+<p id="section-4.1-1">The discovery of EST resources and the definition of the short EST-coaps URI paths specified in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>, as well as the new Resource Type defined in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-8.2" class="relref">Section 8.2</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> apply to EST-oscore.
 In a web link targeting a resource for EST-oscore, it is REQUIRED to indicate that the resource is only accessible using OSCORE, by means of the "osc" target attribute defined in <span><a href="https://rfc-editor.org/rfc/rfc8613#section-9" class="relref">Section 9</a> of [<a href="#RFC8613" class="cite xref">RFC8613</a>]</span>.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1-2">Example:<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.1-3">
@@ -1462,7 +1462,7 @@ In a web link targeting a resource for EST-oscore, it is REQUIRED to indicate th
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-mandatory-optional-est-func" class="section-name selfRef">Mandatory/optional EST Functions</a>
         </h3>
 <p id="section-4.2-1">The EST-oscore specification has the same set of required-to-implement functions as EST-coaps.
-The content of <a href="#table_functions" class="auto internal xref">Table 1</a> is adapted from Section 4.2 in <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> and uses the updated URI paths (see <a href="#discovery" class="auto internal xref">Section 4.1</a>).<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+The content of <a href="#table_functions" class="auto internal xref">Table 1</a> is adapted from <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> and uses the updated URI paths (see <a href="#discovery" class="auto internal xref">Section 4.1</a>).<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <span id="name-mandatory-and-optional-est-"></span><div id="table_functions">
 <table class="center" id="table-1">
           <caption>
@@ -1509,9 +1509,20 @@ The content of <a href="#table_functions" class="auto internal xref">Table 1</a>
 <a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-crts" class="section-name selfRef">/crts</a>
           </h4>
 <p id="section-4.2.1-1">EST-oscore provides the /crts operation.
-A successful request from the client to this resource will be answered with one or more certificates, subsequently installed in the TA database (once the server is authenticated), resulting in Explicit TAs.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+A successful request from the client to this resource will be answered with one or more trust anchors, which are subsequently installed in the TA database (once the server is authenticated), resulting in Explicit TAs.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-2">A trust anchor is commonly a self-signed certificate of the CA public key, of the format indicated by the CoAP Accept option present in the request.
-In order to reduce transport overhead, the trust anchor could be a CBOR encoding of an X.509 certificate <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>, or a CWT Claims Set (CCS) <span>[<a href="#RFC8392" class="cite xref">RFC8392</a>]</span>, containing the CA public key and associated data without a signature.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
+In order to reduce transport overhead, the trust anchor could instead be a CBOR encoding of an X.509 certificate <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>.<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-3">The content of the response to a /crts request depends on the CoAP Accept option present in the request, as specified below.<a href="#section-4.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-4">If the /crts request does not include a CoAP Accept option, the server SHOULD respond with application/pkcs7-mime;smime-type=certs-only (see <a href="#der" class="auto internal xref">Section 4.3.1</a>).
+Since a /crts request carries no payload, the server cannot infer a preference for CBOR-encoded objects from the encoding of the request, and the exception for CBOR-encoded requests in <a href="#der" class="auto internal xref">Section 4.3.1</a> does not apply.
+An EST-oscore client that prefers a CBOR-encoded response MUST include a CoAP Accept option in the request.<a href="#section-4.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-5">When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/pkix-cert or application/cose-c509-cert+cbor, it MUST return only the single CA certificate of the CA that has issued, or will issue, the certificate of the current, authenticated EST-oscore client making the request.
+An exception to this rule is when the server has been configured to operate exclusively with multiple CA trust anchors: then the server MUST respond with a 4.06 (Not Acceptable) error, to signal to the client that it needs to request another Content-Format that supports retrieval of multiple CA certificates, i.e., application/pkcs7-mime;smime-type=certs-only or application/cose-c509+cbor.<a href="#section-4.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-6">When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/pkcs7-mime;smime-type=certs-only or application/cose-c509+cbor without the "usage" parameter, it MUST return all the CA certificates that the client is expected to install as Explicit TAs.
+The order of the certificates carries no meaning.<a href="#section-4.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-7">When the EST-oscore server receives a /crts request with a CoAP Accept option indicating application/cose-c509+cbor; usage=chain, it MUST return the chain of CA certificates of the CA that has issued, or will issue, the certificate of the current, authenticated EST-oscore client making the request.
+The chain is ordered starting with the certificate of that CA and ending with the certificate of the root CA, i.e., the trust anchor.
+If the CA that has issued, or will issue, the certificate of the client is itself the root CA, the chain consists of a single certificate.<a href="#section-4.2.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1528,13 +1539,13 @@ In addition, EST-oscore allows the transport of CBOR-encoded objects, as indicat
 It is up to the client to support only DER-encoded ASN.1, only CBOR encoding, or both.
 Based on the client encoding of the CSR (DER encoding or CBOR encoding), the server is able to tell whether the client prefers a DER-encoded object (<a href="#der" class="auto internal xref">Section 4.3.1</a>) or a CBOR-encoded object (<a href="#cbor" class="auto internal xref">Section 4.3.2</a>) in response.
 In addition, Content-Format negotiation for specific objects happens through the CoAP Accept option present in the requests.
-The CoAP Accept option may not be present; this is a case which carries special semantics, see <a href="#der" class="auto internal xref">Section 4.3.1</a> and <a href="#cbor" class="auto internal xref">Section 4.3.2</a>.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+The CoAP Accept option may not be present; this is a case which carries special semantics, see <a href="#crts" class="auto internal xref">Section 4.2.1</a>, <a href="#der" class="auto internal xref">Section 4.3.1</a>, and <a href="#cbor" class="auto internal xref">Section 4.3.2</a>.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 <div id="der">
 <section id="section-4.3.1">
           <h4 id="name-der-encoded-asn1-objects">
 <a href="#section-4.3.1" class="section-number selfRef">4.3.1. </a><a href="#name-der-encoded-asn1-objects" class="section-name selfRef">DER-encoded ASN.1 Objects</a>
           </h4>
-<p id="section-4.3.1-1"><a href="#table_mediatype_asn1" class="auto internal xref">Table 2</a> summarizes the information from Section 4.3 in <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> for what concerns the transport of DER-encoded ASN.1 objects.<a href="#section-4.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.3.1-1"><a href="#table_mediatype_asn1" class="auto internal xref">Table 2</a> summarizes the information from <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> for what concerns the transport of DER-encoded ASN.1 objects.<a href="#section-4.3.1-1" class="pilcrow">¶</a></p>
 <span id="name-est-functions-and-the-assoc"></span><div id="table_mediatype_asn1">
 <table class="center" id="table-2">
             <caption>
@@ -1647,9 +1658,10 @@ The CoAP Accept option may not be present; this is a case which carries special 
 It is up to the client to support only Content-Format 281, only Content-Format 287, or both.
 As indicated in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>, the client will use a CoAP Accept Option in the request to express the preferred response Content-Format.
 If an Accept Option is not included in the request, the client is not expressing any preference and the server SHOULD choose format 281.
-An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g. application/cose-c509-pkcs10), when the server SHOULD respond with a CBOR-encoded object (see <a href="#cbor" class="auto internal xref">Section 4.3.2</a>).<a href="#section-4.3.1-3" class="pilcrow">¶</a></p>
-<p id="section-4.3.1-4">The generated response for /skg and /skc requests contains two parts: certificate and the corresponding private key.
-<span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.8" class="relref">Section 4.8</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> specifies that the private key in response to /skc request may be either an encrypted (PKCS #7) or unencrypted (PKCS #8) key, depending on whether the CSR request included SMIMECapabilities.<a href="#section-4.3.1-4" class="pilcrow">¶</a></p>
+An exception to this "SHOULD" is in the case when the request contains a CBOR-encoded object (e.g., application/cose-c509-pkcs10+cbor), when the server SHOULD respond with a CBOR-encoded object (see <a href="#cbor" class="auto internal xref">Section 4.3.2</a>).<a href="#section-4.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-4.3.1-4">The generated response for /skg and /skc requests is an application/multipart-core object <span>[<a href="#RFC8710" class="cite xref">RFC8710</a>]</span> with two parts: the private key and the corresponding certificate.
+As specified in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.8" class="relref">Section 4.8</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>, the parts of the application/multipart-core response do not have to be in a particular order, since each part is preceded by its Content-Format identifier; the order in <a href="#table_cft_skg_skc" class="auto internal xref">Table 3</a> is the one used in <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.
+<span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.8" class="relref">Section 4.8</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> specifies that the private key in response to /skg or /skc requests may be either an encrypted (PKCS #7) or unencrypted (PKCS #8) key, depending on whether the CSR request included SMIMECapabilities.<a href="#section-4.3.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.3.1-5">Due to the use of OSCORE, which protects the communication between the EST client and the EST server end-to-end, it is possible to return the private key to /skc or /skg as an unencrypted PKCS #8 object (Content-Format identifier 284).
 Therefore, when making the CSR to /skc or /skg, the EST client MUST NOT include SMIMECapabilities.
 As a consequence, the private key part of the response to /skc or /skg is an unencrypted PKCS #8 object.<a href="#section-4.3.1-5" class="pilcrow">¶</a></p>
@@ -1711,21 +1723,33 @@ As a consequence, the private key part of the response to /skc or /skg is an une
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
-                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-cert</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-cert+cbor</td>
+                <td class="text-left" rowspan="1" colspan="1">res</td>
+                <td class="text-left" rowspan="1" colspan="1">TBD21</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1"> </td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">res</td>
                 <td class="text-left" rowspan="1" colspan="1">TBD3</td>
               </tr>
               <tr>
+                <td class="text-left" rowspan="1" colspan="1"> </td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509+cbor; usage=chain</td>
+                <td class="text-left" rowspan="1" colspan="1">res</td>
+                <td class="text-left" rowspan="1" colspan="1">TBD15</td>
+              </tr>
+              <tr>
                 <td class="text-left" rowspan="1" colspan="1">/sen</td>
-                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-pkcs10</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-pkcs10+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">req</td>
                 <td class="text-left" rowspan="1" colspan="1">TBD4</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
-                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-cert</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-cert+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">res</td>
-                <td class="text-left" rowspan="1" colspan="1">TBD3</td>
+                <td class="text-left" rowspan="1" colspan="1">TBD21</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
@@ -1735,15 +1759,15 @@ As a consequence, the private key part of the response to /skc or /skg is an une
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">/sren</td>
-                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-pkcs10</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-pkcs10+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">req</td>
                 <td class="text-left" rowspan="1" colspan="1">TBD4</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
-                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-cert</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-cert+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">res</td>
-                <td class="text-left" rowspan="1" colspan="1">TBD3</td>
+                <td class="text-left" rowspan="1" colspan="1">TBD21</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
@@ -1753,15 +1777,15 @@ As a consequence, the private key part of the response to /skc or /skg is an une
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">/skg</td>
-                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-pkcs10</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-pkcs10+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">req</td>
                 <td class="text-left" rowspan="1" colspan="1">TBD4</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
-                <td class="text-left" rowspan="1" colspan="1">application/multipart-core</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-pem+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">res</td>
-                <td class="text-left" rowspan="1" colspan="1">62</td>
+                <td class="text-left" rowspan="1" colspan="1">TBD11</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">/skc</td>
@@ -1783,7 +1807,7 @@ As a consequence, the private key part of the response to /skc or /skg is an une
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
-                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-crtemplate</td>
+                <td class="text-left" rowspan="1" colspan="1">application/cose-c509-crtemplate+cbor</td>
                 <td class="text-left" rowspan="1" colspan="1">res</td>
                 <td class="text-left" rowspan="1" colspan="1">TBD19</td>
               </tr>
@@ -1791,40 +1815,18 @@ As a consequence, the private key part of the response to /skc or /skg is an une
           </table>
 </div>
 <p id="section-4.3.2-3">Please note that <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-cbor-encoded-cert-21#section-4.4" class="relref">Section 4.4</a> of [<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span> defines the format and the semantics of the response to /att.<a href="#section-4.3.2-3" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-4">Content-Format TBD3 MUST be supported by both EST-oscore clients and servers.
+<p id="section-4.3.2-4">Content-Format TBD21 MUST be supported by EST-oscore servers, and by EST-oscore clients that support CBOR-encoded objects.
 A preference for any (future) Content-Format is to be expressed by the EST-client through the Accept option.<a href="#section-4.3.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-5">If a CoAP Accept option is not included in the request, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., c5t, c5u).
+<p id="section-4.3.2-5">If a CoAP Accept option is not included in a request to /sen or /sren, the client is not expressing preference and the server SHOULD respond with a response application/multipart-core that includes the reference(s) to the enrolled certificate (e.g., c5t, c5u).
 The application/multipart-core response MUST include the reference(s) to the enrolled certificate which allows the client or any other party to retrieve it (e.g., through a coap URI secured with OSCORE).
 The application/multipart-core response MAY also include the actual certificate.
 The exact contents of the application/multipart-core response are dependent on the application policy.
 Because x5u and c5u references are of the same type application/cbor and the corresponding CoAP Content Format (60), mixing them in the same application/multipart-core response is not supported.
 An exception to the "SHOULD" is in the case when the request contains a DER-encoded ASN.1 object (e.g., application/pkcs10), when the server SHOULD respond with an appropriate ASN.1 object (see <a href="#der" class="auto internal xref">Section 4.3.1</a>).<a href="#section-4.3.2-5" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-6">In the case of a request to /skg, the response contains two parts: certificate and the corresponding private key.
-The certificate part is encoded as the application/cose-c509-cert object (Content-Format identifier TBD3), while the corresponding private key is encoded as application/cose-c509-privkey (Content-Format identifier TBD10).
+<p id="section-4.3.2-6">In the case of a request to /skg, the response is an application/cose-c509-pem+cbor object (Content-Format identifier TBD11), i.e., a C509PEM structure (<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cose-cbor-encoded-cert-21#section-3.6" class="relref">Section 3.6</a> of [<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>) containing the generated private key and the corresponding certificate.
+The second element of the C509PEM structure MUST NOT be null and MUST contain the certificate enrolled for the generated private key.
+If the second element contains more than one certificate, the first certificate MUST be the enrolled certificate.
 The function /skc is not available when using CBOR-encoded objects, and clients MUST use the /skg function for server-side generated keys.<a href="#section-4.3.2-6" class="pilcrow">¶</a></p>
-<p id="section-4.3.2-7"><a href="#table_cft_skg_cbor" class="auto internal xref">Table 5</a> summarizes the Content-Format identifiers used in responses to the /skg function.<a href="#section-4.3.2-7" class="pilcrow">¶</a></p>
-<span id="name-response-content-format-iden"></span><div id="table_cft_skg_cbor">
-<table class="center" id="table-5">
-            <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
-<a href="#name-response-content-format-iden" class="selfRef">Response Content-Format identifiers for /skg in case of CBOR-encoded objects.</a>
-            </caption>
-<thead>
-              <tr>
-                <th class="text-left" rowspan="1" colspan="1">Function</th>
-                <th class="text-left" rowspan="1" colspan="1">CBOR Response, Part 1</th>
-                <th class="text-left" rowspan="1" colspan="1">CBOR Response Part 2</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">/skg</td>
-                <td class="text-left" rowspan="1" colspan="1">TBD10</td>
-                <td class="text-left" rowspan="1" colspan="1">TBD3</td>
-              </tr>
-            </tbody>
-          </table>
-</div>
 </section>
 </div>
 </section>
@@ -1834,19 +1836,23 @@ The function /skc is not available when using CBOR-encoded objects, and clients 
         <h3 id="name-message-bindings">
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-message-bindings" class="section-name selfRef">Message Bindings</a>
         </h3>
-<p id="section-4.4-1">Note that the EST-oscore message characteristics are identical to those specified in Section 4.4 of <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.
-Therefore, the following applies:<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.4-1">The EST-oscore message characteristics are based on those specified in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.4" class="relref">Section 4.4</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.
+The following applies:<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.4-2.1">
-            <p id="section-4.4-2.1.1">EST-oscore endpoints MUST support delayed responses (see <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.7" class="relref">Section 4.7</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>)<a href="#section-4.4-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-2.1.1">EST-oscore endpoints MUST support delayed responses (see <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.7" class="relref">Section 4.7</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>).<a href="#section-4.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-2.2">
-            <p id="section-4.4-2.2.1">EST-oscore endpoints MUST support the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, Block1, Block2, and Accept.
-EST-oscore servers MUST implement Block1 and Block2.
-EST-oscore clients MUST implement Block2 and MAY implement Block1.<a href="#section-4.4-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-2.2.1">EST-oscore endpoints MUST support the following CoAP options: OSCORE, Uri-Host, Uri-Path, Uri-Port, Content-Format, and Accept.<a href="#section-4.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.4-2.3">
-            <p id="section-4.4-2.3.1">The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.<a href="#section-4.4-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-4.4-2.3.1">EST-oscore servers MUST implement Block1 and Block2.<a href="#section-4.4-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.4-2.4">
+            <p id="section-4.4-2.4.1">EST-oscore clients MUST implement Block2 and MAY implement Block1.<a href="#section-4.4-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-4.4-2.5">
+            <p id="section-4.4-2.5.1">The EST-coaps URLs based on coaps:// are translated to coap://, but with mandatory use of the CoAP OSCORE option.<a href="#section-4.4-2.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1856,7 +1862,7 @@ EST-oscore clients MUST implement Block2 and MAY implement Block1.<a href="#sect
         <h3 id="name-coap-response-codes">
 <a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-coap-response-codes" class="section-name selfRef">CoAP response codes</a>
         </h3>
-<p id="section-4.5-1">See Section 4.5 in <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.5-1">See <span><a href="https://rfc-editor.org/rfc/rfc9148#section-4.5" class="relref">Section 4.5</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>.<a href="#section-4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="message-fragmentation">
@@ -1865,8 +1871,8 @@ EST-oscore clients MUST implement Block2 and MAY implement Block1.<a href="#sect
 <a href="#section-4.6" class="section-number selfRef">4.6. </a><a href="#name-message-fragmentation" class="section-name selfRef">Message Fragmentation</a>
         </h3>
 <p id="section-4.6-1">The EDHOC key exchange is optimized for low message overhead, in particular when using static DH keys instead of signature keys for authentication (e.g., method 3 of <span>[<a href="#RFC9528" class="cite xref">RFC9528</a>]</span>).
-Together with various measures listed in this document such as CBOR-encoded payloads <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>, CBOR certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>, certificates by reference (<a href="#optimizations" class="auto internal xref">Section 3.4</a>), and trust anchors without signature (<a href="#crts" class="auto internal xref">Section 4.2.1</a>), a significant reduction of message sizes can be achieved.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
-<p id="section-4.6-2">Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource-constrained networks such as based on IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.<a href="#section-4.6-2" class="pilcrow">¶</a></p>
+Together with various measures listed in this document such as CBOR-encoded payloads <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>, CBOR certificates <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>, and certificates by reference (<a href="#optimizations" class="auto internal xref">Section 3.4</a>), a significant reduction of message sizes can be achieved.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
+<p id="section-4.6-2">Nevertheless, depending on the application, the protocol messages may become larger than the available frame size thus resulting in fragmentation and, in resource-constrained networks such as those based on IEEE 802.15.4 where throughput is limited, fragment loss can trigger costly retransmissions.<a href="#section-4.6-2" class="pilcrow">¶</a></p>
 <p id="section-4.6-3">It is recommended to prevent 6LoWPAN fragmentation, since it involves an error-prone datagram reassembly.
 To limit the size of the CoAP payload, this document specifies the requirements on implementing the CoAP options Block1 and Block2 (see <a href="#message-bindings" class="auto internal xref">Section 4.4</a>).<a href="#section-4.6-3" class="pilcrow">¶</a></p>
 </section>
@@ -1888,7 +1894,7 @@ To limit the size of the CoAP payload, this document specifies the requirements 
 In general, a given key pair should only be used for a single purpose, such as key establishment, digital signature, or key transport.<a href="#section-4.8-1" class="pilcrow">¶</a></p>
 <p id="section-4.8-2">The EST client attempting to enroll a DH key for a key usage operation other than digital signature can use an alternative proof-of-possession algorithm.
 The EST client SHOULD prepare the PKCS#10 object and compute a MAC, replacing the signature, over the certification request information by following the steps in <span><a href="https://rfc-editor.org/rfc/rfc6955#section-6" class="relref">Section 6</a> of [<a href="#RFC6955" class="cite xref">RFC6955</a>]</span>.
-The Key Derivation Function (KDF) and the MAC MUST be set to the HDKF and HMAC algorithms used by OSCORE.
+The Key Derivation Function (KDF) and the MAC MUST be set to the HKDF and HMAC algorithms used by OSCORE.
 The KDF and MAC is thus defined by the hash algorithm used by OSCORE in HKDF and HMAC, which by default is SHA-256.
 When EDHOC is used, then the hash algorithm is the application hash algorithm of the selected cipher suite.<a href="#section-4.8-2" class="pilcrow">¶</a></p>
 <p id="section-4.8-3">In some cases, it may be beneficial to exceptionally use the static DH private key associated with the public key used in enrollment for a one-time signing operation of the CSR.
@@ -1908,7 +1914,7 @@ When generating its DH key pair, the client uses the group parameters as indicat
 <p id="section-4.9-1">The EST client may indicate preference for enrolling a certificate by reference.
 There are two cases to distinguish: 1) any certificate reference, or 2) a specific Content-Format.
 In the first case, the EST client indicates preference for receiving any certificate by reference by sending a CBOR-encoded request without the CoAP Accept option.
-In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash, application/cose-certhash;usage=c509, application/cbor containing a URI <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>).
+In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash+cbor, application/cose-certhash+cbor;usage=c509, application/cbor containing a URI <span>[<a href="#I-D.ietf-cose-cbor-encoded-cert" class="cite xref">I-D.ietf-cose-cbor-encoded-cert</a>]</span>).
 It is out of the scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.<a href="#section-4.9-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1919,11 +1925,11 @@ It is out of the scope of this specification how the certificate by reference ge
       <h2 id="name-http-coap-proxy">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-http-coap-proxy" class="section-name selfRef">HTTP-CoAP Proxy</a>
       </h2>
-<p id="section-5-1">As noted in Section 5 of <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>, in real-world deployments, the EST server will not always reside within the CoAP boundary.
+<p id="section-5-1">As noted in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-5" class="relref">Section 5</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span>, in real-world deployments, the EST server will not always reside within the CoAP boundary.
 The EST-server can be outside the constrained network in a non-constrained network that supports HTTP but not CoAP, thus requiring an intermediary CoAP-to-HTTP proxy.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">Since OSCORE is applicable to CoAP-mappable HTTP (see <span><a href="https://rfc-editor.org/rfc/rfc8613#section-11" class="relref">Section 11</a> of [<a href="#RFC8613" class="cite xref">RFC8613</a>]</span>) the messages conveying the EST payloads can be protected end-to-end between the EST client and EST server, irrespective of the transport protocol or potential transport layer security that may need to be terminated at the proxy, see <a href="#fig-proxy" class="auto internal xref">Figure 2</a>.
-Therefore, the concept "Registrar" and its required trust relationship with EST server as described in Section 5 of <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> is not applicable.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">The mappings between CoAP and HTTP referred to in Section 8.1 of <span>[<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> apply, and additional mappings resulting from the use of OSCORE are specified in Section 11 of <span>[<a href="#RFC8613" class="cite xref">RFC8613</a>]</span>.<a href="#section-5-3" class="pilcrow">¶</a></p>
+Therefore, the concept "Registrar" and its required trust relationship with EST server as described in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-5" class="relref">Section 5</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> is not applicable.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">The mappings between CoAP and HTTP referred to in <span><a href="https://rfc-editor.org/rfc/rfc9148#section-8.1" class="relref">Section 8.1</a> of [<a href="#RFC9148" class="cite xref">RFC9148</a>]</span> apply, and additional mappings resulting from the use of OSCORE are specified in <span><a href="https://rfc-editor.org/rfc/rfc8613#section-11" class="relref">Section 11</a> of [<a href="#RFC8613" class="cite xref">RFC8613</a>]</span>.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <p id="section-5-4">OSCORE provides end-to-end security between the EST Server and EST Client.
 If a secure association is needed between the EST Client and the CoAP-to-HTTP Proxy, this may also rely on OSCORE <span>[<a href="#I-D.ietf-core-oscore-capable-proxies" class="cite xref">I-D.ietf-core-oscore-capable-proxies</a>]</span>.<a href="#section-5-4" class="pilcrow">¶</a></p>
 <span id="name-coap-to-http-proxy-at-the-c"></span><div id="fig-proxy">
@@ -2075,10 +2081,6 @@ How challengePassword is processed is outside of the scope of this specification
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC8392">[RFC8392]</dt>
-        <dd>
-<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Wahlstroem, E.</span>, <span class="refAuthor">Erdtman, S.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"CBOR Web Token (CWT)"</span>, <span class="seriesInfo">RFC 8392</span>, <span class="seriesInfo">DOI 10.17487/RFC8392</span>, <time datetime="2018-05" class="refDate">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8392">https://www.rfc-editor.org/info/rfc8392</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC8446">[RFC8446]</dt>
         <dd>
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8446">https://www.rfc-editor.org/info/rfc8446</a>&gt;</span>. </dd>
@@ -2086,6 +2088,10 @@ How challengePassword is processed is outside of the scope of this specification
 <dt id="RFC8613">[RFC8613]</dt>
         <dd>
 <span class="refAuthor">Selander, G.</span>, <span class="refAuthor">Mattsson, J.</span>, <span class="refAuthor">Palombini, F.</span>, and <span class="refAuthor">L. Seitz</span>, <span class="refTitle">"Object Security for Constrained RESTful Environments (OSCORE)"</span>, <span class="seriesInfo">RFC 8613</span>, <span class="seriesInfo">DOI 10.17487/RFC8613</span>, <time datetime="2019-07" class="refDate">July 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8613">https://www.rfc-editor.org/info/rfc8613</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8710">[RFC8710]</dt>
+        <dd>
+<span class="refAuthor">Fossati, T.</span>, <span class="refAuthor">Hartke, K.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Multipart Content-Format for the Constrained Application Protocol (CoAP)"</span>, <span class="seriesInfo">RFC 8710</span>, <span class="seriesInfo">DOI 10.17487/RFC8710</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8710">https://www.rfc-editor.org/info/rfc8710</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8949">[RFC8949]</dt>
         <dd>
@@ -2186,8 +2192,8 @@ How challengePassword is processed is outside of the scope of this specification
 The EDHOC handshake follows and concludes with the EDHOC message_3.
 EDHOC message_3 is carried in the same message as the OSCORE enrollment request, as specified in <span>[<a href="#RFC9668" class="cite xref">RFC9668</a>]</span>.
 The OSCORE enrollment request contains a CoAP POST to the /sen endpoint.
-This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10, and the Accept option set to the value application/cose-c509-cert, indicating the support for CBOR-encoded objects.
-In response, the client receives the application/cose-c509-cert object that contains the certificate.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+This POST request includes the Content-Format option set to the value application/cose-c509-pkcs10+cbor, and the Accept option set to the value application/cose-c509-cert+cbor, indicating the support for CBOR-encoded objects.
+In response, the client receives the application/cose-c509-cert+cbor object that contains the certificate.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <span id="name-enrollment-est-oscore-flow-"></span><div id="fig-sen-optimizations">
 <figure id="figure-3">
         <div id="appendix-A-2.1">
@@ -2219,22 +2225,22 @@ In response, the client receives the application/cose-c509-cert object that cont
                 <text x="136" y="164">request</text>
                 <text x="180" y="164">to</text>
                 <text x="212" y="164">/sen</text>
-                <text x="116" y="196">POST</text>
-                <text x="220" y="196">/.well-known/est/sen</text>
-                <text x="128" y="212">Accept:</text>
-                <text x="180" y="212">TBD3</text>
-                <text x="160" y="228">Content-Format:</text>
-                <text x="244" y="228">TBD4</text>
-                <text x="132" y="244">Payload:</text>
-                <text x="236" y="244">cose-c509-pkcs10</text>
+                <text x="84" y="196">POST</text>
+                <text x="188" y="196">/.well-known/est/sen</text>
+                <text x="96" y="212">Accept:</text>
+                <text x="152" y="212">TBD21</text>
+                <text x="128" y="228">Content-Format:</text>
+                <text x="212" y="228">TBD4</text>
+                <text x="100" y="244">Payload:</text>
+                <text x="224" y="244">cose-c509-pkcs10+cbor</text>
                 <text x="76" y="276">OSCORE</text>
                 <text x="140" y="276">response</text>
-                <text x="116" y="308">2.04</text>
-                <text x="168" y="308">Changed</text>
-                <text x="160" y="324">Content-Format:</text>
-                <text x="244" y="324">TBD3</text>
-                <text x="132" y="340">Payload:</text>
-                <text x="228" y="340">cose-c509-cert</text>
+                <text x="84" y="308">2.04</text>
+                <text x="136" y="308">Changed</text>
+                <text x="128" y="324">Content-Format:</text>
+                <text x="216" y="324">TBD21</text>
+                <text x="100" y="340">Payload:</text>
+                <text x="216" y="340">cose-c509-cert+cbor</text>
               </g>
             </svg><a href="#appendix-A-2.1.1" class="pilcrow">¶</a>
 </div>
@@ -2282,10 +2288,10 @@ for providing a review of the document.<a href="#appendix-B-2" class="pilcrow">�
 </address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Martin Furuhed</span></div>
-<div dir="auto" class="left"><span class="org">Nexus</span></div>
+<div dir="auto" class="left"><span class="org">IN Groupe</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:martin.furuhed@nexusgroup.com" class="email">martin.furuhed@nexusgroup.com</a>
+<a href="mailto:martin.furuhed@ingroupe.com" class="email">martin.furuhed@ingroupe.com</a>
 </div>
 </address>
 <address class="vcard">
