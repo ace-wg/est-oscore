@@ -166,7 +166,6 @@ The EST-oscore server MUST play the role of the EDHOC Responder.
 The EST-oscore clients and servers perform mutual authentication.
 The EST server and EST client are responsible for ensuring that an acceptable cipher suite is negotiated.
 The client authenticates the server before accepting any server response.
-The server authenticates the client.
 These requirements are fulfilled when using EDHOC {{RFC9528}}.
 
 The server must also provide relevant information to the CA to support its decision about issuing a certificate.
