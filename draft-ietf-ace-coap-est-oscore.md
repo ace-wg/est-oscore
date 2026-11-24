@@ -57,6 +57,7 @@ normative:
   RFC9668:
   RFC8710:
   I-D.ietf-cose-cbor-encoded-cert:
+  RFC6402:
 
 informative:
 
@@ -293,6 +294,26 @@ When the EST-oscore server receives a /crts request with a CoAP Accept option in
 The chain is ordered starting with the certificate of that CA and ending with the certificate of the root CA, i.e., the trust anchor.
 If the CA that has issued, or will issue, the certificate of the client is itself the root CA, the chain consists of a single certificate.
 
+### /sren {#sren}
+
+As specified in {{Section 4.2.2 of RFC7030}}, the Subject field and the SubjectAltName extension in a re-enrollment request to /sren MUST be identical to the corresponding fields in the certificate being renewed or rekeyed.
+The ChangeSubjectName attribute defined in {{RFC6402}} MAY be included in the request to ask that these fields be changed in the new certificate.
+
+If the request is a C509 certification request (application/cose-c509-pkcs10+cbor, see {{cbor}}), the counterpart of the ChangeSubjectName attribute is the C509 Certification Request attribute "CMC Change Subject Name" (see {{iana-cr-attribute}}), with the following attributeValue:
+
+~~~~~~~~~~~ cddl
+C509ChangeSubjectName = [
+  subject: Name / null,
+  subjectAlt: SubjectAltName / null,
+]
+~~~~~~~~~~~
+
+The types Name and SubjectAltName are defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+At least one of the elements subject and subjectAlt MUST NOT be null.
+A non-null subject requests that the Subject field of the new certificate be changed to the given value.
+A non-null subjectAlt requests that the SubjectAltName extension of the new certificate be changed to the given value.
+A null element requests no change to the corresponding field.
+
 ## Payload formats
 
 Similar to EST-coaps, EST-oscore allows transport of DER-encoded objects of a given Media-Type.
@@ -514,7 +535,27 @@ How challengePassword is processed is outside of the scope of this specification
 
 # IANA Considerations  {#iana}
 
-This document does not require any IANA registrations.
+## C509 CR Attributes Registry {#iana-cr-attribute}
+
+IANA is asked to register the following entry in the "C509 CR Attributes" registry under the registry group "CBOR Encoded X.509 (C509)", defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+
+~~~~~~~~~~~
++---------+-----------------------------------------------------------+
+| Value   | CR Attribute                                              |
++=========+===========================================================+
+| TBD-CSN | Name:            CMC Change Subject Name                  |
+|         | Identifiers:     id-cmc-changeSubjectName                 |
+|         | OID:             1.3.6.1.5.5.7.7.36                       |
+|         | DER:             06 08 2B 06 01 05 05 07 07 24            |
+|         | Comments:        RFC 6402                                 |
+|         | attributeValue:  C509ChangeSubjectName                    |
+|         | Reference:       [RFC-XXXX]                               |
++---------+-----------------------------------------------------------+
+~~~~~~~~~~~
+
+The attribute is specified in {{sren}} of this document.
+
+[RFC Editor: Please replace RFC-XXXX with the RFC number of this specification and delete this paragraph. The suggested value for TBD-CSN is 3.]
 
 --- back
 
