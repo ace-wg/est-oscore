@@ -57,6 +57,9 @@ normative:
   RFC9668:
   RFC8710:
   I-D.ietf-cose-cbor-encoded-cert:
+  RFC2986:
+  RFC5280:
+  RFC9925:
 
 informative:
 
@@ -447,6 +450,62 @@ In the first case, the EST client indicates preference for receiving any certifi
 In the second case, the EST client includes a Content-Format identifier in the CoAP Accept option indicating preference for receiving a specific reference (e.g., application/cose-certhash+cbor, application/cose-certhash+cbor;usage=c509, application/cbor containing a URI {{I-D.ietf-cose-cbor-encoded-cert}}).
 It is out of the scope of this specification how the certificate by reference gets resolved to the actual certificate by other parties participating in the communication with the EST client.
 
+## Certification Requests for Server-side Key Generation {#skg-csr}
+
+As specified in {{Section 4.4.1 of RFC7030}}, a request to /skg or /skc carries a certification request of the same format as a request to /sen or /sren, but the EST server ignores the public key and the signature in it.
+Sending a real public key and a signature computed with the corresponding private key thus only increases the size of the request.
+Furthermore, an EST client that relies on server-side key generation typically has no suitable key pair to put in the request.
+
+This section defines a placeholder public key algorithm, "serverKeyGen", which indicates that no public key is included in the certification request and specifies the algorithm of the key pair that the EST server is asked to generate.
+An EST-oscore client SHOULD use the serverKeyGen algorithm in requests to /skg and /skc.
+An EST-oscore server that supports /skg or /skc MUST support the serverKeyGen algorithm in requests to these resources, and MUST reject requests to /sen and /sren that use the serverKeyGen algorithm.
+The serverKeyGen algorithm, i.e., id-alg-serverKeyGen or its C509 counterpart TBD-SKG, MUST NOT be used in certificates.
+
+### PKCS #10 Certification Requests
+
+In a PKCS #10 certification request {{RFC2986}} (application/pkcs10), the EST-oscore client sets the fields as follows:
+
+* The algorithm field of subjectPKInfo is set to the AlgorithmIdentifier id-alg-serverKeyGen, defined below.
+  Its parameters field is the AlgorithmIdentifier of the subject public key algorithm of the key pair to be generated, as it will appear in the subjectPublicKeyInfo field of the certificate {{RFC5280}} (e.g., id-ecPublicKey with the named curve secp256r1).
+  If the parameters field is absent, the algorithm of the key pair to be generated is determined by the policy of the EST server.
+
+* The subjectPublicKey field of subjectPKInfo is a zero-length BIT STRING.
+
+* The signatureAlgorithm field is set to the AlgorithmIdentifier id-alg-unsigned defined in {{RFC9925}}, and the signature field is a zero-length BIT STRING.
+
+~~~~~~~~~~~ asn.1
+id-alg-serverKeyGen OBJECT IDENTIFIER ::= {
+  iso(1) identified-organization(3) dod(6) internet(1)
+  security(5) mechanisms(5) pkix(7) algorithms(6) TBD-SKG-OID }
+
+ServerKeyGenParameters ::= AlgorithmIdentifier
+~~~~~~~~~~~
+
+### C509 Certification Requests
+
+In a C509 certification request ({{Section 4 of I-D.ietf-cose-cbor-encoded-cert}}, application/cose-c509-pkcs10+cbor), the EST-oscore client sets the fields as follows:
+
+* subjectPublicKeyAlgorithm is set to the integer TBD-SKG, which identifies the serverKeyGen algorithm in the "C509 Public Key Algorithms" registry (see {{iana-pk-algorithm}}).
+
+* subjectPublicKey is the AlgorithmIdentifier, as encoded in the subjectPublicKeyAlgorithm field of a C509 certificate, of the key pair to be generated (e.g., the integer 1 for an EC public key with secp256r1), or null if the algorithm of the key pair to be generated is determined by the policy of the EST server.
+
+* subjectSignatureAlgorithm is set to the integer 5 (id-alg-unsigned), and subjectSignatureValue is a zero-length byte string.
+
+~~~~~~~~~~~ cddl
+ServerKeyGenPublicKey = AlgorithmIdentifier / null
+~~~~~~~~~~~
+
+When a C509 certification request using the serverKeyGen algorithm is transformed into a PKCS #10 certification request (see {{Section 4 of I-D.ietf-cose-cbor-encoded-cert}}), the AlgorithmIdentifier in subjectPublicKey becomes the parameters field of id-alg-serverKeyGen, and null becomes an absent parameters field.
+
+### Processing
+
+When receiving a request to /skg or /skc that uses the serverKeyGen algorithm, the EST-oscore server MUST NOT attempt to verify the signature of the certification request, and generates a key pair of the indicated algorithm.
+If the EST-oscore server does not support or does not allow the indicated algorithm, it MUST reject the request.
+
+Since the certification request is not signed, it provides no proof-of-possession of a private key.
+This does not weaken the security of /skg and /skc, since the EST server generates the key pair itself and ignores the public key and signature in any case ({{Section 4.4.1 of RFC7030}}).
+The authentication of the EST-oscore client and the integrity of the request are provided by OSCORE, and channel binding can still be achieved through the challengePassword attribute (see {{channel-binding}}), since the attributes of the certification request are unaffected.
+
 # HTTP-CoAP Proxy {#proxying}
 
 As noted in {{Section 5 of RFC9148}}, in real-world deployments, the EST server will not always reside within the CoAP boundary.
@@ -514,7 +573,39 @@ How challengePassword is processed is outside of the scope of this specification
 
 # IANA Considerations  {#iana}
 
-This document does not require any IANA registrations.
+## SMI Security for PKIX Algorithms Registry {#iana-oid}
+
+IANA is asked to allocate the following object identifier in the "SMI Security for PKIX Algorithms" registry (1.3.6.1.5.5.7.6):
+
+| Decimal     | Description         | References  |
+|-------------|---------------------|-------------|
+| TBD-SKG-OID | id-alg-serverKeyGen | [RFC-XXXX]  |
+{: #table_iana_oid cols="l l l" title="Object identifier for the serverKeyGen algorithm."}
+
+## C509 Public Key Algorithms Registry {#iana-pk-algorithm}
+
+IANA is asked to register the following entry in the "C509 Public Key Algorithms" registry under the registry group "CBOR Encoded X.509 (C509)", defined in {{I-D.ietf-cose-cbor-encoded-cert}}.
+
+~~~~~~~~~~~
++---------+-----------------------------------------------------------+
+| Value   | Public Key Algorithm                                      |
++=========+===========================================================+
+| TBD-SKG | Name:        Server Key Generation                        |
+|         | Identifiers: id-alg-serverKeyGen                          |
+|         | OID:         1.3.6.1.5.5.7.6.TBD-SKG-OID                  |
+|         | Parameters:  AlgorithmIdentifier of the key pair to be    |
+|         |              generated, or absent                         |
+|         | DER:         TBD                                          |
+|         | Comments:    Only in certification requests for           |
+|         |              server-side key generation. subjectPublicKey |
+|         |              is AlgorithmIdentifier / null.               |
+|         | Reference:   [RFC-XXXX]                                   |
++---------+-----------------------------------------------------------+
+~~~~~~~~~~~
+
+The serverKeyGen algorithm is specified in {{skg-csr}} of this document.
+
+[RFC Editor: Please replace RFC-XXXX with the RFC number of this specification and delete this paragraph. The suggested value for TBD-SKG is 256.]
 
 --- back
 
