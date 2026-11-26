@@ -296,8 +296,13 @@ If the CA that has issued, or will issue, the certificate of the client is itsel
 
 If a key update of the root CA applies, then, in the response to a request with a CoAP Accept option indicating application/pkcs7-mime;smime-type=certs-only or application/cose-c509+cbor without the "usage" parameter, the EST-oscore server SHOULD include the "Root CA Key Update" certificates OldWithOld, OldWithNew, NewWithOld, and NewWithNew defined in {{Section 4.4 of RFC9810}}, as specified for EST in {{Section 4.1.3 of RFC7030}}.
 The order of these certificates carries no meaning.
-In the response to a request with a CoAP Accept option indicating application/cose-c509+cbor;usage=chain, the EST-oscore server MUST NOT include the certificates OldWithOld, OldWithNew, and NewWithOld, and the chain ends with the current certificate of the root CA, i.e., NewWithNew.
-An EST-oscore client that needs the "Root CA Key Update" certificates requests one of the Content-Formats listed above that do not indicate a chain.
+In the response to a request with a CoAP Accept option indicating application/cose-c509+cbor;usage=chain, the EST-oscore server MUST NOT include OldWithOld and NewWithOld, and the chain ends as follows:
+
+* If the CA certificate issued by the root CA is issued under OldWithOld: CA certificate, OldWithNew, NewWithNew.
+
+* Otherwise: CA certificate, NewWithNew.
+
+An EST-oscore client that needs all the "Root CA Key Update" certificates requests one of the Content-Formats listed above that do not indicate a chain.
 
 ## Payload formats
 
