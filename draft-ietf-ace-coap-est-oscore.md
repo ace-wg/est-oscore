@@ -558,7 +558,7 @@ KemChallenge = [
   keyId: bstr .size 32,
   serverId: bstr .size 32,
   encapsulation: bstr,
-  ? lifetime: uint,
+  lifetime: uint / null,
 ]
 ~~~~~~~~~~~
 
@@ -572,9 +572,9 @@ The fields are:
 
 * encapsulation is the ciphertext c.
 
-* lifetime, if present, is the number of seconds after which the EST server considers the KEM challenge expired, counted from the time the response is sent.
+* lifetime is the number of seconds after which the EST server considers the KEM challenge expired, counted from the time the response is sent, or null if no lifetime is available.
   A relative value is used so that the EST client does not need a synchronized clock.
-  If lifetime is absent, the lifetime of the KEM challenge is determined by the policy of the EST server.
+  If lifetime is null, the lifetime of the KEM challenge is determined by the policy of the EST server and is not communicated to the EST client.
   The EST client SHOULD send the certification request before the lifetime has elapsed; otherwise, it needs to request a new KEM challenge.
 
 Until the KEM challenge is used or has expired, the EST server MUST retain the challenge state, which consists of at least the KemPublicKey, keyId, serverId, c, K, the identity of the authenticated EST client, and the expiry time of the KEM challenge.
